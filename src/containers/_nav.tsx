@@ -1,25 +1,24 @@
-import CIcon from '@coreui/icons-react';
-import { freeSet } from '@coreui/icons';
+import { FaBox } from 'react-icons/fa';
+import { BiImport, BiExport } from 'react-icons/bi';
 
 const _nav = [
   {
     _tag: 'CSidebarNavItem',
-    name: 'Dashboard',
-    to: '/dashboard',
-    icon: (
-      <CIcon
-        content={freeSet.cilSpeedometer}
-        customClasses="c-sidebar-nav-icon"
-      />
-    ),
+    name: 'Import',
+    to: '/imports',
+    icon: <BiImport className="c-sidebar-nav-icon" />,
   },
   {
     _tag: 'CSidebarNavItem',
-    name: 'Colors',
-    to: '/colors',
-    icon: (
-      <CIcon content={freeSet.cilDrop} customClasses="c-sidebar-nav-icon" />
-    ),
+    name: 'Exports',
+    to: '/exports',
+    icon: <BiExport className="c-sidebar-nav-icon" />,
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Products',
+    to: '/products',
+    icon: <FaBox className="c-sidebar-nav-icon" />,
   },
 ];
 

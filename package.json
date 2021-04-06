@@ -19,6 +19,9 @@
     "bootstrap": "^4.6.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "react-icons": "^4.2.0",
+    "react-js-pagination": "^3.0.3",
+    "react-paginate": "^7.1.2",
     "react-redux": "^7.2.3",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
@@ -54,6 +57,7 @@
   },
   "tslint:check": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
   "devDependencies": {
+    "@types/react-js-pagination": "^3.0.3",
     "@types/react-router-dom": "^5.1.7"
   }
 }
