@@ -1,0 +1,14 @@
+{
+  "extends": ["tslint:recommended", "tslint-eslint-rules"],
+  "rules": {
+    "ter-indent": [true, 2],
+    "only-arrow-functions": {
+      "options": ["allow-declarations", "allow-named-functions"]
+    },
+    "no-any": true,
+    "interface-name": true,
+    "no-console": {
+      "options": ["log"]
+    }
+  }
+}
