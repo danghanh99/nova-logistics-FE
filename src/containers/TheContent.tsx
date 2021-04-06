@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import { CContainer } from '@coreui/react';
 
 import routes from '../routes';
+import { IRoute } from '../types/RouteType';
 
 const loading = (
   <div className="pt-3 text-center">
@@ -16,7 +17,7 @@ const TheContent = () => {
       <CContainer fluid>
         <Suspense fallback={loading}>
           <Switch>
-            {routes.map((route: any, idx: any) => {
+            {routes.map((route: IRoute, idx: number) => {
               return (
                 route.component && (
                   <Route

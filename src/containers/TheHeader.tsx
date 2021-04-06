@@ -13,10 +13,11 @@ import CIcon from '@coreui/icons-react';
 
 import routes from '../routes';
 import { sidebarStatus } from './SidebarSlice';
+import { ISidebar } from '../types/SidebarType';
 
 const TheHeader = () => {
   const dispatch = useDispatch();
-  const sidebarShow = useSelector((state: any) => state.sidebar);
+  const sidebarShow = useSelector((state: ISidebar) => state.sidebar);
 
   const toggleSidebar = () => {
     const val = [true].includes(sidebarShow) ? false : true;

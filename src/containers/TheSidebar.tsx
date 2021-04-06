@@ -13,15 +13,16 @@ import CIcon from '@coreui/icons-react';
 import navigation from './_nav';
 import { freeSet } from '@coreui/icons';
 import { sidebarStatus } from './SidebarSlice';
+import { ISidebar } from '../types/SidebarType';
 
 const TheSidebar = () => {
   const dispatch = useDispatch();
-  const show = useSelector((state: any) => state.sidebar);
+  const show = useSelector((state: ISidebar) => state.sidebar);
 
   return (
     <CSidebar
       show={show}
-      onShowChange={(val: any) => dispatch(sidebarStatus(val))}
+      onShowChange={(val: boolean) => dispatch(sidebarStatus(val))}
     >
       <CSidebarBrand className="d-md-down-none" to="/">
         <CIcon
