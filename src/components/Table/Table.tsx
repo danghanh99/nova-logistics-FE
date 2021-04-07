@@ -55,9 +55,7 @@ const Table = (props: IProps) => {
       </div>
       <div className="table-responsive">
         <table className="table table-bordered table-striped table-hover">
-          <thead>
-            <tr>{headers}</tr>
-          </thead>
+          <thead>{headers}</thead>
           <tbody>{children}</tbody>
         </table>
         <div className="col-12 pr-0">

@@ -3,13 +3,20 @@ import Table from '../../components/Table/Table';
 import data from './SuppliersData';
 import { freeSet } from '@coreui/icons';
 
+import './supplier.css';
 const Suppliers = (): JSX.Element => {
-  const nameCol = ['ID', 'Phone Number', 'Address', 'Date', 'Mo ta'];
+  const nameCol = ['ID', 'Phone Number', 'Address', 'Date', 'Action'];
 
   const headers = (): any => {
-    return nameCol.map((value, index) => {
-      return <th scope="col">{value}</th>;
-    });
+    return (
+      <tr>
+        <th style={{ width: '50px', textAlign: 'right' }}>ID</th>
+        <th>Phone Number</th>
+        <th>Address</th>
+        <th>Date</th>
+        <th>Action</th>
+      </tr>
+    );
   };
 
   return (
@@ -18,14 +25,15 @@ const Suppliers = (): JSX.Element => {
         {data.map((value, index) => {
           return (
             <tr>
-              <td>{value.ID}</td>
-              <td>{value.PhoneNumber}</td>
-              <td className="text-center">{value.Address}</td>
-              <td>{value.Date}</td>
+              <td className="text-right">{value.ID}</td>
+              <td className="text-right">{value.PhoneNumber}</td>
+              <td className="text-left">{value.Address}</td>
+              <td className="text-right">{value.Date}</td>
               <td>
                 <div className="d-flex justify-content-center">
                   <button className="btn btn-outline-primary mr-2 d-flex align-items-center">
                     <CIcon content={freeSet.cilBrush}></CIcon>
+                    <CIcon content={freeSet.cilColorBorder}></CIcon>
                   </button>
                 </div>
               </td>
