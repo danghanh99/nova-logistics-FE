@@ -4,22 +4,25 @@ import './Pagination.scss';
 const Pagination = (): JSX.Element => {
   return (
     <React.Fragment>
-      <ul className="page">
-        <li className="page__btn">
-          <span className="material-icons">&laquo;</span>
-        </li>
-        <li className="page__numbers"> 1</li>
-        <li className="page__numbers active">2</li>
-        <li className="page__numbers">3</li>
-        <li className="page__numbers">4</li>
-        <li className="page__numbers">5</li>
-        <li className="page__numbers">6</li>
-        <li className="page__dots">...</li>
-        <li className="page__numbers"> 10</li>
-        <li className="page__btn">
-          <span className="material-icons">&raquo;</span>
-        </li>
-      </ul>
+      <nav aria-label="Page navigation example">
+        <ul className="pagination justify-content-center">
+          <li className="page-item disabled">
+            <a className="page-link">Previous</a>
+          </li>
+          <li className="page-item">
+            <a className="page-link">1</a>
+          </li>
+          <li className="page-item">
+            <a className="page-link">2</a>
+          </li>
+          <li className="page-item">
+            <a className="page-link">3</a>
+          </li>
+          <li className="page-item">
+            <a className="page-link">Next</a>
+          </li>
+        </ul>
+      </nav>
     </React.Fragment>
   );
 };
