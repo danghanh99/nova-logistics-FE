@@ -7,18 +7,15 @@ const _nav = [
     name: 'Dashboard',
     to: '/dashboard',
     icon: (
-      <CIcon
-        content={freeSet.cilSpeedometer}
-        customClasses="c-sidebar-nav-icon"
-      />
+      <CIcon content={freeSet.cilTruck} customClasses="c-sidebar-nav-icon" />
     ),
   },
   {
     _tag: 'CSidebarNavItem',
-    name: 'Colors',
-    to: '/colors',
+    name: 'Supplier',
+    to: '/suppliers',
     icon: (
-      <CIcon content={freeSet.cilDrop} customClasses="c-sidebar-nav-icon" />
+      <CIcon content={freeSet.cilGroup} customClasses="c-sidebar-nav-icon" />
     ),
   },
 ];
