@@ -1,28 +1,21 @@
 import CIcon from '@coreui/icons-react';
 import suppliersData from './SuppliersData';
 import { freeSet } from '@coreui/icons';
-import {
-  CButton,
-  CBadge,
-  CCard,
-  CCardBody,
-  CCardHeader,
-  CCol,
-  CDataTable,
-  CRow,
-} from '@coreui/react';
-import { tmpdir } from 'os';
-const fields = [
-  'ID',
-  'PhoneNumber',
-  'Address',
-  'Date',
-  'Description',
-  'Action',
-];
-
+import './supplier.scss';
 function Supplier() {
-  const data = suppliersData.map((value, index) => {
+  const nameCol = [
+    'ID',
+    'Phone Number',
+    'Address',
+    'Date',
+    'Description',
+    'Action',
+  ];
+  const colTable = nameCol.map((value) => {
+    return <th style={{ textAlign: 'center' }}>{value}</th>;
+  });
+
+  const data = suppliersData.map((value) => {
     return (
       <tr>
         <td style={{ textAlign: 'center' }}>{value.ID}</td>
@@ -78,21 +71,17 @@ function Supplier() {
               New Supplier
             </button>
           </div>
-          <table className="table table-bordered table-striped table-hover ">
+          <table className="table table-bordered table-striped table-hover">
             <thead>
-              <tr>
-                <th style={{ textAlign: 'center' }}>ID</th>
-                <th style={{ textAlign: 'center' }}>Phone Number</th>
-                <th style={{ textAlign: 'center' }}>Address</th>
-                <th style={{ textAlign: 'center' }}>Date</th>
-                <th style={{ textAlign: 'center' }}>Description</th>
-                <th style={{ textAlign: 'center' }}>Action</th>
-              </tr>
+              <tr>{colTable}</tr>
             </thead>
             <tbody>{data}</tbody>
           </table>
         </div>
-        <div className="pagination">
+        <div
+          className="pagination active "
+          style={{ position: 'absolute', left: '50%' }}
+        >
           <a href="#">&laquo;</a>
           <a href="#">1</a>
           <a className="active" href="#">
@@ -104,6 +93,23 @@ function Supplier() {
           <a href="#">6</a>
           <a href="#">&raquo;</a>
         </div>
+
+        <ul className="page">
+          <li className="page__btn">
+            <span className="material-icons">chevron_left</span>
+          </li>
+          <li className="page__numbers"> 1</li>
+          <li className="page__numbers active">2</li>
+          <li className="page__numbers">3</li>
+          <li className="page__numbers">4</li>
+          <li className="page__numbers">5</li>
+          <li className="page__numbers">6</li>
+          <li className="page__dots">...</li>
+          <li className="page__numbers"> 10</li>
+          <li className="page__btn">
+            <span className="material-icons">chevron_right</span>
+          </li>
+        </ul>
       </div>
     </div>
   );
