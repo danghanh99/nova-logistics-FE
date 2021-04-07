@@ -1,7 +1,6 @@
 import CIcon from '@coreui/icons-react';
 import suppliersData from './SuppliersData';
 import { freeSet } from '@coreui/icons';
-import './supplier.scss';
 function Supplier() {
   const nameCol = [
     'ID',
@@ -93,23 +92,6 @@ function Supplier() {
           <a href="#">6</a>
           <a href="#">&raquo;</a>
         </div>
-
-        <ul className="page">
-          <li className="page__btn">
-            <span className="material-icons">chevron_left</span>
-          </li>
-          <li className="page__numbers"> 1</li>
-          <li className="page__numbers active">2</li>
-          <li className="page__numbers">3</li>
-          <li className="page__numbers">4</li>
-          <li className="page__numbers">5</li>
-          <li className="page__numbers">6</li>
-          <li className="page__dots">...</li>
-          <li className="page__numbers"> 10</li>
-          <li className="page__btn">
-            <span className="material-icons">chevron_right</span>
-          </li>
-        </ul>
       </div>
     </div>
   );
