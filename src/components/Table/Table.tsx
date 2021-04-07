@@ -7,10 +7,12 @@ interface IProps {
   colTable: string[];
   data: IProduct[];
   modelName: string;
+  children: any;
+  headers: any;
 }
 
 const Table = (props: IProps) => {
-  const { colTable, data, modelName } = props;
+  const { colTable, data, modelName, children, headers } = props;
 
   return (
     <>
@@ -59,30 +61,13 @@ const Table = (props: IProps) => {
         <table className="table table-bordered table-striped table-hover">
           <thead>
             <tr>
-              {colTable.map((value, index) => {
+              {/* {colTable.map((value, index) => {
                 return <th scope="col">{value}</th>;
-              })}
+              })} */}
+              {headers}
             </tr>
           </thead>
-          <tbody>
-            {data.map((value, index) => {
-              return (
-                <tr>
-                  <td>{value.ID}</td>
-                  <td>{value.PhoneNumber}</td>
-                  <td className="text-center">{value.Address}</td>
-                  <td>{value.Date}</td>
-                  <td>
-                    <div className="d-flex justify-content-center">
-                      <button className="btn btn-outline-primary mr-2 d-flex align-items-center">
-                        <CIcon content={freeSet.cilBrush}></CIcon>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
+          <tbody>{children}</tbody>
         </table>
         <div className="col-12 pr-0">
           <Pagination />

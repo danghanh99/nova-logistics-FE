@@ -3,9 +3,7 @@ import data from '../Supplier/SuppliersData';
 const Products = (): JSX.Element => {
   const nameCol = ['ID', 'Phone Number', 'Address', 'Date', 'Action'];
   return (
-    <>
-      <Table colTable={nameCol} data={data} modelName="Product" />
-    </>
+    <>{/* <Table colTable={nameCol} data={data} modelName="Product" /> */}</>
   );
 };
 
