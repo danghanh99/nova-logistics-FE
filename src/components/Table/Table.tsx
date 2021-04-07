@@ -1,18 +1,14 @@
 import { CIcon } from '@coreui/icons-react';
 import { freeSet } from '@coreui/icons';
 import Pagination from '../../components/Pagination/Pagination';
-import IProduct from '../../types/ProductType';
-import ISupplier from '../../types/SupplierType';
 interface IProps {
-  colTable: string[];
-  data: IProduct[];
   modelName: string;
-  children: any;
-  headers: any;
+  children: React.ReactNode;
+  headers: JSX.Element;
 }
 
 const Table = (props: IProps) => {
-  const { colTable, data, modelName, children, headers } = props;
+  const { modelName, children, headers } = props;
 
   return (
     <>
@@ -60,12 +56,7 @@ const Table = (props: IProps) => {
       <div className="table-responsive">
         <table className="table table-bordered table-striped table-hover">
           <thead>
-            <tr>
-              {/* {colTable.map((value, index) => {
-                return <th scope="col">{value}</th>;
-              })} */}
-              {headers}
-            </tr>
+            <tr>{headers}</tr>
           </thead>
           <tbody>{children}</tbody>
         </table>

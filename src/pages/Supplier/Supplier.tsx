@@ -1,6 +1,8 @@
 import CIcon from '@coreui/icons-react';
 import Table from '../../components/Table/Table';
 import data from './SuppliersData';
+import { freeSet } from '@coreui/icons';
+
 const Suppliers = (): JSX.Element => {
   const nameCol = ['ID', 'Phone Number', 'Address', 'Date', 'Mo ta'];
 
@@ -12,12 +14,7 @@ const Suppliers = (): JSX.Element => {
 
   return (
     <>
-      <Table
-        colTable={nameCol}
-        data={data}
-        headers={headers()}
-        modelName="Supplier"
-      >
+      <Table headers={headers()} modelName="Supplier">
         {data.map((value, index) => {
           return (
             <tr>
@@ -28,7 +25,7 @@ const Suppliers = (): JSX.Element => {
               <td>
                 <div className="d-flex justify-content-center">
                   <button className="btn btn-outline-primary mr-2 d-flex align-items-center">
-                    {/* <CIcon content={freeSet.cilBrush}></CIcon> */}
+                    <CIcon content={freeSet.cilBrush}></CIcon>
                   </button>
                 </div>
               </td>
