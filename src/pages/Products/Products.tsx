@@ -1,7 +1,7 @@
 import { CIcon } from '@coreui/icons-react';
 import { freeSet } from '@coreui/icons';
-// import ReactPaginate from 'react-paginate';
-
+import Pagination from '../../components/Pagination/Pagination';
+import './products.scss';
 const Products = (): JSX.Element => {
   return (
     <>
@@ -84,13 +84,8 @@ const Products = (): JSX.Element => {
             </tr>
           </tbody>
         </table>
-        <div className="alert alert-warning text-center" role="alert"></div>
         <div className="col-12 pr-0">
-          {/* <Pagination
-            itemsCountPerPage={10}
-            totalItemsCount={450}
-            pageRangeDisplayed={5}
-          /> */}
+          <Pagination />
         </div>
       </div>
     </>
