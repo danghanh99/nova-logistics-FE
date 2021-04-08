@@ -6,7 +6,7 @@ import './Customers.css';
 const Suppliers = (): JSX.Element => {
   const nameCol = ['ID', 'Phone Number', 'Address', 'Date', 'Action'];
 
-  const headers = (): any => {
+  const headers = (): JSX.Element => {
     return (
       <tr>
         <th style={{ width: '50px', textAlign: 'right' }}>ID</th>
