@@ -3,7 +3,34 @@ import Table from '../../components/Table/Table';
 import data from './CustomersData';
 import { freeSet } from '@coreui/icons';
 import './Customers.css';
-const Suppliers = (): JSX.Element => {
+import ICustomer from '../../models/Customer';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { plainToClass } from 'class-transformer';
+import { getCustomers } from './CustomersSlice';
+import CutomersService from '../../services/CutomersService';
+export interface IState {
+  customers: ICustomer[];
+}
+
+const Customers = (): JSX.Element => {
+  const listCustomers = plainToClass(
+    ICustomer,
+    useSelector((state: IState) => state.customers)
+  );
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    CutomersService.getCustomers()
+      .then((res) => {
+        dispatch(getCustomers(res.data));
+      })
+      .catch((error) => {
+        throw error;
+      });
+  }, []);
+
   const headers = (): JSX.Element => {
     return (
       <tr>
@@ -19,20 +46,20 @@ const Suppliers = (): JSX.Element => {
   const children = (): React.ReactNode => {
     return (
       <>
-        {data.map((value) => {
+        {listCustomers.map((value) => {
           return (
             <tr>
-              <td className="text-right">{value.ID}</td>
-              <td className="text-right">{value.Name}</td>
-              <td className="text-right">{value.PhoneNumber}</td>
-              <td className="text-left">{value.Address}</td>
+              <td className="text-right">{value.id}</td>
+              <td className="text-right">{value.name}</td>
+              <td className="text-right">{value.phone}</td>
+              <td className="text-left">{value.address}</td>
               <td>
                 <div className="d-flex justify-content-center">
-                  <button className="btn btn-outline-primary mr-2 d-flex align-items-center btn-warning">
+                  <button className="btn mr-2 d-flex align-items-center btn-warning">
                     <CIcon content={freeSet.cilColorBorder}></CIcon>
                   </button>
-                  <button className="btn btn-outline-primary mr-2 d-flex align-items-center btn-danger">
-                    <CIcon content={freeSet.cilDelete}></CIcon>
+                  <button className="btn mr-2 d-flex align-items-center btn-danger">
+                    <CIcon content={freeSet.cilTrash}></CIcon>
                   </button>
                 </div>
               </td>
@@ -48,10 +75,10 @@ const Suppliers = (): JSX.Element => {
       <Table
         headers={headers()}
         modelName="Customer"
-        children={children}
+        children={children()}
       ></Table>
     </>
   );
 };
 
-export default Suppliers;
+export default Customers;
