@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import LoginFrom from '../components/Login/Login';
+import LoginForm from '../components/LoginForm/LoginForm';
 import {
   CButton,
   CCard,
@@ -19,7 +19,7 @@ const Login = () => {
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
-                  <LoginFrom />
+                  <LoginForm />
                 </CCardBody>
               </CCard>
               <CCard

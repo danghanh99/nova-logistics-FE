@@ -4,9 +4,7 @@ import data from './SuppliersData';
 import { freeSet } from '@coreui/icons';
 import './Suppliers.css';
 const Suppliers = (): JSX.Element => {
-  const nameCol = ['ID', 'Phone Number', 'Address', 'Date', 'Action'];
-
-  const headers = (): any => {
+  const headers = (): JSX.Element => {
     return (
       <tr>
         <th style={{ width: '50px', textAlign: 'right' }}>ID</th>
@@ -18,10 +16,10 @@ const Suppliers = (): JSX.Element => {
     );
   };
 
-  return (
-    <>
-      <Table headers={headers()} modelName="Supplier">
-        {data.map((value, index) => {
+  const children = (): React.ReactNode => {
+    return (
+      <>
+        {data.map((value) => {
           return (
             <tr>
               <td className="text-right">{value.ID}</td>
@@ -41,7 +39,17 @@ const Suppliers = (): JSX.Element => {
             </tr>
           );
         })}
-      </Table>
+      </>
+    );
+  };
+
+  return (
+    <>
+      <Table
+        headers={headers()}
+        modelName="Supplier"
+        children={children}
+      ></Table>
     </>
   );
 };
