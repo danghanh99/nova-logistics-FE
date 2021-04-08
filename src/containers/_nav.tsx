@@ -5,15 +5,7 @@ import { freeSet } from '@coreui/icons';
 const _nav = [
   {
     _tag: 'CSidebarNavItem',
-    name: 'Supplier',
-    to: '/suppliers',
-    icon: (
-      <CIcon content={freeSet.cilGroup} customClasses="c-sidebar-nav-icon" />
-    ),
-  },
-  {
-    _tag: 'CSidebarNavItem',
-    name: 'Import',
+    name: 'Imports',
     to: '/imports',
     icon: <BiImport className="c-sidebar-nav-icon" />,
   },
@@ -28,6 +20,22 @@ const _nav = [
     name: 'Products',
     to: '/products',
     icon: <FaBox className="c-sidebar-nav-icon" />,
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Suppliers',
+    to: '/suppliers',
+    icon: (
+      <CIcon content={freeSet.cilGroup} customClasses="c-sidebar-nav-icon" />
+    ),
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Customers',
+    to: '/customers',
+    icon: (
+      <CIcon content={freeSet.cilUser} customClasses="c-sidebar-nav-icon" />
+    ),
   },
 ];
 

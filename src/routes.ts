@@ -2,7 +2,8 @@ import { Exports } from './pages/Exports';
 import { Imports } from './pages/Imports';
 import Products from './pages/Products/Products';
 import { IRoute } from './types/RouteType';
-import Supplier from './pages/Supplier/Supplier';
+import Suppliers from './pages/Suppliers/Suppliers';
+import Customers from './pages/Customers/Customers';
 const routes: IRoute[] = [
   {
     path: '/imports',
@@ -24,8 +25,14 @@ const routes: IRoute[] = [
   },
   {
     path: '/suppliers',
-    name: 'Supplier',
-    component: Supplier,
+    name: 'Suppliers',
+    component: Suppliers,
+    exact: undefined,
+  },
+  {
+    path: '/customers',
+    name: 'Customers',
+    component: Customers,
     exact: undefined,
   },
 ];

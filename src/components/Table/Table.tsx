@@ -4,15 +4,13 @@ import Pagination from '../../components/Pagination/Pagination';
 import IProduct from '../../types/ProductType';
 import ISupplier from '../../types/SupplierType';
 interface IProps {
-  colTable: string[];
-  data: IProduct[];
   modelName: string;
   children: any;
   headers: any;
 }
 
 const Table = (props: IProps) => {
-  const { colTable, data, modelName, children, headers } = props;
+  const { modelName, children, headers } = props;
 
   return (
     <>

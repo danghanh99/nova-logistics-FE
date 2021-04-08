@@ -1,5 +1,5 @@
 import Table from '../../components/Table/Table';
-import data from '../Supplier/SuppliersData';
+import data from '../Suppliers/SuppliersData';
 const Products = (): JSX.Element => {
   const nameCol = ['ID', 'Phone Number', 'Address', 'Date', 'Action'];
   return (
