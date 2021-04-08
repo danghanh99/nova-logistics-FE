@@ -1,12 +1,10 @@
 import { CIcon } from '@coreui/icons-react';
 import { freeSet } from '@coreui/icons';
 import Pagination from '../../components/Pagination/Pagination';
-import IProduct from '../../types/ProductType';
-import ISupplier from '../../types/SupplierType';
 interface IProps {
   modelName: string;
-  children: any;
-  headers: any;
+  children: React.ReactNode;
+  headers: JSX.Element;
 }
 
 const Table = (props: IProps) => {
