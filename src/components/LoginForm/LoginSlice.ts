@@ -1,7 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+const user = localStorage.getItem('user');
+const initialState = user ? true : false;
+
 const todo = createSlice({
   name: 'auth',
-  initialState: false,
+  initialState: initialState,
   reducers: {
     isLoggedIn: (state, { payload }: PayloadAction<boolean>) => {
       return (state = payload);

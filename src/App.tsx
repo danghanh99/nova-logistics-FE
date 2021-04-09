@@ -5,15 +5,15 @@ import TheLayout from './containers/TheLayout';
 import { useSelector } from 'react-redux';
 import AuthService from './services/AuthService';
 type State = {
-  isLogin: boolean;
+  isLoggedIn: boolean;
 };
 
 function App() {
-  const isLoggedIn = useSelector((state: State) => state.isLogin);
+  const isLoggedIn = useSelector((state: State) => state.isLoggedIn);
 
   return (
     <Router>
-      {!isLoggedIn || !AuthService.isExpired() ? (
+      {!isLoggedIn || AuthService.isExpired() === false ? (
         <Redirect to="/login" />
       ) : (
         <Redirect to="/admin/exports" />
