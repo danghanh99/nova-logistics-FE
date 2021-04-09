@@ -15,7 +15,6 @@ const routes: IRoute[] = [
     path: '/admin/exports',
     name: 'Exports',
     component: Exports,
-    exact: undefined,
   },
   {
     path: '/admin/products',

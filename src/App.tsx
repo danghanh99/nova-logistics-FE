@@ -19,7 +19,7 @@ function App() {
         <Redirect to="/admin/exports" />
       )}
       <Route path="/login" component={Login} />
-      <Route path={['/admin']} component={TheLayout} />
+      <Route path="/admin" component={TheLayout} />
     </Router>
   );
 }

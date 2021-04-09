@@ -1,9 +1,8 @@
-import React from 'react';
 import './Pagination.scss';
 
 const Pagination = (): JSX.Element => {
   return (
-    <React.Fragment>
+    <>
       <nav aria-label="Page navigation example">
         <ul className="pagination justify-content-center">
           <li className="page-item disabled">
@@ -23,7 +22,7 @@ const Pagination = (): JSX.Element => {
           </li>
         </ul>
       </nav>
-    </React.Fragment>
+    </>
   );
 };
 
