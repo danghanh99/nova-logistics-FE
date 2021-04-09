@@ -1,5 +1,5 @@
 import { TheContent, TheSidebar, TheFooter, TheHeader } from './index';
-
+import { Redirect } from 'react-router-dom';
 const TheLayout = () => {
   return (
     <>
@@ -13,6 +13,7 @@ const TheLayout = () => {
           <TheFooter />
         </div>
       </div>
+      <Redirect from="/" to="/admin/exports" />
     </>
   );
 };

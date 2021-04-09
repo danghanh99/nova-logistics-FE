@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import LoginFrom from '../components/Login/Login';
+import LoginFrom from '../components/Login/LoginForm';
 import {
   CButton,
   CCard,

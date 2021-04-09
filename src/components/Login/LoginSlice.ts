@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 const todo = createSlice({
-  name: 'sidebar',
-  initialState: true,
+  name: 'auth',
+  initialState: false,
   reducers: {
-    sidebarStatus: (state, { payload }: PayloadAction<boolean>) => {
+    isLoggedIn: (state, { payload }: PayloadAction<boolean>) => {
       return (state = payload);
     },
   },
 });
 
 const { reducer, actions } = todo;
-export const { sidebarStatus } = actions;
+export const { isLoggedIn } = actions;
 
 export default reducer;

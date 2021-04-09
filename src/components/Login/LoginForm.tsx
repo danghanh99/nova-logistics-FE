@@ -35,8 +35,7 @@ const LoginForm = (): JSX.Element => {
     try {
       AuthService.Login(data.username, data.password).then(
         () => {
-          history.push('/exports');
-          window.location.reload();
+          history.push('/admin/exports');
         },
         (error) => {
           const resMessage =
@@ -49,7 +48,7 @@ const LoginForm = (): JSX.Element => {
           setMessage(resMessage);
         }
       );
-      dispatch({ data });
+      dispatch(true);
     } catch (error) {
       return error;
     }
