@@ -6,31 +6,30 @@ import Suppliers from './pages/Suppliers/Suppliers';
 import Customers from './pages/Customers/Customers';
 const routes: IRoute[] = [
   {
-    path: '/imports',
+    path: '/admin/imports',
     name: 'Imports',
     component: Imports,
     exact: undefined,
   },
   {
-    path: '/exports',
+    path: '/admin/exports',
     name: 'Exports',
     component: Exports,
-    exact: undefined,
   },
   {
-    path: '/products',
+    path: '/admin/products',
     name: 'Products',
     component: Products,
     exact: undefined,
   },
   {
-    path: '/suppliers',
+    path: '/admin/suppliers',
     name: 'Suppliers',
     component: Suppliers,
     exact: undefined,
   },
   {
-    path: '/customers',
+    path: '/admin/customers',
     name: 'Customers',
     component: Customers,
     exact: undefined,
