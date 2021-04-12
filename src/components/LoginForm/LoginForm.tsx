@@ -15,7 +15,7 @@ import { useDispatch } from 'react-redux';
 import AuthService from '../../services/AuthService';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import Exports from '../../pages/Exports';
+import Exports from '../../pages/Exports/Exports';
 import { Redirect } from 'react-router-dom';
 import React, { Component, Fragment } from 'react';
 interface IFormInputs {

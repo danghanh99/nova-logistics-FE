@@ -48,7 +48,7 @@ const Customers = (): JSX.Element => {
         {listCustomers.map((value, index) => {
           return (
             <tr key={index}>
-              <td className="text-right">{value.id}</td>
+              <td className="text-right">{index + 1}</td>
               <td className="text-right">{value.name}</td>
               <td className="text-right">{value.phone_number}</td>
               <td className="text-left">{value.address}</td>

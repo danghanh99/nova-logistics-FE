@@ -1,31 +1,38 @@
 import CIcon from '@coreui/icons-react';
 import Table from '../../components/Table/Table';
+import data from './../Suppliers/SuppliersData';
 import { freeSet } from '@coreui/icons';
-import './Suppliers.css';
-import ISupplier from '../../models/Supplier';
+import Export from '../../models/Export';
+import { plainToClass } from 'class-transformer';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import SuppliersService from '../../services/SuppliersService';
-import { getSuppliers } from './SuppliersSlice';
-import { plainToClass } from 'class-transformer';
-import { useHistory } from 'react-router-dom';
+import ExportsService from '../../services/ExportsService';
+import { getExports } from './ExportsSlice';
 export interface IState {
-  suppliers: ISupplier[];
+  exports: Export[];
 }
 
-const Suppliers = (): JSX.Element => {
-  const history = useHistory();
-  const listSuppliers = plainToClass(
-    ISupplier,
-    useSelector((state: IState) => state.suppliers)
+const Exports = (): JSX.Element => {
+  const listExports = plainToClass(
+    Export,
+    useSelector((state: IState) => state.exports)
   );
+
+  const nameCol = [
+    'Product',
+    'Customer',
+    'Quantity ',
+    'Price',
+    'Export Date',
+    'Description',
+  ];
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    SuppliersService.getSuppliers()
+    ExportsService.getExports()
       .then((res) => {
-        dispatch(getSuppliers(res.data));
+        dispatch(getExports(res.data));
       })
       .catch((error) => {
         throw error;
@@ -34,33 +41,35 @@ const Suppliers = (): JSX.Element => {
 
   const headers = (): JSX.Element => {
     return (
-      <tr>
+      <>
         <th style={{ width: '50px', textAlign: 'right' }}>ID</th>
-        <th>Name</th>
-        <th>Phone Number</th>
-        <th>Address</th>
-        <th>Description</th>
+        {nameCol.map((value, index) => {
+          return (
+            <th key={index} className="text-center" scope="col">
+              {value}
+            </th>
+          );
+        })}
         <th style={{ width: '200px' }}>Action</th>
-      </tr>
+      </>
     );
   };
 
   const children = (): React.ReactNode => {
     return (
       <>
-        {listSuppliers.map((value, index) => {
+        {listExports.map((value, index) => {
           return (
             <tr key={index}>
               <td className="text-right">{index + 1}</td>
-              <td className="text-left">{value.name}</td>
-              <td className="text-right">{value.phone}</td>
-              <td className="text-left">{value.address}</td>
+              <td className="text-left">{value.imports[0].product.name}</td>
+              <td className="text-left">{value.customer.name}</td>
+              <td className="text-right">{value.quantity}</td>
+              <td className="text-right">{value.sell_price}</td>
+              <td className="text-right">{value.exported_date}</td>
               <td className="text-left">{value.description}</td>
               <td>
                 <div className="d-flex justify-content-center">
-                  <button className="btn mr-2 d-flex align-items-center btn-warning">
-                    <CIcon content={freeSet.cilColorBorder}></CIcon>
-                  </button>
                   <button className="btn mr-2 d-flex align-items-center btn-danger">
                     <CIcon content={freeSet.cilTrash}></CIcon>
                   </button>
@@ -77,11 +86,11 @@ const Suppliers = (): JSX.Element => {
     <>
       <Table
         headers={headers()}
-        modelName="Supplier"
+        modelName="Export"
         children={children()}
       ></Table>
     </>
   );
 };
 
-export default Suppliers;
+export default Exports;

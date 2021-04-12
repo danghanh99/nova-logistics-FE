@@ -33,7 +33,7 @@ const Products = (): JSX.Element => {
         {data.map((value, index) => {
           return (
             <tr key={index}>
-              <td>{value.ID}</td>
+              <td>{index + 1}</td>
               <td>{value.PhoneNumber}</td>
               <td className="text-center">{value.Address}</td>
               <td>{value.Date}</td>
