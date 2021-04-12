@@ -9,18 +9,19 @@ const routes: IRoute[] = [
     path: '/admin/imports',
     name: 'Imports',
     component: Imports,
-    exact: undefined,
+    exact: true,
   },
   {
     path: '/admin/exports',
     name: 'Exports',
     component: Exports,
+    exact: true,
   },
   {
     path: '/admin/products',
     name: 'Products',
     component: Products,
-    exact: undefined,
+    exact: true,
   },
   {
     path: '/admin/suppliers',
@@ -32,7 +33,7 @@ const routes: IRoute[] = [
     path: '/admin/customers',
     name: 'Customers',
     component: Customers,
-    exact: undefined,
+    exact: true,
   },
 ];
 

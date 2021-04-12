@@ -55,7 +55,6 @@ const Exports = (): JSX.Element => {
 
   return (
     <>
-      {console.log('ok')}
       <Table headers={headers()} modelName="Export" children={children}></Table>
     </>
   );

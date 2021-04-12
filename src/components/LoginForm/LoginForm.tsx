@@ -2,7 +2,6 @@ import {
   CButton,
   CCol,
   CForm,
-  CInput,
   CInputGroup,
   CInputGroupPrepend,
   CInputGroupText,
@@ -15,9 +14,6 @@ import { useDispatch } from 'react-redux';
 import AuthService from '../../services/AuthService';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import Exports from '../../pages/Exports';
-import { Redirect } from 'react-router-dom';
-import React, { Component, Fragment } from 'react';
 interface IFormInputs {
   username: string;
   password: string;
