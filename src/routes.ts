@@ -1,5 +1,5 @@
-import Exports from './pages/Exports';
-import Imports from './pages/Imports';
+import Exports from './pages/Exports/Exports';
+import Imports from './pages/Imports/Imports';
 import Products from './pages/Products/Products';
 import { IRoute } from './types/RouteType';
 import Suppliers from './pages/Suppliers/Suppliers';
