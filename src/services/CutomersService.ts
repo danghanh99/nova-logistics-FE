@@ -13,8 +13,7 @@ const getCustomers = (): Promise<IState> => {
     .get(API_URL + 'customers', {
       headers: {
         Authorization:
-          'Bearer ' +
-          'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2MTgyNzgxMjN9.ljaF3Q1VEGUlKLOT5vClCDMY-2n2jhqfmZNKLa6t1QU',
+          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2MTgyNzk5Mjl9.P21YivjTmn1Chyi-tvJexIuDN45yiyXEBVMgc0Q--zY',
       },
     })
     .then((response) => {

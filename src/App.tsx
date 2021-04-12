@@ -11,14 +11,20 @@ type State = {
 function App() {
   const isLoggedIn = useSelector((state: State) => state.isLoggedIn);
 
+  const redirect = () => {
+    if (!isLoggedIn || !AuthService.isExpired()) {
+      return <Redirect to="/" />;
+    }
+  };
+
   return (
     <Router>
-      {!isLoggedIn || AuthService.isExpired() === false ? (
-        <Redirect to="/login" />
-      ) : (
-        <Redirect to="/admin/exports" />
-      )}
-      <Route path="/login" component={Login} />
+      {redirect()}
+      <Route
+        path="/"
+        component={!isLoggedIn || !AuthService.isExpired() ? Login : TheLayout}
+        exact
+      />
       <Route path="/admin" component={TheLayout} />
     </Router>
   );

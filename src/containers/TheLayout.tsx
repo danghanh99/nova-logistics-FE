@@ -1,4 +1,3 @@
-import { Redirect } from 'react-router-dom';
 import { TheContent, TheSidebar, TheFooter, TheHeader } from './index';
 const TheLayout = () => {
   return (
@@ -13,7 +12,6 @@ const TheLayout = () => {
           <TheFooter />
         </div>
       </div>
-      <Redirect from="/" to="/admin/exports" />
     </>
   );
 };
