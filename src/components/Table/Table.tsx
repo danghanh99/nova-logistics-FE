@@ -2,6 +2,10 @@ import { CIcon } from '@coreui/icons-react';
 import { freeSet } from '@coreui/icons';
 import Pagination from '../../components/Pagination/Pagination';
 import { render } from '@testing-library/react';
+import { getSuppliers } from '../../pages/Suppliers/SuppliersSlice';
+import { useDispatch } from 'react-redux';
+import { enableShowForm } from '../../pages/Suppliers/showNewFormSlice';
+import { Link, Redirect } from 'react-router-dom';
 interface IProps {
   modelName: string;
   children: React.ReactNode;
@@ -10,9 +14,9 @@ interface IProps {
 
 const Table = (props: IProps) => {
   const { modelName, children, headers } = props;
-
+  const dispatch = useDispatch();
   const handleClickNewIteam = () => {
-    console.log('ok11111111');
+    <Redirect to="/imports/new" />;
   };
   return (
     <>

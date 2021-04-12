@@ -8,18 +8,17 @@ import { useEffect } from 'react';
 import SuppliersService from '../../services/SuppliersService';
 import { getSuppliers } from './SuppliersSlice';
 import { plainToClass } from 'class-transformer';
-import { useHistory } from 'react-router-dom';
 export interface IState {
   suppliers: ISupplier[];
+  newSupplier: boolean;
 }
 
 const Suppliers = (): JSX.Element => {
-  const history = useHistory();
   const listSuppliers = plainToClass(
     ISupplier,
     useSelector((state: IState) => state.suppliers)
   );
-
+  const showForm = useSelector((state: IState) => state.newSupplier);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -75,6 +74,19 @@ const Suppliers = (): JSX.Element => {
 
   return (
     <>
+      {showForm && (
+        <form>
+          <label htmlFor="fname">First name:</label>
+          <br />
+          <input type="text" id="fname" name="fname" />
+          <br />
+          <label htmlFor="lname">Last name:</label>
+          <br />
+          <input type="text" id="lname" name="lname" />
+          <button className="btn-success">Submit</button>
+          <button className="btn-warning">Cancel</button>
+        </form>
+      )}
       <Table
         headers={headers()}
         modelName="Supplier"
