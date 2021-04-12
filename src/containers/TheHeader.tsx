@@ -14,6 +14,7 @@ import CIcon from '@coreui/icons-react';
 import routes from '../routes';
 import { sidebarStatus } from './SidebarSlice';
 import { ISidebar } from '../types/SidebarType';
+import { TheHeaderDropdown } from './index';
 
 const TheHeader = () => {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ const TheHeader = () => {
         className="ml-3 d-md-down-none"
         onClick={toggleSidebar}
       />
-      <CHeaderBrand className="mx-auto d-lg-none" to="/">
+      <CHeaderBrand className="mx-auto d-lg-none">
         <CIcon name="logo" height="48" alt="Logo" />
       </CHeaderBrand>
 
@@ -46,7 +47,7 @@ const TheHeader = () => {
           <CHeaderNavLink to="/dashboard">English</CHeaderNavLink>
         </CHeaderNavItem>
         <CHeaderNavItem className="px-3">
-          <CHeaderNavLink to="/dashboard">Logout</CHeaderNavLink>
+          <TheHeaderDropdown />
         </CHeaderNavItem>
       </CHeaderNav>
 

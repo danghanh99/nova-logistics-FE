@@ -19,6 +19,11 @@ const Login = async (email: string, password: string) => {
   return response;
 };
 
+const logout = () => {
+  localStorage.removeItem('token');
+  localStorage.removeItem('user');
+};
+
 const isExpired = (): boolean => {
   const token = localStorage.getItem('token') || '';
   const decodedToken: Token = jwt_decode(token);
@@ -26,7 +31,7 @@ const isExpired = (): boolean => {
   return decodedToken.exp * 1000 < currentDate.getTime() ? false : true;
 };
 
-const setAuthToken = (): void => {
+export const setAuthToken = (): void => {
   const token = localStorage.getItem('token') || '';
   axios.defaults.headers.common[`Authorization`] = `${token}`;
 };
@@ -34,4 +39,5 @@ const setAuthToken = (): void => {
 export default {
   Login,
   isExpired,
+  logout,
 };
