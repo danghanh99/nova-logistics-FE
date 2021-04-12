@@ -9,16 +9,9 @@ interface IState {
   meta: Hash;
 }
 const getCustomers = (): Promise<IState> => {
-  return axios
-    .get(API_URL + 'customers', {
-      headers: {
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2MTgyNzk5Mjl9.P21YivjTmn1Chyi-tvJexIuDN45yiyXEBVMgc0Q--zY',
-      },
-    })
-    .then((response) => {
-      return response.data;
-    });
+  return axios.get(API_URL + 'customers').then((response) => {
+    return response.data;
+  });
 };
 
 // const addTodo = (title: string, done: boolean): Promise<ITodo> => {
