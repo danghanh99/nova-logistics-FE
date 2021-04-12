@@ -25,10 +25,7 @@ function App() {
         component={!isLoggedIn || !AuthService.isExpired() ? Login : TheLayout}
         exact
       />
-      <Route
-        path="/admin"
-        component={!isLoggedIn || !AuthService.isExpired() ? Login : TheLayout}
-      />
+      <Route path="/admin" component={TheLayout} />
     </Router>
   );
 }
