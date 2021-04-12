@@ -1,6 +1,7 @@
 import { CIcon } from '@coreui/icons-react';
 import { freeSet } from '@coreui/icons';
 import Pagination from '../../components/Pagination/Pagination';
+import { render } from '@testing-library/react';
 interface IProps {
   modelName: string;
   children: React.ReactNode;
@@ -10,6 +11,9 @@ interface IProps {
 const Table = (props: IProps) => {
   const { modelName, children, headers } = props;
 
+  const handleClickNewIteam = () => {
+    console.log('ok11111111');
+  };
   return (
     <>
       <div className="row mb-4">
@@ -44,7 +48,11 @@ const Table = (props: IProps) => {
           </div>
         </div>
         <div className="col-4 text-right">
-          <button type="button" className="btn btn-info">
+          <button
+            onClick={() => handleClickNewIteam()}
+            type="button"
+            className="btn btn-info"
+          >
             <CIcon
               content={freeSet.cilPlaylistAdd}
               className="btn-icon mr-2"
