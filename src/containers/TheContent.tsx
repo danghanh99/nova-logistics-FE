@@ -24,7 +24,7 @@ const TheContent = () => {
                     key={idx}
                     path={route.path}
                     exact={route.exact}
-                    component={route.component}
+                    children={<route.component />}
                   />
                 )
               );

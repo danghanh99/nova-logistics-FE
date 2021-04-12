@@ -14,7 +14,7 @@ const getCustomers = (): Promise<IState> => {
       headers: {
         Authorization:
           'Bearer ' +
-          'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2MTc5MzY1NjF9.foCejeD_STbnDZ4hKf2_GzTqicMz6tb_WwoSA33AG60',
+          'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2MTgyNzgxMjN9.ljaF3Q1VEGUlKLOT5vClCDMY-2n2jhqfmZNKLa6t1QU',
       },
     })
     .then((response) => {

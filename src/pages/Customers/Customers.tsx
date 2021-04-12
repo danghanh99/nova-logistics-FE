@@ -1,21 +1,20 @@
 import CIcon from '@coreui/icons-react';
 import Table from '../../components/Table/Table';
-import data from './CustomersData';
 import { freeSet } from '@coreui/icons';
 import './Customers.css';
-import ICustomer from '../../models/Customer';
+import Customer from '../../models/Customer';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { plainToClass } from 'class-transformer';
 import { getCustomers } from './CustomersSlice';
 import CutomersService from '../../services/CutomersService';
 export interface IState {
-  customers: ICustomer[];
+  customers: Customer[];
 }
 
 const Customers = (): JSX.Element => {
   const listCustomers = plainToClass(
-    ICustomer,
+    Customer,
     useSelector((state: IState) => state.customers)
   );
 
@@ -46,12 +45,12 @@ const Customers = (): JSX.Element => {
   const children = (): React.ReactNode => {
     return (
       <>
-        {listCustomers.map((value) => {
+        {listCustomers.map((value, index) => {
           return (
-            <tr>
+            <tr key={index}>
               <td className="text-right">{value.id}</td>
               <td className="text-right">{value.name}</td>
-              <td className="text-right">{value.phone}</td>
+              <td className="text-right">{value.phone_number}</td>
               <td className="text-left">{value.address}</td>
               <td>
                 <div className="d-flex justify-content-center">

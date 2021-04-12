@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import ImportsService from '../../services/ImportsService';
 import { getImports } from './ImportsSlice';
 import { plainToClass } from 'class-transformer';
+import { BiImport, BiExport } from 'react-icons/bi';
 
 export interface IState {
   imports: Import[];
@@ -38,8 +39,8 @@ const Imports = (): JSX.Element => {
         <th>Supplier</th>
         <th>Quantity</th>
         <th>Price</th>
-        <th>Date</th>
-        <th>Note</th>
+        <th>Import Date</th>
+        <th>Description</th>
         <th style={{ width: '200px' }}>Action</th>
       </tr>
     );
@@ -51,18 +52,23 @@ const Imports = (): JSX.Element => {
         {listImports.map((value, index) => {
           return (
             <tr key={index}>
-              {console.log(value)}
               <td className="text-right">{value.id}</td>
               <td className="text-left">{value.product.name}</td>
               <td className="text-left">{value.supplier.name}</td>
               <td className="text-right">{value.quantity}</td>
-              <td className="text-right">{value.price}</td>
-              <td className="text-right">{value.date}</td>
-              <td className="text-left">{value.note}</td>
+              <td className="text-right">{value.retail_price}</td>
+              <td className="text-right">{value.imported_date}</td>
+              <td className="text-left">{value.description}</td>
               <td>
                 <div className="d-flex justify-content-center">
-                  <button className="btn btn-outline-primary mr-2 d-flex align-items-center">
-                    <CIcon content={freeSet.cilBrush}></CIcon>
+                  <button className="btn mr-2 d-flex align-items-center btn-success">
+                    <BiExport className="c-icon" />
+                  </button>
+                  <button className="btn mr-2 d-flex align-items-center btn-warning">
+                    <CIcon content={freeSet.cilColorBorder}></CIcon>
+                  </button>
+                  <button className="btn mr-2 d-flex align-items-center btn-danger">
+                    <CIcon content={freeSet.cilTrash}></CIcon>
                   </button>
                 </div>
               </td>

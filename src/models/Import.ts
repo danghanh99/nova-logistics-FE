@@ -5,9 +5,9 @@ class Import {
   product!: Product;
   supplier!: Supplier;
   quantity!: number;
-  price!: number;
-  date!: Date;
-  note!: string;
+  retail_price!: number;
+  imported_date!: Date;
+  description!: string;
 }
 
 export default Import;

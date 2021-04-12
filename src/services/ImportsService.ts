@@ -9,9 +9,17 @@ interface IState {
   meta: Hash;
 }
 const getImports = (): Promise<IState> => {
-  return axios.get(API_URL + 'imports').then((response) => {
-    return response.data;
-  });
+  return axios
+    .get(API_URL + 'imports', {
+      headers: {
+        Authorization:
+          'Bearer ' +
+          'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2MTgyNzgxMjN9.ljaF3Q1VEGUlKLOT5vClCDMY-2n2jhqfmZNKLa6t1QU',
+      },
+    })
+    .then((response) => {
+      return response.data;
+    });
 };
 
 const ImportsService = { getImports };

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 const todo = createSlice({
-  name: 'todos',
+  name: 'sidebar',
   initialState: true,
   reducers: {
     sidebarStatus: (state, { payload }: PayloadAction<boolean>) => {

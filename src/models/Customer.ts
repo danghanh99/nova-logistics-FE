@@ -1,6 +1,6 @@
 class Customer {
   id!: number;
-  phone!: string;
+  phone_number!: string;
   name!: string;
   address!: string;
 

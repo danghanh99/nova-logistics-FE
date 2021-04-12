@@ -8,11 +8,13 @@ import { useEffect } from 'react';
 import SuppliersService from '../../services/SuppliersService';
 import { getSuppliers } from './SuppliersSlice';
 import { plainToClass } from 'class-transformer';
+import { useHistory } from 'react-router-dom';
 export interface IState {
   suppliers: ISupplier[];
 }
 
 const Suppliers = (): JSX.Element => {
+  const history = useHistory();
   const listSuppliers = plainToClass(
     ISupplier,
     useSelector((state: IState) => state.suppliers)
