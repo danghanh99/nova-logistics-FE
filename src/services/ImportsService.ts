@@ -22,5 +22,13 @@ const getImports = (
     });
 };
 
-const ImportsService = { getImports };
+const deleteImport = (id: number) => {
+  const response = axios.delete(`${API_URL}imports/${id}`);
+  response.then((res) => {
+    if (res.data) return res.data;
+  });
+  return response;
+};
+
+const ImportsService = { getImports, deleteImport };
 export default ImportsService;

@@ -5,12 +5,13 @@ import Import from '../../models/Import';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect } from 'react';
 import ImportsService from '../../services/ImportsService';
-import { getImports } from './ImportsSlice';
+import { getImports, deleteImport } from './ImportsSlice';
 import { plainToClass } from 'class-transformer';
 import { BiExport } from 'react-icons/bi';
 import Pagination from '../../components/Pagination/Pagination';
 import { useState } from 'react';
 import IMeta from '../../types/MetaType';
+import { useHistory } from 'react-router-dom';
 export interface IState {
   imports: {
     data: Import[];
@@ -29,7 +30,9 @@ const Imports = (): JSX.Element => {
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const [search, setSearch] = useState('');
-
+  const history = useHistory();
+  const [message, setMessage] = useState('');
+  const [success, setSuccess] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -74,13 +77,37 @@ const Imports = (): JSX.Element => {
     );
   };
 
+  const onHandleEdit = (id: number) => {
+    history.push(`/admin/imports/edit/${id}`);
+  };
+
+  const onHandleDelete = (id: number) => {
+    ImportsService.deleteImport(id).then(
+      () => {
+        setSuccess(true);
+        setMessage('Delete Import Success');
+        dispatch(deleteImport(id));
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        setMessage(resMessage);
+        setSuccess(false);
+      }
+    );
+  };
+
   const children = (): React.ReactNode => {
     return (
       <>
         {listImports.map((value, index) => {
           return (
             <tr key={index}>
-              <td className="text-right">{index + 1}</td>
+              <td className="text-right">{value.id}</td>
               <td className="text-left">{value.product.name}</td>
               <td className="text-left">{value.supplier.name}</td>
               <td className="text-right">{value.quantity}</td>
@@ -92,10 +119,16 @@ const Imports = (): JSX.Element => {
                   <button className="btn mr-2 d-flex align-items-center btn-success">
                     <BiExport className="c-icon" />
                   </button>
-                  <button className="btn mr-2 d-flex align-items-center btn-warning">
+                  <button
+                    className="btn mr-2 d-flex align-items-center btn-warning"
+                    onClick={() => onHandleEdit(value.id)}
+                  >
                     <CIcon content={freeSet.cilColorBorder}></CIcon>
                   </button>
-                  <button className="btn mr-2 d-flex align-items-center btn-danger">
+                  <button
+                    className="btn mr-2 d-flex align-items-center btn-danger"
+                    onClick={() => onHandleDelete(value.id)}
+                  >
                     <CIcon content={freeSet.cilTrash}></CIcon>
                   </button>
                 </div>
@@ -148,6 +181,11 @@ const Imports = (): JSX.Element => {
 
   return (
     <>
+      {message && (
+        <div className={`alert alert-${success ? 'success' : 'danger'}`}>
+          <strong>{message}</strong>
+        </div>
+      )}
       <Table
         headers={headers()}
         modelName="Import"
