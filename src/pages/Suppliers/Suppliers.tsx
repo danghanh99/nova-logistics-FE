@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import SuppliersService from '../../services/SuppliersService';
 import { getSuppliers } from './SuppliersSlice';
 import { plainToClass } from 'class-transformer';
+import Pagination from '../../components/Pagination/Pagination';
 export interface IState {
   suppliers: ISupplier[];
   newSupplier: boolean;
@@ -72,6 +73,10 @@ const Suppliers = (): JSX.Element => {
     );
   };
 
+  const pagination = () => {
+    return <>{/* <Pagination /> */}</>;
+  };
+
   return (
     <>
       {showForm && (
@@ -87,11 +92,12 @@ const Suppliers = (): JSX.Element => {
           <button className="btn-warning">Cancel</button>
         </form>
       )}
-      <Table
+      {/* <Table
         headers={headers()}
         modelName="Supplier"
         children={children()}
-      ></Table>
+        pagination={pagination()}
+      ></Table> */}
     </>
   );
 };

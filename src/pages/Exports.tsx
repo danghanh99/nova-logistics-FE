@@ -2,6 +2,7 @@ import CIcon from '@coreui/icons-react';
 import Table from '../components/Table/Table';
 import data from './Suppliers/SuppliersData';
 import { freeSet } from '@coreui/icons';
+import Pagination from '../components/Pagination/Pagination';
 
 const Exports = (): JSX.Element => {
   const nameCol = [
@@ -53,9 +54,18 @@ const Exports = (): JSX.Element => {
     );
   };
 
+  const pagination = () => {
+    return <>{/* <Pagination /> */}</>;
+  };
+
   return (
     <>
-      <Table headers={headers()} modelName="Export" children={children}></Table>
+      {/* <Table
+        headers={headers()}
+        modelName="Export"
+        children={children}
+        pagination={pagination()}
+      ></Table> */}
     </>
   );
 };

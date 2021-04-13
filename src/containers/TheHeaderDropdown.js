@@ -8,7 +8,6 @@ import CIcon from '@coreui/icons-react';
 import { freeSet } from '@coreui/icons';
 import { isLoggedIn } from '../components/LoginForm/LoginSlice';
 import AuthService from '../services/AuthService';
-import { useHistory } from 'react-router-dom';
 
 const TheHeaderDropdown = () => {
   const onLogout = () => {

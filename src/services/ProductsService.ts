@@ -9,17 +9,9 @@ interface IState {
   meta: Hash;
 }
 const getProducts = (): Promise<IState> => {
-  return axios
-    .get(API_URL + 'products', {
-      headers: {
-        Authorization:
-          'Bearer ' +
-          'eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2MTgyNzgxMjN9.ljaF3Q1VEGUlKLOT5vClCDMY-2n2jhqfmZNKLa6t1QU',
-      },
-    })
-    .then((response) => {
-      return response.data;
-    });
+  return axios.get(API_URL + 'products').then((response) => {
+    return response.data;
+  });
 };
 const ProductsService = { getProducts };
 export default ProductsService;
