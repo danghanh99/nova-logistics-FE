@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { plainToClass } from 'class-transformer';
 import { getCustomers } from './CustomersSlice';
 import CutomersService from '../../services/CutomersService';
+import Pagination from '../../components/Pagination/Pagination';
 export interface IState {
   customers: Customer[];
 }
@@ -69,13 +70,18 @@ const Customers = (): JSX.Element => {
     );
   };
 
+  const pagination = () => {
+    return <>{/* <Pagination /> */}</>;
+  };
+
   return (
     <>
-      <Table
+      {/* <Table
         headers={headers()}
         modelName="Customer"
         children={children()}
-      ></Table>
+        pagination={pagination()}
+      ></Table> */}
     </>
   );
 };

@@ -10,12 +10,14 @@ interface IProps {
   modelName: string;
   children: React.ReactNode;
   headers: JSX.Element;
+  pagination: JSX.Element;
+  select: JSX.Element;
+  search: JSX.Element;
 }
 
 const Table = (props: IProps) => {
-  const { modelName, children, headers } = props;
-  const dispatch = useDispatch();
   const history = useHistory();
+  const { modelName, children, headers, pagination, select, search } = props;
   const handleClickNewIteam = () => {
     history.push('/admin/imports/new');
   };
@@ -28,28 +30,14 @@ const Table = (props: IProps) => {
               <div className="input-group-text">
                 <CIcon content={freeSet.cilSearch}></CIcon>
               </div>
+              {search}
             </div>
-            <input
-              type="search"
-              className="form-control sticky-top"
-              placeholder="Search a name"
-            />
           </div>
         </div>
         <div className="col-4">
           <div className="form-group">
             <label className="d-inline-block mr-3 ml-2">Items per page</label>
-            <select
-              className="form-control d-inline-block"
-              style={{ width: 'auto' }}
-              id="perpage"
-            >
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="20">20</option>
-              <option value="50">50</option>
-              <option></option>
-            </select>
+            {select}
           </div>
         </div>
         <div className="col-4 text-right">
@@ -71,9 +59,7 @@ const Table = (props: IProps) => {
           <thead>{headers}</thead>
           <tbody>{children}</tbody>
         </table>
-        <div className="col-12 pr-0">
-          <Pagination />
-        </div>
+        <div className="col-12 pr-0">{pagination}</div>
       </div>
     </>
   );

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import ProductsService from '../../services/ProductsService';
 import { getProducts } from './ProductSlice';
+import Pagination from '../../components/Pagination/Pagination';
 
 export interface IState {
   products: Product[];
@@ -47,6 +48,10 @@ const Products = (): JSX.Element => {
     );
   };
 
+  const pagination = () => {
+    return <>{/* <Pagination /> */}</>;
+  };
+
   const children = (): React.ReactNode => {
     return (
       <>
@@ -74,11 +79,12 @@ const Products = (): JSX.Element => {
 
   return (
     <>
-      <Table
+      {/* <Table
         headers={headers()}
         modelName="Product"
         children={children()}
-      ></Table>
+        pagination={pagination()}
+      ></Table> */}
     </>
   );
 };

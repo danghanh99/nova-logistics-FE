@@ -4,7 +4,6 @@ import Login from './pages/Login';
 import TheLayout from './containers/TheLayout';
 import { useSelector } from 'react-redux';
 import AuthService from './services/AuthService';
-import { useEffect } from 'react';
 import { setAuthToken } from './services/AuthService';
 
 type State = {
@@ -20,14 +19,9 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    if (isLoggedIn) {
-      setAuthToken();
-    }
-  });
-
   return (
     <Router>
+      {isLoggedIn ? setAuthToken() : null}
       {redirect()}
       <Route
         path="/"

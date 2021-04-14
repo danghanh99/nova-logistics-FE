@@ -24,7 +24,7 @@ const LoginForm = (): JSX.Element => {
   const [message, setMessage] = useState('');
   const dispatch = useDispatch();
   const history = useHistory();
-  const { register, handleSubmit, reset } = useForm<IFormInputs>({
+  const { register, handleSubmit } = useForm<IFormInputs>({
     criteriaMode: 'all',
   });
   const onSubmit = (data: IFormInputs) => {

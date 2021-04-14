@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import ExportsService from '../../services/ExportsService';
 import { getExports } from './ExportsSlice';
+import Pagination from '../../components/Pagination/Pagination';
 export interface IState {
   exports: Export[];
 }
@@ -82,13 +83,18 @@ const Exports = (): JSX.Element => {
     );
   };
 
+  const pagination = () => {
+    return <>{/* <Pagination /> */}</>;
+  };
+
   return (
     <>
-      <Table
+      {/* <Table
         headers={headers()}
         modelName="Export"
         children={children()}
-      ></Table>
+        pagination={pagination()}
+      ></Table> */}
     </>
   );
 };

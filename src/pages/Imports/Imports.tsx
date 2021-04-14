@@ -3,33 +3,64 @@ import Table from '../../components/Table/Table';
 import { freeSet } from '@coreui/icons';
 import Import from '../../models/Import';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import ImportsService from '../../services/ImportsService';
-import { getImports } from './ImportsSlice';
+import { getImports, deleteImport } from './ImportsSlice';
 import { plainToClass } from 'class-transformer';
-import { BiImport, BiExport } from 'react-icons/bi';
-
+import { BiExport } from 'react-icons/bi';
+import Pagination from '../../components/Pagination/Pagination';
+import { useState } from 'react';
+import IMeta from '../../types/MetaType';
+import { useHistory } from 'react-router-dom';
 export interface IState {
-  imports: Import[];
+  imports: {
+    data: Import[];
+    meta: IMeta;
+  };
 }
 
 const Imports = (): JSX.Element => {
   const listImports = plainToClass(
     Import,
-    useSelector((state: IState) => state.imports)
+    useSelector((state: IState) => state.imports.data)
   );
 
+  const meta = useSelector((state: IState) => state.imports.meta);
+
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(10);
+  const [search, setSearch] = useState('');
+  const history = useHistory();
+  const [message, setMessage] = useState('');
+  const [success, setSuccess] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    ImportsService.getImports()
+    ImportsService.getImports(page, perPage, search)
       .then((res) => {
-        dispatch(getImports(res.data));
+        dispatch(getImports(res));
       })
       .catch((error) => {
         throw error;
       });
-  }, []);
+  }, [page, perPage, search]);
+
+  const onchangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+
+  const onSearch = (): JSX.Element => {
+    return (
+      <>
+        <input
+          type="search"
+          className="form-control sticky-top"
+          placeholder="Search a name"
+          onChange={onchangeSearch}
+        />
+      </>
+    );
+  };
 
   const headers = (): JSX.Element => {
     return (
@@ -46,13 +77,37 @@ const Imports = (): JSX.Element => {
     );
   };
 
+  const onHandleEdit = (id: number) => {
+    history.push(`/admin/imports/edit/${id}`);
+  };
+
+  const onHandleDelete = (id: number) => {
+    ImportsService.deleteImport(id).then(
+      () => {
+        setSuccess(true);
+        setMessage('Delete Import Success');
+        dispatch(deleteImport(id));
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        setMessage(resMessage);
+        setSuccess(false);
+      }
+    );
+  };
+
   const children = (): React.ReactNode => {
     return (
       <>
         {listImports.map((value, index) => {
           return (
             <tr key={index}>
-              <td className="text-right">{index + 1}</td>
+              <td className="text-right">{value.id}</td>
               <td className="text-left">{value.product.name}</td>
               <td className="text-left">{value.supplier.name}</td>
               <td className="text-right">{value.quantity}</td>
@@ -64,10 +119,16 @@ const Imports = (): JSX.Element => {
                   <button className="btn mr-2 d-flex align-items-center btn-success">
                     <BiExport className="c-icon" />
                   </button>
-                  <button className="btn mr-2 d-flex align-items-center btn-warning">
+                  <button
+                    className="btn mr-2 d-flex align-items-center btn-warning"
+                    onClick={() => onHandleEdit(value.id)}
+                  >
                     <CIcon content={freeSet.cilColorBorder}></CIcon>
                   </button>
-                  <button className="btn mr-2 d-flex align-items-center btn-danger">
+                  <button
+                    className="btn mr-2 d-flex align-items-center btn-danger"
+                    onClick={() => onHandleDelete(value.id)}
+                  >
                     <CIcon content={freeSet.cilTrash}></CIcon>
                   </button>
                 </div>
@@ -79,12 +140,59 @@ const Imports = (): JSX.Element => {
     );
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setPerPage(parseInt(e.target.value, undefined));
+  };
+
+  const select = () => {
+    return (
+      <>
+        <select
+          className="form-control d-inline-block"
+          style={{ width: 'auto' }}
+          id="perpage"
+          onChange={handleChange}
+          value={perPage}
+        >
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+          <option value="50">50</option>
+          <option value="-1">All</option>
+          <option></option>
+        </select>
+      </>
+    );
+  };
+
+  const hanleOnclick = (e: React.MouseEvent<HTMLElement>) => {
+    const numberPages = parseInt(e.currentTarget.textContent || '', undefined);
+
+    if (numberPages > 0) {
+      setPage(parseInt(e.currentTarget.textContent || '', undefined));
+    }
+    if (e.currentTarget.textContent === 'Next') {
+      if (meta.current_page < meta.total_pages) setPage(meta.current_page + 1);
+    }
+    if (e.currentTarget.textContent === 'Prev') {
+      if (meta.current_page > 1) setPage(meta.current_page - 1);
+    }
+  };
+
   return (
     <>
+      {message && (
+        <div className={`alert alert-${success ? 'success' : 'danger'}`}>
+          <strong>{message}</strong>
+        </div>
+      )}
       <Table
         headers={headers()}
         modelName="Import"
+        search={onSearch()}
         children={children()}
+        pagination={<Pagination meta={meta} hanleOnclick={hanleOnclick} />}
+        select={select()}
       ></Table>
     </>
   );
