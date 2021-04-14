@@ -5,7 +5,7 @@ import { render } from '@testing-library/react';
 import { getSuppliers } from '../../pages/Suppliers/SuppliersSlice';
 import { useDispatch } from 'react-redux';
 import { enableShowForm } from '../../pages/Suppliers/showNewFormSlice';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 interface IProps {
   modelName: string;
   children: React.ReactNode;
@@ -15,8 +15,9 @@ interface IProps {
 const Table = (props: IProps) => {
   const { modelName, children, headers } = props;
   const dispatch = useDispatch();
+  const history = useHistory();
   const handleClickNewIteam = () => {
-    <Redirect to="/imports/new" />;
+    history.push('/admin/imports/new');
   };
   return (
     <>
