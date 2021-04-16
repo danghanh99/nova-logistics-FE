@@ -7,7 +7,7 @@ type Token = {
 };
 
 const API_URL = 'https://nova-logistics-backend.herokuapp.com/api/v1';
-
+// const API_URL = 'http://localhost:3000/api/v1';
 const Login = async (email: string, password: string) => {
   const response = await axios.post(`${API_URL}/login`, { email, password });
   if (response.data) {

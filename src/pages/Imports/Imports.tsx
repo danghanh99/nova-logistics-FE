@@ -30,13 +30,14 @@ const Imports = (): JSX.Element => {
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const [search, setSearch] = useState('');
+  const [sort, setSort] = useState('created_at: desc');
   const history = useHistory();
   const [message, setMessage] = useState('');
   const [success, setSuccess] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    ImportsService.getImports(page, perPage, search)
+    ImportsService.getImports(page, perPage, search, sort)
       .then((res) => {
         dispatch(getImports(res));
       })
@@ -107,7 +108,7 @@ const Imports = (): JSX.Element => {
         {listImports.map((value, index) => {
           return (
             <tr key={index}>
-              <td className="text-right">{value.id}</td>
+              <td className="text-right">{index + 1}</td>
               <td className="text-left">{value.product.name}</td>
               <td className="text-left">{value.supplier.name}</td>
               <td className="text-right">{value.quantity}</td>
