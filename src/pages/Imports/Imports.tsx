@@ -12,6 +12,7 @@ import Pagination from '../../components/Pagination/Pagination';
 import { useState } from 'react';
 import IMeta from '../../types/MetaType';
 import { useHistory } from 'react-router-dom';
+import './Imports.scss';
 
 export interface IState {
   imports: {
@@ -78,15 +79,56 @@ const Imports = (): JSX.Element => {
     );
   };
 
+  const onSort = (e: React.MouseEvent, name: string, value: string): void => {
+    const sortType = `${name}: ${value}`;
+    setSort(sortType);
+  };
+
   const headers = (): JSX.Element => {
     return (
       <tr>
         <th style={{ width: '50px', textAlign: 'right' }}>ID</th>
         <th>Product</th>
         <th>Supplier</th>
-        <th>Quantity</th>
-        <th>Price</th>
-        <th>Import Date</th>
+        <th>
+          Quantity
+          <i>
+            <CIcon
+              content={freeSet.cilArrowTop}
+              onClick={(e) => onSort(e, 'quantity', 'desc')}
+            />
+            <CIcon
+              content={freeSet.cilArrowBottom}
+              onClick={(e) => onSort(e, 'quantity', 'asc')}
+            />
+          </i>
+        </th>
+        <th>
+          Price
+          <i>
+            <CIcon
+              content={freeSet.cilArrowTop}
+              onClick={(e) => onSort(e, 'retail_price', 'desc')}
+            />
+            <CIcon
+              content={freeSet.cilArrowBottom}
+              onClick={(e) => onSort(e, 'retail_price', 'asc')}
+            />
+          </i>
+        </th>
+        <th>
+          Import Date
+          <i>
+            <CIcon
+              content={freeSet.cilArrowTop}
+              onClick={(e) => onSort(e, 'imported_date', 'desc')}
+            ></CIcon>
+            <CIcon
+              content={freeSet.cilArrowBottom}
+              onClick={(e) => onSort(e, 'imported_date', 'asc')}
+            ></CIcon>
+          </i>
+        </th>
         <th>Description</th>
         <th style={{ width: '200px' }}>Action</th>
       </tr>
