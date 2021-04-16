@@ -165,7 +165,7 @@ const Imports = (): JSX.Element => {
         {listImports.map((value, index) => {
           return (
             <tr key={index}>
-              <td className="text-right">{value.id}</td>
+              <td className="text-right">{index + 1}</td>
               <td className="text-left">{value.product?.name}</td>
               <td className="text-left">{value.supplier?.name}</td>
               <td className="text-right">{value.quantity}</td>

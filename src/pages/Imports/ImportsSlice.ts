@@ -28,6 +28,11 @@ const todo = createSlice({
       state.data = state.data.filter((item: Import) => item.id !== payload);
       return state;
     },
+    newImport: (state, action: PayloadAction<Import>) => {
+      console.log('ok', action.payload);
+      state.data.push(action.payload);
+      // return (state = action.payload);
+    },
     getImport: (state, { payload }: PayloadAction<Import>) => {
       state.data = [payload];
       return state;
@@ -50,5 +55,6 @@ export const {
   getImport,
   reset,
   updateImport,
+  newImport,
 } = actions;
 export default reducer;

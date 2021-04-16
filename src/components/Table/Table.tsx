@@ -1,6 +1,15 @@
 import { CIcon } from '@coreui/icons-react';
 import { freeSet } from '@coreui/icons';
-import { Redirect } from 'react-router-dom';
+import Pagination from '../../components/Pagination/Pagination';
+import { render } from '@testing-library/react';
+import { getSuppliers } from '../../pages/Suppliers/SuppliersSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { enableShowForm } from '../../pages/Suppliers/showNewFormSlice';
+import { Link, Redirect, useHistory } from 'react-router-dom';
+import ProductsService from '../../services/ProductsService';
+import { getProducts } from '../../pages/Products/ProductSlice';
+import Product from '../../models/Product';
+import { useEffect } from 'react';
 interface IProps {
   modelName: string;
   children: React.ReactNode;
@@ -10,10 +19,16 @@ interface IProps {
   search: JSX.Element;
 }
 
+export interface IState {
+  products: Product[];
+}
+
 const Table = (props: IProps) => {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const { modelName, children, headers, pagination, select, search } = props;
   const handleClickNewIteam = () => {
-    return <Redirect to="/imports/new" />;
+    history.push('/admin/imports/new');
   };
   return (
     <>

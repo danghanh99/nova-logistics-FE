@@ -8,10 +8,14 @@ interface IState {
   data: Product[];
   meta: Hash;
 }
-const getProducts = (): Promise<IState> => {
-  return axios.get(API_URL + 'products').then((response) => {
-    return response.data;
-  });
+const getProducts = (search?: string): Promise<IState> => {
+  return axios
+    .get(API_URL + 'products', {
+      params: { name: search },
+    })
+    .then((response) => {
+      return response.data;
+    });
 };
 const ProductsService = { getProducts };
 export default ProductsService;
