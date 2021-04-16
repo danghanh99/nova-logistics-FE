@@ -63,7 +63,7 @@ const Exports = (): JSX.Element => {
           return (
             <tr key={index}>
               <td className="text-right">{index + 1}</td>
-              <td className="text-left">{value.imports[0].product.name}</td>
+              <td className="text-left">{value.imports[0].product?.name}</td>
               <td className="text-left">{value.customer.name}</td>
               <td className="text-right">{value.quantity}</td>
               <td className="text-right">{value.sell_price}</td>

@@ -11,11 +11,12 @@ interface IState {
 const getImports = (
   page?: number,
   perPage?: number,
-  search?: string
+  search?: string,
+  sort?: string
 ): Promise<IState> => {
   return axios
     .get(API_URL + 'imports', {
-      params: { page, per_page: perPage, product_name: search },
+      params: { page, per_page: perPage, product_name: search, sort },
     })
     .then((response) => {
       return response.data;
@@ -30,5 +31,36 @@ const deleteImport = (id: number) => {
   return response;
 };
 
-const ImportsService = { getImports, deleteImport };
+const getImport = (id: number) => {
+  const response = axios.get(`${API_URL}imports/${id}`);
+  response.then((res) => {
+    if (res.data) return res.data;
+  });
+  return response;
+};
+
+const updateImport = (newImport: Import) => {
+  const {
+    retail_price,
+    quantity,
+    imported_date,
+    description,
+    supplier,
+    product,
+  } = newImport;
+  const response = axios.patch(`${API_URL}imports/${newImport.id}`, {
+    supplier_id: supplier?.id,
+    product_id: product?.id,
+    retail_price,
+    quantity,
+    imported_date,
+    description,
+  });
+  response.then((res) => {
+    if (res.data) return res.data;
+  });
+  return response;
+};
+
+const ImportsService = { getImports, deleteImport, getImport, updateImport };
 export default ImportsService;
