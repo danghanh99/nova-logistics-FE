@@ -5,13 +5,14 @@ import Import from '../../models/Import';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useEffect } from 'react';
 import ImportsService from '../../services/ImportsService';
-import { getImports, deleteImport } from './ImportsSlice';
+import { getImports, deleteImport, reset } from './ImportsSlice';
 import { plainToClass } from 'class-transformer';
 import { BiExport } from 'react-icons/bi';
 import Pagination from '../../components/Pagination/Pagination';
 import { useState } from 'react';
 import IMeta from '../../types/MetaType';
 import { useHistory } from 'react-router-dom';
+
 export interface IState {
   imports: {
     data: Import[];
@@ -30,21 +31,35 @@ const Imports = (): JSX.Element => {
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const [search, setSearch] = useState('');
-  const [sort, setSort] = useState('created_at: desc');
   const history = useHistory();
   const [message, setMessage] = useState('');
   const [success, setSuccess] = useState(false);
+  const [sort, setSort] = useState('updated_at: desc, created_at: desc');
   const dispatch = useDispatch();
 
   useEffect(() => {
     ImportsService.getImports(page, perPage, search, sort)
-      .then((res) => {
-        dispatch(getImports(res));
-      })
+      .then(
+        (res) => {
+          dispatch(getImports(res));
+        },
+        (error) => {
+          const resMessage =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+          setMessage(resMessage);
+        }
+      )
       .catch((error) => {
         throw error;
       });
-  }, [page, perPage, search]);
+    return () => {
+      dispatch(reset(true));
+    };
+  }, [page, perPage, search, sort]);
 
   const onchangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -109,8 +124,8 @@ const Imports = (): JSX.Element => {
           return (
             <tr key={index}>
               <td className="text-right">{index + 1}</td>
-              <td className="text-left">{value.product.name}</td>
-              <td className="text-left">{value.supplier.name}</td>
+              <td className="text-left">{value.product?.name}</td>
+              <td className="text-left">{value.supplier?.name}</td>
               <td className="text-right">{value.quantity}</td>
               <td className="text-right">{value.retail_price}</td>
               <td className="text-right">{value.imported_date}</td>

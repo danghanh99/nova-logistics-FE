@@ -3,7 +3,7 @@ import { useState } from 'react';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ProductsService from '../../services/ProductsService';
-import { newImport } from './ImportsSlice';
+import { newImport, reset } from './ImportsSlice';
 import Product from '../../models/Product';
 import { plainToClass } from 'class-transformer';
 import { getProducts } from '../Products/ProductSlice';
@@ -28,10 +28,6 @@ const NewImport = (): JSX.Element => {
   const [inputProduct, setInputProduct] = useState('');
   const [inputSupplier, setInputSupplier] = useState('');
   const [] = useState(init);
-  // const [inputDate, setInputDate] = useState('');
-  // const [inputQuantity, setInputQuantity] = useState(1);
-  // const [inputPrice, setInputPrice] = useState(1);
-  // const [inputDescription, setInputDescription] = useState('');
   const initial = {
     inputDate: '',
     inputQuantity: 1,
@@ -71,6 +67,7 @@ const NewImport = (): JSX.Element => {
     ImportsService.newImport(formValues).then(
       (res) => {
         dispatch(newImport(res));
+        dispatch(reset(true));
         history.push('/admin/imports');
       },
       (error) => {
@@ -103,8 +100,6 @@ const NewImport = (): JSX.Element => {
       .catch((error) => {
         throw error;
       });
-  }, [inputProduct]);
-  useEffect(() => {
     SuppliersService.getSuppliers(inputSupplier)
       .then((res) => {
         dispatch(getSuppliers(res.data));
@@ -112,7 +107,8 @@ const NewImport = (): JSX.Element => {
       .catch((error) => {
         throw error;
       });
-  }, [inputSupplier]);
+  }, [inputProduct, inputSupplier]);
+
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)} className="add-items form-group">

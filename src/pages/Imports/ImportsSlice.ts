@@ -33,9 +33,28 @@ const todo = createSlice({
       state.data.push(action.payload);
       // return (state = action.payload);
     },
+    getImport: (state, { payload }: PayloadAction<Import>) => {
+      state.data = [payload];
+      return state;
+    },
+    updateImport: (state, { payload }: PayloadAction<Import>) => {
+      state.data = [payload];
+      return state;
+    },
+    reset: (state, { payload }: PayloadAction<boolean>) => {
+      if (payload) state = initialize;
+      return state;
+    },
   },
 });
 
 const { reducer, actions } = todo;
-export const { getImports, deleteImport, newImport } = actions;
+export const {
+  getImports,
+  deleteImport,
+  getImport,
+  reset,
+  updateImport,
+  newImport,
+} = actions;
 export default reducer;

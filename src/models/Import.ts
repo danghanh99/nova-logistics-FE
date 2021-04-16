@@ -4,16 +4,16 @@ import Supplier from './Supplier';
 import User from './User';
 class Import {
   id!: number;
-  product!: Product;
-  supplier!: Supplier;
-  user!: User;
-  inventory!: Inventory;
+  // user!: User;
+  // inventory!: Inventory;
+  product?: Product | null;
+  supplier?: Supplier | null;
   quantity!: number;
   retail_price!: number;
   imported_date!: string;
   description!: string;
-  available_quantity!: number;
-  created_at!: Date;
+  // available_quantity!: number;
+  // created_at!: Date;
 }
 
 export default Import;
