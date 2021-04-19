@@ -10,8 +10,8 @@ interface IState {
 }
 
 interface IFormValues {
-  product_id: number;
-  supplier_id: number;
+  product: number;
+  supplier: number;
   import_date: string;
   quantity: number;
   price: number;
@@ -33,15 +33,15 @@ const getImports = (
     });
 };
 
-const newImport = (formValues?: IFormValues): Promise<Import> => {
+const newImport = (Import: Import): Promise<Import> => {
   return axios
     .post(API_URL + 'imports', {
-      product_id: formValues?.product_id,
-      supplier_id: formValues?.supplier_id,
-      imported_date: formValues?.import_date,
-      quantity: formValues?.quantity,
-      retail_price: formValues?.price,
-      description: formValues?.description,
+      product_id: Import.product?.id,
+      supplier_id: Import.supplier?.id,
+      imported_date: Import.imported_date,
+      quantity: Import.quantity,
+      retail_price: Import.retail_price,
+      description: Import?.description,
     })
     .then((response) => {
       return response.data.import;
