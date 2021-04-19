@@ -136,7 +136,7 @@ const ImportForm = () => {
                   autoComplete="off"
                   defaultValue={currentDate}
                   required
-                  name="inputDate"
+                  name="imported_date"
                 />
               </div>
 
@@ -150,7 +150,7 @@ const ImportForm = () => {
                     onChange={handleTextChange}
                     autoComplete="off"
                     required
-                    name="inputQuantity"
+                    name="quantity"
                   />
                 </div>
                 <div className="form-group col-md-6">
@@ -162,7 +162,7 @@ const ImportForm = () => {
                     onChange={handleTextChange}
                     autoComplete="off"
                     required
-                    name="inputPrice"
+                    name="retail_price"
                   />
                 </div>
               </div>
@@ -174,7 +174,7 @@ const ImportForm = () => {
                 id="comment"
                 defaultValue={''}
                 autoComplete="off"
-                name="inputDescription"
+                name="description"
               />
               <div style={{ textAlign: 'center' }}>
                 <button
