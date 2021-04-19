@@ -91,17 +91,15 @@ const Imports = (): JSX.Element => {
   const onSort = (e: React.MouseEvent, name: string, value: string): void => {
     const sortType = `${name}: ${value}`;
     setSort(sortType);
-
-    Object.keys(iconSort).map((key) => {
-      setIconSort({
-        ...iconSort,
-        [key]: '',
-      });
-    });
     const enableIcon = `${name}_${value}`;
-
     setIconSort({
       ...iconSort,
+      quantity_desc: '',
+      quantity_asc: '',
+      retail_price_desc: '',
+      retail_price_asc: '',
+      imported_date_desc: '',
+      imported_date_asc: '',
       [enableIcon]: 'text-success',
     });
   };
