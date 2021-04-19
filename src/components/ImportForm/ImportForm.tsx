@@ -69,8 +69,8 @@ const ImportForm = () => {
       (res) => {
         dispatch(newImport(res));
         dispatch(reset(true));
-        enqueueSnackbar('New import success', { variant: 'success' });
         history.push('/admin/imports');
+        enqueueSnackbar('New import success', { variant: 'success' });
       },
       (error) => {
         const resMessage =
