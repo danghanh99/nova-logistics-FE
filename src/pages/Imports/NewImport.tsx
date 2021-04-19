@@ -13,6 +13,8 @@ import { getSuppliers } from '../Suppliers/SuppliersSlice';
 import ImportsService from '../../services/ImportsService';
 import Import from '../../models/Import';
 import { useHistory } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
+
 interface IFormInput {
   inputProduct: string;
 }
@@ -44,6 +46,8 @@ const NewImport = (): JSX.Element => {
     setInputSupplier(e.target.value);
   };
 
+  const { enqueueSnackbar } = useSnackbar();
+
   const history = useHistory();
   const { handleSubmit } = useForm<IFormInput>();
 
@@ -69,9 +73,16 @@ const NewImport = (): JSX.Element => {
         dispatch(newImport(res));
         dispatch(reset(true));
         history.push('/admin/imports');
+        enqueueSnackbar('New import success', { variant: 'success' });
       },
       (error) => {
-        console.log(error.response.data.message);
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        enqueueSnackbar(resMessage, { variant: 'error' });
       }
     );
   };

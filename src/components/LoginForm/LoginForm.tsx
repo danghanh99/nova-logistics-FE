@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux';
 import AuthService from '../../services/AuthService';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 interface IFormInputs {
   username: string;
   password: string;
@@ -21,14 +22,13 @@ interface IFormInputs {
 
 const LoginForm = (): JSX.Element => {
   const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
   const dispatch = useDispatch();
   const history = useHistory();
   const { register, handleSubmit } = useForm<IFormInputs>({
     criteriaMode: 'all',
   });
+  const { enqueueSnackbar } = useSnackbar();
   const onSubmit = (data: IFormInputs) => {
-    setMessage('');
     setLoading(true);
     try {
       AuthService.Login(data.username, data.password).then(
@@ -43,7 +43,7 @@ const LoginForm = (): JSX.Element => {
             error.message ||
             error.toString();
           setLoading(false);
-          setMessage(resMessage);
+          enqueueSnackbar(resMessage, { variant: 'error' });
         }
       );
       dispatch(true);
@@ -55,13 +55,6 @@ const LoginForm = (): JSX.Element => {
     <CForm onSubmit={handleSubmit(onSubmit)}>
       <h1>Login</h1>
       <p className="text-muted">Sign In to your account</p>
-      {message && (
-        <div className="form-group">
-          <div className="alert alert-danger" role="alert">
-            {message}
-          </div>
-        </div>
-      )}
       <CInputGroup className="mb-3">
         <CInputGroupPrepend>
           <CInputGroupText>

@@ -29,9 +29,7 @@ const todo = createSlice({
       return state;
     },
     newImport: (state, action: PayloadAction<Import>) => {
-      console.log('ok', action.payload);
       state.data.push(action.payload);
-      // return (state = action.payload);
     },
     getImport: (state, { payload }: PayloadAction<Import>) => {
       state.data = [payload];

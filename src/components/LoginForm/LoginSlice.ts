@@ -5,7 +5,7 @@ const initialState = user ? true : false;
 
 const todo = createSlice({
   name: 'auth',
-  initialState: initialState,
+  initialState,
   reducers: {
     isLoggedIn: (state, { payload }: PayloadAction<boolean>) => {
       return (state = payload);
