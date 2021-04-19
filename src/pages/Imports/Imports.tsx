@@ -21,12 +21,21 @@ export interface IState {
   };
 }
 
+const initIconSort = {
+  quantity_desc: '',
+  quantity_asc: '',
+  retail_price_desc: '',
+  retail_price_asc: '',
+  imported_date_desc: '',
+  imported_date_asc: '',
+};
+
 const Imports = (): JSX.Element => {
   const listImports = plainToClass(
     Import,
     useSelector((state: IState) => state.imports.data)
   );
-
+  const [iconSort, setIconSort] = useState(initIconSort);
   const meta = useSelector((state: IState) => state.imports.meta);
 
   const [page, setPage] = useState(1);
@@ -82,6 +91,19 @@ const Imports = (): JSX.Element => {
   const onSort = (e: React.MouseEvent, name: string, value: string): void => {
     const sortType = `${name}: ${value}`;
     setSort(sortType);
+
+    Object.keys(iconSort).map((key) => {
+      setIconSort({
+        ...iconSort,
+        [key]: '',
+      });
+    });
+    const enableIcon = `${name}_${value}`;
+
+    setIconSort({
+      ...iconSort,
+      [enableIcon]: 'text-success',
+    });
   };
 
   const headers = (): JSX.Element => {
@@ -94,10 +116,12 @@ const Imports = (): JSX.Element => {
           Quantity
           <i>
             <CIcon
+              className={iconSort.quantity_desc}
               content={freeSet.cilArrowTop}
               onClick={(e) => onSort(e, 'quantity', 'desc')}
             />
             <CIcon
+              className={iconSort.quantity_asc}
               content={freeSet.cilArrowBottom}
               onClick={(e) => onSort(e, 'quantity', 'asc')}
             />
@@ -107,10 +131,12 @@ const Imports = (): JSX.Element => {
           Price
           <i>
             <CIcon
+              className={iconSort.retail_price_desc}
               content={freeSet.cilArrowTop}
               onClick={(e) => onSort(e, 'retail_price', 'desc')}
             />
             <CIcon
+              className={iconSort.retail_price_asc}
               content={freeSet.cilArrowBottom}
               onClick={(e) => onSort(e, 'retail_price', 'asc')}
             />
@@ -120,10 +146,12 @@ const Imports = (): JSX.Element => {
           Import Date
           <i>
             <CIcon
+              className={iconSort.imported_date_desc}
               content={freeSet.cilArrowTop}
               onClick={(e) => onSort(e, 'imported_date', 'desc')}
             ></CIcon>
             <CIcon
+              className={iconSort.imported_date_asc}
               content={freeSet.cilArrowBottom}
               onClick={(e) => onSort(e, 'imported_date', 'asc')}
             ></CIcon>
