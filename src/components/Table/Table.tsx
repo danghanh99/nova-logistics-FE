@@ -1,15 +1,7 @@
 import { CIcon } from '@coreui/icons-react';
 import { freeSet } from '@coreui/icons';
-import Pagination from '../../components/Pagination/Pagination';
-import { render } from '@testing-library/react';
-import { getSuppliers } from '../../pages/Suppliers/SuppliersSlice';
-import { useDispatch, useSelector } from 'react-redux';
-import { enableShowForm } from '../../pages/Suppliers/showNewFormSlice';
-import { Link, Redirect, useHistory } from 'react-router-dom';
-import ProductsService from '../../services/ProductsService';
-import { getProducts } from '../../pages/Products/ProductSlice';
+import { useHistory } from 'react-router-dom';
 import Product from '../../models/Product';
-import { useEffect } from 'react';
 interface IProps {
   modelName: string;
   children: React.ReactNode;
@@ -25,10 +17,9 @@ export interface IState {
 
 const Table = (props: IProps) => {
   const history = useHistory();
-  const dispatch = useDispatch();
   const { modelName, children, headers, pagination, select, search } = props;
   const handleClickNewIteam = () => {
-    history.push('/admin/imports/new');
+    history.push(`/admin/${modelName.toLowerCase()}s/new`);
   };
   return (
     <>

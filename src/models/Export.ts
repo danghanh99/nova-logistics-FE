@@ -1,5 +1,3 @@
-import Product from './Product';
-import Supplier from './Supplier';
 import Import from './Import';
 import Customer from './Customer';
 import User from './User';
@@ -9,12 +7,12 @@ class Export {
   id!: number;
   sell_price!: number;
   quantity!: number;
-  exported_date!: Date;
+  exported_date!: string;
 
   imports!: Import[];
-  customer!: Customer;
-  user!: User;
-  inventory!: Inventory;
+  customer?: Customer | null;
+  user?: User;
+  inventory?: Inventory;
 
   description!: string;
 }

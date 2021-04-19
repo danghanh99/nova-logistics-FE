@@ -6,6 +6,7 @@ import Suppliers from './pages/Suppliers/Suppliers';
 import Customers from './pages/Customers/Customers';
 import NewImport from './pages/Imports/NewImport';
 import EditImport from './pages/Imports/EditImport';
+import NewExport from './pages/Exports/NewExport';
 const routes: IRoute[] = [
   {
     path: '/admin/imports',
@@ -41,6 +42,12 @@ const routes: IRoute[] = [
     path: '/admin/imports/new',
     name: 'New Import',
     component: NewImport,
+    exact: true,
+  },
+  {
+    path: '/admin/exports/new',
+    name: 'New Export',
+    component: NewExport,
     exact: true,
   },
   {

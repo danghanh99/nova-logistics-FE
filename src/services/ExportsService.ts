@@ -1,18 +1,57 @@
 import axios from 'axios';
-import { Hash } from 'crypto';
 import Export from '../models/Export';
+import IMeta from '../types/MetaType';
 
 const API_URL = 'https://nova-logistics-backend.herokuapp.com/api/v1/';
 
 interface IState {
   data: Export[];
-  meta: Hash;
+  meta: IMeta;
 }
-const getExports = (): Promise<IState> => {
-  return axios.get(API_URL + 'exports').then((response) => {
-    return response.data;
-  });
+const getExports = (
+  page?: number,
+  perPage?: number,
+  search?: string,
+  sort?: string
+): Promise<IState> => {
+  return axios
+    .get(API_URL + 'exports', {
+      params: { page, per_page: perPage, product_name: search, sort },
+    })
+    .then((response) => {
+      return response.data;
+    });
 };
 
-const ExportsService = { getExports };
+const deleteExport = (id: number) => {
+  const response = axios.delete(`${API_URL}exports/${id}`);
+  response.then((res) => {
+    if (res.data) return res.data;
+  });
+  return response;
+};
+
+const createExport = (
+  sellPrice: number,
+  quantity: number,
+  description: string,
+  exportedDate: string,
+  productId: number,
+  customerId: number
+) => {
+  const response = axios.post(`${API_URL}exports`, {
+    sell_price: sellPrice,
+    quantity,
+    description,
+    exported_date: exportedDate,
+    product_id: productId,
+    customer_id: customerId,
+  });
+  response.then((res) => {
+    if (res.data) return res.data;
+  });
+  return response;
+};
+
+const ExportsService = { deleteExport, getExports, createExport };
 export default ExportsService;
