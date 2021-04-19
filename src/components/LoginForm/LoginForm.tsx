@@ -62,10 +62,11 @@ const LoginForm = (): JSX.Element => {
           </CInputGroupText>
         </CInputGroupPrepend>
         <input
-          type="text"
+          type="email"
           placeholder="Username"
+          required
           autoComplete="username"
-          {...register('username', { required: true })}
+          {...register('username')}
         />
       </CInputGroup>
       <CInputGroup className="mb-4">
@@ -78,7 +79,8 @@ const LoginForm = (): JSX.Element => {
           type="password"
           placeholder="Password"
           autoComplete="current-password"
-          {...register('password', { required: true })}
+          required
+          {...register('password')}
         />
       </CInputGroup>
       <CRow>
