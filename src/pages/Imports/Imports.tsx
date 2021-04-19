@@ -13,7 +13,7 @@ import { useState } from 'react';
 import IMeta from '../../types/MetaType';
 import { useHistory } from 'react-router-dom';
 import './Imports.scss';
-
+import { useSnackbar } from 'notistack';
 export interface IState {
   imports: {
     data: Import[];
@@ -31,6 +31,8 @@ const initIconSort = {
 };
 
 const Imports = (): JSX.Element => {
+  const { enqueueSnackbar } = useSnackbar();
+
   const listImports = plainToClass(
     Import,
     useSelector((state: IState) => state.imports.data)
@@ -42,8 +44,6 @@ const Imports = (): JSX.Element => {
   const [perPage, setPerPage] = useState(10);
   const [search, setSearch] = useState('');
   const history = useHistory();
-  const [message, setMessage] = useState('');
-  const [success, setSuccess] = useState(false);
   const [sort, setSort] = useState('updated_at: desc, created_at: desc');
   const dispatch = useDispatch();
 
@@ -60,7 +60,7 @@ const Imports = (): JSX.Element => {
               error.response.data.message) ||
             error.message ||
             error.toString();
-          setMessage(resMessage);
+          enqueueSnackbar(resMessage, { variant: 'error' });
         }
       )
       .catch((error) => {
@@ -170,9 +170,8 @@ const Imports = (): JSX.Element => {
   const onHandleDelete = (id: number) => {
     ImportsService.deleteImport(id).then(
       () => {
-        setSuccess(true);
-        setMessage('Delete Import Success');
         dispatch(deleteImport(id));
+        enqueueSnackbar('Delete import success', { variant: 'success' });
       },
       (error) => {
         const resMessage =
@@ -181,8 +180,7 @@ const Imports = (): JSX.Element => {
             error.response.data.message) ||
           error.message ||
           error.toString();
-        setMessage(resMessage);
-        setSuccess(false);
+        enqueueSnackbar(resMessage, { variant: 'error' });
       }
     );
   };
@@ -267,11 +265,6 @@ const Imports = (): JSX.Element => {
 
   return (
     <>
-      {message && (
-        <div className={`alert alert-${success ? 'success' : 'danger'}`}>
-          <strong>{message}</strong>
-        </div>
-      )}
       <Table
         headers={headers()}
         modelName="Import"

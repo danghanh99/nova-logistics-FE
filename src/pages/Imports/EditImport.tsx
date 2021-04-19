@@ -15,6 +15,7 @@ import SuppliersService from '../../services/SuppliersService';
 import { getSuppliers } from '../Suppliers/SuppliersSlice';
 import Supplier from '../../models/Supplier';
 import Product from '../../models/Product';
+import { useSnackbar } from 'notistack';
 
 type Params = {
   id: string;
@@ -37,6 +38,7 @@ const EditImport = (): JSX.Element => {
   const listSuppliers = useSelector((state: IStateSupplier) => state.suppliers);
   const history = useHistory();
   const [importDetail, setImport] = useState(init);
+  const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     ImportsService.getImport(parseInt(id, undefined)).then((res) => {
@@ -75,9 +77,21 @@ const EditImport = (): JSX.Element => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    ImportsService.updateImport(importDetail).then(() => {
-      history.push('/admin/imports');
-    });
+    ImportsService.updateImport(importDetail).then(
+      () => {
+        history.push('/admin/imports');
+        enqueueSnackbar('Update import success', { variant: 'success' });
+      },
+      (error) => {
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        enqueueSnackbar(resMessage, { variant: 'error' });
+      }
+    );
   };
 
   return (

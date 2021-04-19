@@ -14,6 +14,7 @@ import SuppliersService from '../../services/SuppliersService';
 import { getSuppliers } from '../../pages/Suppliers/SuppliersSlice';
 import { Autocomplete } from '@material-ui/lab';
 import { TextField } from '@material-ui/core';
+import { useSnackbar } from 'notistack';
 interface IFormInput {
   inputProduct: string;
 }
@@ -30,6 +31,7 @@ const ImportForm = () => {
   const { handleSubmit } = useForm<IFormInput>();
   const currentDate = new Date().toLocaleDateString('fr-CA');
   const dispatch = useDispatch();
+  const { enqueueSnackbar } = useSnackbar();
   const initial: Import = {
     quantity: 0,
     description: '',
@@ -67,10 +69,17 @@ const ImportForm = () => {
       (res) => {
         dispatch(newImport(res));
         dispatch(reset(true));
+        enqueueSnackbar('New import success', { variant: 'success' });
         history.push('/admin/imports');
       },
       (error) => {
-        console.log(error.response.data.message);
+        const resMessage =
+          (error.response &&
+            error.response.data &&
+            error.response.data.message) ||
+          error.message ||
+          error.toString();
+        enqueueSnackbar(resMessage, { variant: 'error' });
       }
     );
   };
