@@ -9,15 +9,6 @@ interface IState {
   meta: IMeta;
 }
 
-interface IFormValues {
-  product: number;
-  supplier: number;
-  import_date: string;
-  quantity: number;
-  price: number;
-  description: string;
-}
-
 const getImports = (
   page?: number,
   perPage?: number,

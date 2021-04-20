@@ -15,9 +15,6 @@ import { getSuppliers } from '../../pages/Suppliers/SuppliersSlice';
 import { Autocomplete } from '@material-ui/lab';
 import { TextField } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
-interface IFormInput {
-  inputProduct: string;
-}
 
 export interface IState {
   products: Product[];
@@ -26,9 +23,9 @@ export interface IState {
 }
 
 const ImportForm = () => {
-  const [inputProduct, setInputProduct] = useState('');
-  const [inputSupplier, setInputSupplier] = useState('');
-  const { handleSubmit } = useForm<IFormInput>();
+  const [inputProduct] = useState('');
+  const [inputSupplier] = useState('');
+  const { handleSubmit } = useForm();
   const currentDate = new Date().toLocaleDateString('fr-CA');
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
@@ -36,12 +33,11 @@ const ImportForm = () => {
     quantity: 0,
     description: '',
     id: 0,
-    imported_date: '2021-04-14',
+    imported_date: `${currentDate}`,
     retail_price: 0,
   };
   const history = useHistory();
   const [inputText, setInputText] = useState(initial);
-  const { imported_date, description, retail_price, quantity } = inputText;
 
   const handleProductChange = (e: ChangeEvent<{}>, value: Product | null) => {
     setInputText({ ...inputText, product: value });

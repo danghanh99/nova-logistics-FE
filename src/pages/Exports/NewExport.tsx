@@ -6,16 +6,20 @@ import { useHistory } from 'react-router-dom';
 import ClipLoader from 'react-spinners/ClipLoader';
 import Customer from '../../models/Customer';
 import Product from '../../models/Product';
-import CutomersService from '../../services/CutomersService';
+import CustomersService from '../../services/CustomersService';
 import ExportsService from '../../services/ExportsService';
 import ProductsService from '../../services/ProductsService';
 import { getCustomers } from '../Customers/CustomersSlice';
 import { IState } from '../Products/Products';
 import { getProducts } from '../Products/ProductSlice';
 import { useSnackbar } from 'notistack';
+import IMeta from '../../types/MetaType';
 
 type StateCustomer = {
-  customers: Customer[];
+  customers: {
+    data: Customer[];
+    meta: IMeta;
+  };
 };
 
 const init = {
@@ -29,7 +33,10 @@ const init = {
 
 function NewExport(): JSX.Element {
   const listProducts = useSelector((state: IState) => state.products.data);
-  const listCustomer = useSelector((state: StateCustomer) => state.customers);
+  const listCustomer = useSelector(
+    (state: StateCustomer) => state.customers.data
+  );
+
   const dispatch = useDispatch();
   const [exportDetail, setExport] = useState(init);
   const history = useHistory();
@@ -40,8 +47,8 @@ function NewExport(): JSX.Element {
       dispatch(getProducts(res));
     });
 
-    CutomersService.getCustomers().then((res) => {
-      dispatch(getCustomers(res.data));
+    CustomersService.getCustomers().then((res) => {
+      dispatch(getCustomers(res));
     });
   });
 

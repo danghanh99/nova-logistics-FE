@@ -11,9 +11,10 @@ interface IProps {
   search: JSX.Element;
 }
 
-export interface IState {
-  products: Product[];
-}
+// export interface IState {
+//   products: Product[];
+//   products: Product[];
+// }
 
 const Table = (props: IProps) => {
   const history = useHistory();
