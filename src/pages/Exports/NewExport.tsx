@@ -13,9 +13,13 @@ import { getCustomers } from '../Customers/CustomersSlice';
 import { IState } from '../Products/Products';
 import { getProducts } from '../Products/ProductSlice';
 import { useSnackbar } from 'notistack';
+import IMeta from '../../types/MetaType';
 
 type StateCustomer = {
-  customers: Customer[];
+  customers: {
+    data: Customer[];
+    meta: IMeta;
+  };
 };
 
 const init = {
@@ -29,7 +33,10 @@ const init = {
 
 function NewExport(): JSX.Element {
   const listProducts = useSelector((state: IState) => state.products);
-  const listCustomer = useSelector((state: StateCustomer) => state.customers);
+  const listCustomer = useSelector((state: StateCustomer) => state.customers.data);
+
+  console.log(useSelector((state: StateCustomer) => state));
+
   const dispatch = useDispatch();
   const [exportDetail, setExport] = useState(init);
   const history = useHistory();
