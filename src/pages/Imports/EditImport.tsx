@@ -45,7 +45,7 @@ const EditImport = (): JSX.Element => {
       setImport(res.data.import);
     });
     ProductsService.getProducts().then((res) => {
-      dispatch(getProducts(res.data));
+      dispatch(getProducts(res));
     });
     SuppliersService.getSuppliers().then((res) => {
       dispatch(getSuppliers(res.data));
@@ -109,7 +109,7 @@ const EditImport = (): JSX.Element => {
                     defaultValue={importDetail.product}
                     id="combo-box-demo"
                     componentName="product"
-                    options={listProducts}
+                    options={listProducts.data}
                     getOptionLabel={(option) => option.name}
                     onChange={handleChangeProductImport}
                     renderInput={(params) => <TextField {...params} />}

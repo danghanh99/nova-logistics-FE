@@ -86,7 +86,7 @@ const ImportForm = () => {
   useEffect(() => {
     ProductsService.getProducts(inputProduct)
       .then((res) => {
-        dispatch(getProducts(res.data));
+        dispatch(getProducts(res));
       })
       .catch((error) => {
         throw error;

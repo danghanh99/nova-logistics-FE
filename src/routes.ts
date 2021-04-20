@@ -7,6 +7,8 @@ import Customers from './pages/Customers/Customers';
 import NewImport from './pages/Imports/NewImport';
 import EditImport from './pages/Imports/EditImport';
 import NewExport from './pages/Exports/NewExport';
+import NewProduct from './pages/Products/NewProduct';
+import EditProduct from './pages/Products/EditProduct';
 const routes: IRoute[] = [
   {
     path: '/admin/imports',
@@ -51,9 +53,21 @@ const routes: IRoute[] = [
     exact: true,
   },
   {
+    path: '/admin/products/new',
+    name: 'New Product',
+    component: NewProduct,
+    exact: true,
+  },
+  {
     path: '/admin/imports/edit/:id',
     name: 'Edit Import',
     component: EditImport,
+    exact: true,
+  },
+  {
+    path: '/admin/products/edit/:id',
+    name: 'Edit Import',
+    component: EditProduct,
     exact: true,
   },
 ];

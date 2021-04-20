@@ -28,7 +28,7 @@ const init = {
 };
 
 function NewExport(): JSX.Element {
-  const listProducts = useSelector((state: IState) => state.products);
+  const listProducts = useSelector((state: IState) => state.products.data);
   const listCustomer = useSelector((state: StateCustomer) => state.customers);
   const dispatch = useDispatch();
   const [exportDetail, setExport] = useState(init);
@@ -37,7 +37,7 @@ function NewExport(): JSX.Element {
 
   useEffect(() => {
     ProductsService.getProducts().then((res) => {
-      dispatch(getProducts(res.data));
+      dispatch(getProducts(res));
     });
 
     CutomersService.getCustomers().then((res) => {
