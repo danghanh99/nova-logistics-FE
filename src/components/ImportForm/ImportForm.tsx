@@ -186,7 +186,7 @@ const ImportForm = () => {
                   type="submit"
                   className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn mt-1"
                 >
-                  Submit
+                  Create
                 </button>
               </div>
             </form>
