@@ -69,7 +69,7 @@ function EditProduct(): JSX.Element {
                   <input
                     type="text"
                     className="form-control"
-                    value={product?.name}
+                    defaultValue={product?.name}
                     {...register('name')}
                     name="name"
                     required
@@ -80,7 +80,7 @@ function EditProduct(): JSX.Element {
                     rows={3}
                     cols={60}
                     {...register('description')}
-                    value={product?.description}
+                    defaultValue={product?.description}
                     name="description"
                   ></textarea>
                 </div>
