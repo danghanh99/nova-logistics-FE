@@ -18,7 +18,7 @@ const getCustomers = (
 ): Promise<IState> => {
   return axios
     .get(API_URL + 'customers', {
-      params: { page, per_page: perPage, product_name: search, sort },
+      params: { page, per_page: perPage, name: search, sort },
     })
     .then((response) => {
       return response.data;

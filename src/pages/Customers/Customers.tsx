@@ -24,8 +24,18 @@ export interface IState {
   };
 }
 
+const initIconSort = {
+  name_desc: '',
+  name_asc: '',
+  phone_number_desc: '',
+  phone_number_asc: '',
+  address_desc: '',
+  address_asc: '',
+};
+
 const Customers = (): JSX.Element => {
   const [search, setSearch] = useState('');
+  const [iconSort, setIconSort] = useState(initIconSort);
   const meta = useSelector((state: IState) => state.customers.meta);
   const [page, setPage] = useState(1);
   const listCustomers = plainToClass(
@@ -35,13 +45,64 @@ const Customers = (): JSX.Element => {
 
   const dispatch = useDispatch();
 
+  const onSort = (e: React.MouseEvent, name: string, value: string): void => {
+    const sortType = `${name}: ${value}`;
+    setSort(sortType);
+    const enableIcon = `${name}_${value}`;
+    setIconSort({
+      ...iconSort,
+      name_desc: '',
+      name_asc: '',
+      phone_number_desc: '',
+      phone_number_asc: '',
+      address_desc: '',
+      address_asc: '',
+      [enableIcon]: 'text-success',
+    });
+  };
   const headers = (): JSX.Element => {
     return (
       <tr>
         <th style={{ width: '50px', textAlign: 'right' }}>ID</th>
-        <th>Name</th>
-        <th>Phone Number</th>
-        <th>Address</th>
+        <th>
+          Name
+          <CIcon
+            className={iconSort.name_desc}
+            content={freeSet.cilArrowTop}
+            onClick={(e) => onSort(e, 'name', 'desc')}
+          />
+          <CIcon
+            className={iconSort.name_asc}
+            content={freeSet.cilArrowBottom}
+            onClick={(e) => onSort(e, 'name', 'asc')}
+          />
+        </th>
+        <th>
+          Phone Number
+          <CIcon
+            className={iconSort.phone_number_desc}
+            content={freeSet.cilArrowTop}
+            onClick={(e) => onSort(e, 'phone_number', 'desc')}
+          />
+          <CIcon
+            className={iconSort.phone_number_asc}
+            content={freeSet.cilArrowBottom}
+            onClick={(e) => onSort(e, 'phone_number', 'asc')}
+          />
+        </th>
+        <th>
+          Address
+          <CIcon
+            className={iconSort.address_desc}
+            content={freeSet.cilArrowTop}
+            onClick={(e) => onSort(e, 'address', 'desc')}
+          />
+          <CIcon
+            className={iconSort.address_asc}
+            content={freeSet.cilArrowBottom}
+            onClick={(e) => onSort(e, 'address', 'asc')}
+          />
+        </th>
         <th style={{ width: '200px' }}>Action</th>
       </tr>
     );
@@ -155,16 +216,6 @@ const Customers = (): JSX.Element => {
       </>
     );
   };
-
-  // useEffect(() => {
-  //   CustomersService.getCustomers()
-  //     .then((res) => {
-  //       dispatch(getCustomers(res.data));
-  //     })
-  //     .catch((error) => {
-  //       throw error;
-  //     });
-  // }, []);
 
   const [sort, setSort] = useState('updated_at: desc, created_at: desc');
   const { enqueueSnackbar } = useSnackbar();
