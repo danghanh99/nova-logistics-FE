@@ -81,7 +81,7 @@ const routes: IRoute[] = [
   },
   {
     path: '/admin/products/edit/:id',
-    name: 'Edit Import',
+    name: 'Edit Product',
     component: EditProduct,
     exact: true,
   },

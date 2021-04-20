@@ -36,35 +36,39 @@ function NewProduct(): JSX.Element {
 
   return (
     <>
-      <div className="container d-flex justify-content-center">
+      <div className="container">
         <div className="row">
-          <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div
+            className="col-xs-5 col-sm-5 col-md-5 col-lg-5"
+            style={{ marginLeft: 'auto', marginRight: 'auto' }}
+          >
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="form-row">
-                <div className="form-group col-md-6">
-                  <label htmlFor="inputAddress2">Name</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    {...register('name')}
-                    name="name"
-                    required
-                  />
-                </div>
-                <div className="form-group">
-                  <label>Descripton</label>
-                  <textarea
-                    className="form-control"
-                    rows={3}
-                    cols={60}
-                    {...register('description')}
-                    name="description"
-                  ></textarea>
-                </div>
+                <label htmlFor="inputAddress2">Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  {...register('name')}
+                  name="name"
+                  required
+                />
+                <label>Descripton</label>
+                <textarea
+                  className="form-control"
+                  rows={3}
+                  cols={60}
+                  {...register('description')}
+                  name="description"
+                ></textarea>
               </div>
-              <button type="submit" className="btn btn-primary">
-                Create
-              </button>
+              <div style={{ textAlign: 'center' }}>
+                <button
+                  type="submit"
+                  className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn mt-1"
+                >
+                  Create
+                </button>
+              </div>
             </form>
           </div>
         </div>

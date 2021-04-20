@@ -74,19 +74,20 @@ const NewCustomer = (): JSX.Element => {
                   required
                   name="phone_number"
                 />
+                <label>Address:</label>
+                <textarea
+                  placeholder="address..."
+                  onChange={handleInputChange}
+                  className="form-control"
+                  rows={5}
+                  id="comment"
+                  defaultValue={''}
+                  autoComplete="on"
+                  name="address"
+                  required
+                />
               </div>
-              <label>Address:</label>
-              <textarea
-                placeholder="address..."
-                onChange={handleInputChange}
-                className="form-control"
-                rows={5}
-                id="comment"
-                defaultValue={''}
-                autoComplete="on"
-                name="address"
-                required
-              />
+
               <div style={{ textAlign: 'center' }}>
                 <button
                   type="submit"
