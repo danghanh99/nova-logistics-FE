@@ -1,32 +1,35 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import ICustomer from '../../models/Customer';
+import Customer from '../../models/Customer';
+import IMeta from '../../types/MetaType';
 
-// interface IState {
-//   data: ISupplier[];
-//   meta: Hash;
-// }
+interface IState {
+  data: Customer[];
+  meta: IMeta;
+}
+
+const initialize = {
+  data: [],
+  meta: {
+    current_page: 1,
+    page_size: 0,
+    total_pages: 1,
+    total_count: 0,
+  },
+};
+
 const todo = createSlice({
   name: 'customers',
-  initialState: [] as ICustomer[],
+  initialState: initialize as IState,
   reducers: {
-    // addTodo: (state, action: PayloadAction<ISupplier>) => {
-    //   state.push(action.payload);
-    // },
-    getCustomers: (state, action: PayloadAction<ICustomer[]>) => {
+    getCustomers: (state, action: PayloadAction<IState>) => {
       return (state = action.payload);
     },
-    // editDoneTodo: (state: ISupplier[], action: PayloadAction<ISupplier>) => {
-    //   const index = state.findIndex((item) => item.id === action.payload.id);
-    //   const editTodo = state[index];
-    //   editTodo.done = action.payload.done;
-    //   editTodo.title = action.payload.title;
-    // },
-    // deleteTodo: (state, action: PayloadAction<number>) => {
-    //   return state.filter((item: ISupplier) => item.id !== action.payload);
-    // },
+    newCustomer: (state, action: PayloadAction<Customer>) => {
+      state.data.push(action.payload);
+    },
   },
 });
 
 const { reducer, actions } = todo;
-export const { getCustomers } = actions;
+export const { getCustomers, newCustomer } = actions;
 export default reducer;

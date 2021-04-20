@@ -1,5 +1,3 @@
-import Product from './Product';
-import Supplier from './Supplier';
 import Import from './Import';
 import Customer from './Customer';
 import User from './User';
