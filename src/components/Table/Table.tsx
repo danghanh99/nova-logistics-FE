@@ -1,7 +1,6 @@
 import { CIcon } from '@coreui/icons-react';
 import { freeSet } from '@coreui/icons';
 import { useHistory } from 'react-router-dom';
-import Product from '../../models/Product';
 interface IProps {
   modelName: string;
   children: React.ReactNode;
@@ -10,11 +9,6 @@ interface IProps {
   select: JSX.Element;
   search: JSX.Element;
 }
-
-// export interface IState {
-//   products: Product[];
-//   products: Product[];
-// }
 
 const Table = (props: IProps) => {
   const history = useHistory();

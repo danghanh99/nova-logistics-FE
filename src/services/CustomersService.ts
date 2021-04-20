@@ -37,5 +37,41 @@ const newCustomer = (customer: Customer): Promise<Customer> => {
     });
 };
 
-const CustomersService = { getCustomers, newCustomer };
+// const deleteCustomer = (id: number) => {
+//   const response = axios.delete(`${API_URL}customers/${id}`);
+//   console.log(response);
+
+//   response.then((res) => {
+//     if (res.data) return res.data;
+//   });
+//   return response;
+// };
+
+const editCustomer = (customer: Customer) => {
+  const { name, phone_number, address } = customer;
+  const response = axios.patch(`${API_URL}customers/${customer.id}`, {
+    name,
+    phone_number,
+    address,
+  });
+  response.then((res) => {
+    if (res.data) return res.data;
+  });
+  return response;
+};
+
+const getCustomer = (id: number) => {
+  const response = axios.get(`${API_URL}customers/${id}`);
+  response.then((res) => {
+    if (res.data) return res.data;
+  });
+  return response;
+};
+
+const CustomersService = {
+  getCustomers,
+  newCustomer,
+  editCustomer,
+  getCustomer,
+};
 export default CustomersService;

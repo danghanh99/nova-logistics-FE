@@ -12,6 +12,7 @@ import Pagination from '../../components/Pagination/Pagination';
 import IMeta from '../../types/MetaType';
 import { useSnackbar } from 'notistack';
 import { reset } from '../Imports/ImportsSlice';
+import { useHistory } from 'react-router-dom';
 // export interface IState {
 //   customers: Customer[];
 // }
@@ -46,6 +47,28 @@ const Customers = (): JSX.Element => {
     );
   };
 
+  // const handleDelete = (id: number) => {
+  //   CustomersService.deleteCustomer(id).then(
+  //     () => {
+  //       dispatch(deleteCustomer(id));
+  //       enqueueSnackbar('Delete customer success', { variant: 'success' });
+  //     },
+  //     (error) => {
+  //       const resMessage =
+  //         (error.response &&
+  //           error.response.data &&
+  //           error.response.data.message) ||
+  //         error.message ||
+  //         error.toString();
+  //       enqueueSnackbar(resMessage, { variant: 'error' });
+  //     }
+  //   );
+  // };
+
+  const history = useHistory();
+  const handleEdit = (id: number) => {
+    history.push(`/admin/customers/${id}`);
+  };
   const children = (): React.ReactNode => {
     return (
       <>
@@ -58,12 +81,15 @@ const Customers = (): JSX.Element => {
               <td className="text-left">{value.address}</td>
               <td>
                 <div className="d-flex justify-content-center">
-                  <button className="btn mr-2 d-flex align-items-center btn-warning">
+                  <button
+                    className="btn mr-2 d-flex align-items-center btn-warning"
+                    onClick={() => handleEdit(value.id)}
+                  >
                     <CIcon content={freeSet.cilColorBorder}></CIcon>
                   </button>
-                  <button className="btn mr-2 d-flex align-items-center btn-danger">
+                  {/* <button className="btn mr-2 d-flex align-items-center btn-danger">
                     <CIcon content={freeSet.cilTrash}></CIcon>
-                  </button>
+                  </button> */}
                 </div>
               </td>
             </tr>
