@@ -15,9 +15,13 @@ import { getSuppliers } from '../../pages/Suppliers/SuppliersSlice';
 import { Autocomplete } from '@material-ui/lab';
 import { TextField } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
+import IMeta from '../../types/MetaType';
 
 export interface IState {
-  products: Product[];
+  products: {
+    data: Product[];
+    meta: IMeta;
+  };
   suppliers: Supplier[];
   imports: Import[];
 }
@@ -53,8 +57,9 @@ const ImportForm = () => {
   };
   const listProducts = plainToClass(
     Product,
-    useSelector((state: IState) => state.products)
+    useSelector((state: IState) => state.products.data)
   );
+
   const listSuppliers = plainToClass(
     Supplier,
     useSelector((state: IState) => state.suppliers)
@@ -82,7 +87,7 @@ const ImportForm = () => {
   useEffect(() => {
     ProductsService.getProducts(inputProduct)
       .then((res) => {
-        dispatch(getProducts(res.data));
+        dispatch(getProducts(res));
       })
       .catch((error) => {
         throw error;
@@ -108,7 +113,6 @@ const ImportForm = () => {
                 <label>Product:</label>
                 <Autocomplete
                   id="combo-box-demo"
-                  componentName="product"
                   options={listProducts}
                   getOptionLabel={(option: Product) => option.name}
                   onChange={handleProductChange}
@@ -122,7 +126,6 @@ const ImportForm = () => {
                 <label>Supplier:</label>
                 <Autocomplete
                   id="combo-box-demo"
-                  componentName="product"
                   options={listSuppliers}
                   getOptionLabel={(option: Supplier) => option.name}
                   onChange={handleSupplierChange}
