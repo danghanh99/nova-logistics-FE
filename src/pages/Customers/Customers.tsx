@@ -13,9 +13,6 @@ import IMeta from '../../types/MetaType';
 import { useSnackbar } from 'notistack';
 import { reset } from '../Imports/ImportsSlice';
 import { useHistory } from 'react-router-dom';
-// export interface IState {
-//   customers: Customer[];
-// }
 
 export interface IState {
   customers: {

@@ -48,7 +48,7 @@ const EditImport = (): JSX.Element => {
       dispatch(getProducts(res));
     });
     SuppliersService.getSuppliers().then((res) => {
-      dispatch(getSuppliers(res.data));
+      dispatch(getSuppliers(res));
     });
     return () => {
       dispatch(reset(true));

@@ -1,32 +1,43 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import ISupplier from '../../types/SupplierType';
+import Supplier from '../../models/Supplier';
+import IMeta from '../../types/MetaType';
 
-// interface IState {
-//   data: ISupplier[];
-//   meta: Hash;
-// }
+interface IState {
+  data: Supplier[];
+  meta: IMeta;
+}
+
+const initialize = {
+  data: [],
+  meta: {
+    current_page: 1,
+    page_size: 0,
+    total_pages: 1,
+    total_count: 0,
+  },
+};
+
 const todo = createSlice({
   name: 'suppliers',
-  initialState: [] as ISupplier[],
+  initialState: initialize as IState,
   reducers: {
-    // addTodo: (state, action: PayloadAction<ISupplier>) => {
-    //   state.push(action.payload);
-    // },
-    getSuppliers: (state, action: PayloadAction<ISupplier[]>) => {
+    getSuppliers: (state, action: PayloadAction<IState>) => {
       return (state = action.payload);
     },
-    // editDoneTodo: (state: ISupplier[], action: PayloadAction<ISupplier>) => {
-    //   const index = state.findIndex((item) => item.id === action.payload.id);
-    //   const editTodo = state[index];
-    //   editTodo.done = action.payload.done;
-    //   editTodo.title = action.payload.title;
-    // },
-    // deleteTodo: (state, action: PayloadAction<number>) => {
-    //   return state.filter((item: ISupplier) => item.id !== action.payload);
-    // },
+    newSupplier: (state, action: PayloadAction<Supplier>) => {
+      state.data.push(action.payload);
+    },
+    editSupplier: (state, { payload }: PayloadAction<Supplier>) => {
+      state.data = [payload];
+      return state;
+    },
+    getSupplier: (state, { payload }: PayloadAction<Supplier>) => {
+      state.data = [payload];
+      return state;
+    },
   },
 });
 
 const { reducer, actions } = todo;
-export const { getSuppliers } = actions;
+export const { getSuppliers, newSupplier, editSupplier, getSupplier } = actions;
 export default reducer;

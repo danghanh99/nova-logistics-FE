@@ -14,6 +14,8 @@ const Table = (props: IProps) => {
   const history = useHistory();
   const { modelName, children, headers, pagination, select, search } = props;
   const handleClickNewIteam = () => {
+    // console.log(`/admin/${modelName.toLowerCase()}s/new`);
+
     history.push(`/admin/${modelName.toLowerCase()}s/new`);
   };
   return (

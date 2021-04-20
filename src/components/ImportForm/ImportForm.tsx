@@ -22,7 +22,10 @@ export interface IState {
     data: Product[];
     meta: IMeta;
   };
-  suppliers: Supplier[];
+  suppliers: {
+    data: Supplier[];
+    meta: IMeta;
+  };
   imports: Import[];
 }
 
@@ -62,7 +65,7 @@ const ImportForm = () => {
 
   const listSuppliers = plainToClass(
     Supplier,
-    useSelector((state: IState) => state.suppliers)
+    useSelector((state: IState) => state.suppliers.data)
   );
 
   const onSubmit = () => {
@@ -92,9 +95,9 @@ const ImportForm = () => {
       .catch((error) => {
         throw error;
       });
-    SuppliersService.getSuppliers(inputSupplier)
+    SuppliersService.getSuppliers()
       .then((res) => {
-        dispatch(getSuppliers(res.data));
+        dispatch(getSuppliers(res));
       })
       .catch((error) => {
         throw error;
