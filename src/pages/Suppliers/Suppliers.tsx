@@ -11,6 +11,7 @@ import { plainToClass } from 'class-transformer';
 import Pagination from '../../components/Pagination/Pagination';
 import IMeta from '../../types/MetaType';
 import { useSnackbar } from 'notistack';
+import { useHistory } from 'react-router-dom';
 export interface IState {
   suppliers: {
     data: ISupplier[];
@@ -19,15 +20,45 @@ export interface IState {
   newSupplier: boolean;
 }
 
+const initIconSort = {
+  name_desc: '',
+  name_asc: '',
+  phone_desc: '',
+  phone_asc: '',
+  address_desc: '',
+  address_asc: '',
+  description_desc: '',
+  description_asc: '',
+};
+
 const Suppliers = (): JSX.Element => {
   const [search, setSearch] = useState('');
   const [perPage, setPerPage] = useState(10);
+  const [iconSort, setIconSort] = useState(initIconSort);
   const [sort, setSort] = useState('updated_at: desc, created_at: desc');
   const meta = useSelector((state: IState) => state.suppliers.meta);
   const listSuppliers = plainToClass(
     ISupplier,
     useSelector((state: IState) => state.suppliers.data)
   );
+  const onSort = (e: React.MouseEvent, name: string, value: string): void => {
+    const sortType = `${name}: ${value}`;
+    setSort(sortType);
+    const enableIcon = `${name}_${value}`;
+    setIconSort({
+      ...iconSort,
+      name_desc: '',
+      name_asc: '',
+      phone_desc: '',
+      phone_asc: '',
+      address_desc: '',
+      address_asc: '',
+      description_desc: '',
+      description_asc: '',
+      [enableIcon]: 'text-success',
+    });
+  };
+
   const showForm = useSelector((state: IState) => state.newSupplier);
   const dispatch = useDispatch();
 
@@ -35,15 +66,55 @@ const Suppliers = (): JSX.Element => {
     return (
       <tr>
         <th style={{ width: '50px', textAlign: 'right' }}>ID</th>
-        <th>Name</th>
-        <th>Phone Number</th>
-        <th>Address</th>
+        <th>
+          Name{' '}
+          <CIcon
+            className={iconSort.name_desc}
+            content={freeSet.cilArrowTop}
+            onClick={(e) => onSort(e, 'name', 'desc')}
+          />
+          <CIcon
+            className={iconSort.name_asc}
+            content={freeSet.cilArrowBottom}
+            onClick={(e) => onSort(e, 'name', 'asc')}
+          />
+        </th>
+        <th>
+          Phone Number{' '}
+          <CIcon
+            className={iconSort.phone_desc}
+            content={freeSet.cilArrowTop}
+            onClick={(e) => onSort(e, 'phone', 'desc')}
+          />
+          <CIcon
+            className={iconSort.phone_asc}
+            content={freeSet.cilArrowBottom}
+            onClick={(e) => onSort(e, 'phone', 'asc')}
+          />
+        </th>
+        <th>
+          Address{' '}
+          <CIcon
+            className={iconSort.address_desc}
+            content={freeSet.cilArrowTop}
+            onClick={(e) => onSort(e, 'address', 'desc')}
+          />
+          <CIcon
+            className={iconSort.address_asc}
+            content={freeSet.cilArrowBottom}
+            onClick={(e) => onSort(e, 'address', 'asc')}
+          />
+        </th>
         <th>Description</th>
         <th style={{ width: '200px' }}>Action</th>
       </tr>
     );
   };
 
+  const history = useHistory();
+  const handleEdit = (id: number) => {
+    history.push(`/admin/suppliers/${id}`);
+  };
   const children = (): React.ReactNode => {
     return (
       <>
@@ -57,7 +128,10 @@ const Suppliers = (): JSX.Element => {
               <td className="text-left">{value.description}</td>
               <td>
                 <div className="d-flex justify-content-center">
-                  <button className="btn mr-2 d-flex align-items-center btn-warning">
+                  <button
+                    className="btn mr-2 d-flex align-items-center btn-warning"
+                    onClick={() => handleEdit(value.id)}
+                  >
                     <CIcon content={freeSet.cilColorBorder}></CIcon>
                   </button>
                 </div>

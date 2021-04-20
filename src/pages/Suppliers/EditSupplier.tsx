@@ -6,6 +6,7 @@ import Supplier from '../../models/Supplier';
 import { useSnackbar } from 'notistack';
 import Customer from '../../models/Customer';
 import CustomersService from '../../services/CustomersService';
+import SuppliersService from '../../services/SuppliersService';
 
 type Params = {
   id: string;
@@ -16,23 +17,24 @@ export interface IStateSupplier {
 }
 
 const EditSupplier = (): JSX.Element => {
-  const initial: Customer = {
+  const initial: Supplier = {
     id: 0,
     name: '',
-    phone_number: '',
+    phone: '',
     address: '',
+    description: '',
   };
   const { id }: Params = useParams();
 
-  const [customerDetail, setCustomer] = useState(initial);
+  const [supplierDetail, setSupplier] = useState(initial);
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    CustomersService.editCustomer(customerDetail).then(
+    SuppliersService.editSupplier(supplierDetail).then(
       () => {
-        history.push('/admin/customers');
-        enqueueSnackbar('Update customer success', { variant: 'success' });
+        history.push('/admin/suppliers');
+        enqueueSnackbar('Update supplier success', { variant: 'success' });
       },
       (error) => {
         const resMessage =
@@ -49,12 +51,12 @@ const EditSupplier = (): JSX.Element => {
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setCustomer({ ...customerDetail, [e.target.name]: e.target.value });
+    setSupplier({ ...supplierDetail, [e.target.name]: e.target.value });
   };
 
   useEffect(() => {
-    CustomersService.getCustomer(parseInt(id, undefined)).then((res) => {
-      setCustomer(res.data.customer);
+    SuppliersService.getSupplier(parseInt(id, undefined)).then((res) => {
+      setSupplier(res.data.supplier);
     });
   }, []);
   return (
@@ -65,7 +67,7 @@ const EditSupplier = (): JSX.Element => {
             className="col-xs-5 col-sm-5 col-md-5 col-lg-5"
             style={{ marginLeft: 'auto', marginRight: 'auto' }}
           >
-            {customerDetail.id === 0 ? (
+            {supplierDetail.id === 0 ? (
               <ClipLoader color="#FFC0CB" loading={true} size={400} />
             ) : (
               <form onSubmit={handleSubmit}>
@@ -78,7 +80,7 @@ const EditSupplier = (): JSX.Element => {
                     onChange={handleInputChange}
                     autoComplete="on"
                     name="name"
-                    defaultValue={customerDetail.name}
+                    defaultValue={supplierDetail.name}
                   />
                   <label>Phone number:</label>
                   <input
@@ -87,21 +89,32 @@ const EditSupplier = (): JSX.Element => {
                     className="form-control"
                     onChange={handleInputChange}
                     autoComplete="on"
-                    name="phone_number"
-                    defaultValue={customerDetail.phone_number}
+                    name="phone"
+                    defaultValue={supplierDetail.phone}
+                  />
+                  <label>Address:</label>
+                  <input
+                    placeholder="address..."
+                    onChange={handleInputChange}
+                    className="form-control"
+                    id="comment"
+                    autoComplete="on"
+                    name="address"
+                    defaultValue={supplierDetail.address}
+                  />
+                  <label>Description:</label>
+                  <textarea
+                    placeholder="description..."
+                    onChange={handleInputChange}
+                    className="form-control"
+                    rows={5}
+                    id="comment"
+                    autoComplete="on"
+                    name="description"
+                    defaultValue={supplierDetail.description}
                   />
                 </div>
-                <label>Address:</label>
-                <textarea
-                  placeholder="address..."
-                  onChange={handleInputChange}
-                  className="form-control"
-                  rows={5}
-                  id="comment"
-                  autoComplete="on"
-                  name="address"
-                  defaultValue={customerDetail.address}
-                />
+
                 <div style={{ textAlign: 'center' }}>
                   <button
                     type="submit"
