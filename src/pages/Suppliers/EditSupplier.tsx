@@ -81,6 +81,7 @@ const EditSupplier = (): JSX.Element => {
                     autoComplete="on"
                     name="name"
                     defaultValue={supplierDetail.name}
+                    style={{ height: '56px' }}
                   />
                   <label>Phone number:</label>
                   <input
@@ -91,6 +92,7 @@ const EditSupplier = (): JSX.Element => {
                     autoComplete="on"
                     name="phone"
                     defaultValue={supplierDetail.phone}
+                    style={{ height: '56px' }}
                   />
                   <label>Address:</label>
                   <input
@@ -101,6 +103,7 @@ const EditSupplier = (): JSX.Element => {
                     autoComplete="on"
                     name="address"
                     defaultValue={supplierDetail.address}
+                    style={{ height: '56px' }}
                   />
                   <label>Description:</label>
                   <textarea

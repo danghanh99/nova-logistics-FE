@@ -69,28 +69,28 @@ const EditCustomer = (): JSX.Element => {
               <ClipLoader color="#FFC0CB" loading={true} size={400} />
             ) : (
               <form onSubmit={handleSubmit}>
-                <div className="form-row">
-                  <label>Name:</label>
-                  <input
-                    type="text"
-                    placeholder="name..."
-                    className="form-control"
-                    onChange={handleInputChange}
-                    autoComplete="on"
-                    name="name"
-                    defaultValue={customerDetail.name}
-                  />
-                  <label>Phone number:</label>
-                  <input
-                    type="text"
-                    placeholder="phone number..."
-                    className="form-control"
-                    onChange={handleInputChange}
-                    autoComplete="on"
-                    name="phone_number"
-                    defaultValue={customerDetail.phone_number}
-                  />
-                </div>
+                <label>Name:</label>
+                <input
+                  type="text"
+                  placeholder="name..."
+                  className="form-control"
+                  onChange={handleInputChange}
+                  autoComplete="on"
+                  name="name"
+                  defaultValue={customerDetail.name}
+                  style={{ height: '56px' }}
+                />
+                <label>Phone number:</label>
+                <input
+                  type="text"
+                  placeholder="phone number..."
+                  className="form-control"
+                  onChange={handleInputChange}
+                  autoComplete="on"
+                  name="phone_number"
+                  defaultValue={customerDetail.phone_number}
+                  style={{ height: '56px' }}
+                />
                 <label>Address:</label>
                 <textarea
                   placeholder="address..."

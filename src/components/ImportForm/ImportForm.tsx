@@ -148,6 +148,7 @@ const ImportForm = () => {
                   defaultValue={currentDate}
                   required
                   name="imported_date"
+                  style={{ height: '56px' }}
                 />
               </div>
 
@@ -162,6 +163,7 @@ const ImportForm = () => {
                     autoComplete="off"
                     required
                     name="quantity"
+                    style={{ height: '56px' }}
                   />
                 </div>
                 <div className="form-group col-md-6">
@@ -174,6 +176,7 @@ const ImportForm = () => {
                     autoComplete="off"
                     required
                     name="retail_price"
+                    style={{ height: '56px' }}
                   />
                 </div>
               </div>
@@ -186,6 +189,7 @@ const ImportForm = () => {
                 defaultValue={''}
                 autoComplete="off"
                 name="description"
+                style={{ height: '56px' }}
               />
               <div style={{ textAlign: 'center' }}>
                 <button

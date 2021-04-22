@@ -96,88 +96,106 @@ const EditImport = (): JSX.Element => {
 
   return (
     <>
-      <div className="container d-flex justify-content-center">
+      <div className="container">
         <div className="row">
-          <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            {importDetail.id === 0 ? (
-              <ClipLoader color="#FFC0CB" loading={true} size={400} />
-            ) : (
-              <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <label htmlFor="inputEmail4">Product</label>
-                  <Autocomplete
-                    defaultValue={importDetail.product}
-                    id="combo-box-demo"
-                    componentName="product"
-                    options={listProducts.data}
-                    getOptionLabel={(option) => option.name}
-                    onChange={handleChangeProductImport}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="inputPassword4">Supplier</label>
-                  <Autocomplete
-                    defaultValue={importDetail.supplier}
-                    id="combo-box-demo"
-                    options={listSuppliers}
-                    getOptionLabel={(option) => option.name}
-                    onChange={handleChangeSupplierImport}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="inputAddress">Date</label>
+          <div
+            className="col-xs-6 col-sm-6 col-md-6 col-lg-6"
+            style={{ marginLeft: 'auto', marginRight: 'auto' }}
+          >
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label>Product:</label>
+                <Autocomplete
+                  defaultValue={importDetail.product}
+                  id="combo-box-demo"
+                  style={{ backgroundColor: 'white' }}
+                  componentName="product"
+                  options={listProducts.data}
+                  getOptionLabel={(option) => option.name}
+                  onChange={handleChangeProductImport}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      label={`${importDetail.product?.name}`}
+                    />
+                  )}
+                />
+              </div>
+              <div className="form-group">
+                <label>Supplier:</label>
+                <Autocomplete
+                  defaultValue={importDetail.supplier}
+                  id="combo-box-demo"
+                  style={{ backgroundColor: 'white' }}
+                  options={listSuppliers}
+                  getOptionLabel={(option) => option.name}
+                  onChange={handleChangeSupplierImport}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      label={`${importDetail.supplier?.name}`}
+                    />
+                  )}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="inputAddress">Date</label>
+                <input
+                  type="date"
+                  className="form-control"
+                  defaultValue={importDetail.imported_date}
+                  onChange={changeValue}
+                  name="imported_date"
+                  style={{ height: '56px' }}
+                />
+              </div>
+
+              <div className="form-row">
+                <div className="form-group col-md-6">
+                  <label htmlFor="inputAddress2">Quantity</label>
                   <input
-                    type="date"
+                    type="number"
                     className="form-control"
-                    defaultValue={importDetail.imported_date}
+                    min="0"
+                    defaultValue={importDetail.quantity}
                     onChange={changeValue}
-                    name="imported_date"
+                    name="quantity"
+                    style={{ height: '56px' }}
                   />
                 </div>
-                <div className="form-row">
-                  <div className="form-group col-md-6">
-                    <label htmlFor="inputAddress2">Quantity</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      min="0"
-                      defaultValue={importDetail.quantity}
-                      onChange={changeValue}
-                      name="quantity"
-                    />
-                  </div>
-                  <div className="form-group col-md-6">
-                    <label htmlFor="inputCity">Price</label>
-                    <input
-                      type="number"
-                      className="form-control"
-                      min="0"
-                      defaultValue={importDetail.retail_price}
-                      onChange={changeValue}
-                      name="retail_price"
-                    />
-                  </div>
+                <div className="form-group col-md-6">
+                  <label htmlFor="inputCity">Price</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    min="0"
+                    defaultValue={importDetail.retail_price}
+                    onChange={changeValue}
+                    name="retail_price"
+                    style={{ height: '56px' }}
+                  />
                 </div>
-                <div className="form-row">
-                  <div className="form-group">
-                    <label>Descripton</label>
-                    <textarea
-                      className="form-control"
-                      rows={3}
-                      cols={60}
-                      defaultValue={importDetail.description}
-                      onChange={changeValue}
-                      name="description"
-                    ></textarea>
-                  </div>
-                </div>
-                <button type="submit" className="btn btn-primary">
-                  Save
+              </div>
+              <label>Descripton</label>
+              <textarea
+                className="form-control"
+                rows={5}
+                cols={60}
+                defaultValue={importDetail.description}
+                onChange={changeValue}
+                name="description"
+              ></textarea>
+              <div style={{ textAlign: 'center' }}>
+                <button
+                  type="submit"
+                  className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn mt-1"
+                >
+                  Create
                 </button>
-              </form>
-            )}
+              </div>
+            </form>
           </div>
         </div>
       </div>

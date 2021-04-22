@@ -72,12 +72,13 @@ function EditProduct(): JSX.Element {
                     defaultValue={product?.name}
                     {...register('name')}
                     name="name"
+                    style={{ height: '56px' }}
                     required
                   />
                   <label>Descripton</label>
                   <textarea
                     className="form-control"
-                    rows={3}
+                    rows={5}
                     cols={60}
                     {...register('description')}
                     defaultValue={product?.description}

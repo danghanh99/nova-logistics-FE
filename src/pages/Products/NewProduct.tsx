@@ -51,11 +51,12 @@ function NewProduct(): JSX.Element {
                   {...register('name')}
                   name="name"
                   required
+                  style={{ height: '56px' }}
                 />
                 <label>Descripton</label>
                 <textarea
                   className="form-control"
-                  rows={3}
+                  rows={5}
                   cols={60}
                   {...register('description')}
                   name="description"

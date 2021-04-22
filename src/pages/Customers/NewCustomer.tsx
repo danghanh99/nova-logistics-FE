@@ -63,6 +63,7 @@ const NewCustomer = (): JSX.Element => {
                   autoComplete="on"
                   required
                   name="name"
+                  style={{ height: '56px' }}
                 />
                 <label>Phone number:</label>
                 <input
@@ -73,6 +74,7 @@ const NewCustomer = (): JSX.Element => {
                   autoComplete="on"
                   required
                   name="phone_number"
+                  style={{ height: '56px' }}
                 />
                 <label>Address:</label>
                 <textarea
@@ -85,6 +87,7 @@ const NewCustomer = (): JSX.Element => {
                   autoComplete="on"
                   name="address"
                   required
+                  style={{ height: '56px' }}
                 />
               </div>
 

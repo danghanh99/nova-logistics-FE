@@ -108,54 +108,54 @@ function NewExport(): JSX.Element {
 
   return (
     <>
-      <div className="container d-flex justify-content-center">
+      <div className="container">
         <div className="row">
-          <div className="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <div
+            className="col-xs-6 col-sm-6 col-md-6 col-lg-6"
+            style={{ marginLeft: 'auto', marginRight: 'auto' }}
+          >
             {listProducts === [] && listCustomer === [] ? (
               <ClipLoader color="#FFC0CB" loading={true} size={400} />
             ) : (
               <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                  <label htmlFor="inputEmail4">Product</label>
-                  <Autocomplete
-                    value={listProducts.find(
-                      (item) => item.id === exportDetail.product_id
-                    )}
-                    id="combo-box-demo"
-                    componentName="product"
-                    options={listProducts}
-                    getOptionLabel={(option) => option.name}
-                    onChange={handleChangeProductExport}
-                    renderInput={(params) => (
-                      <TextField {...params} variant="outlined" />
-                    )}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="inputPassword4">Customer</label>
-                  <Autocomplete
-                    value={listCustomer.find(
-                      (item) => item.id === exportDetail.customer_id
-                    )}
-                    id="combo-box-demo"
-                    options={listCustomer}
-                    getOptionLabel={(option) => option.name}
-                    onChange={handleChangeCustomerImport}
-                    renderInput={(params) => (
-                      <TextField {...params} variant="outlined" />
-                    )}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="inputAddress">Date</label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    value={exportDetail.exported_date}
-                    onChange={changeValue}
-                    name="exported_date"
-                  />
-                </div>
+                <label htmlFor="inputEmail4">Product</label>
+                <Autocomplete
+                  value={listProducts.find(
+                    (item) => item.id === exportDetail.product_id
+                  )}
+                  id="combo-box-demo"
+                  style={{ backgroundColor: 'white' }}
+                  componentName="product"
+                  options={listProducts}
+                  getOptionLabel={(option) => option.name}
+                  onChange={handleChangeProductExport}
+                  renderInput={(params) => (
+                    <TextField {...params} variant="outlined" label="Name..." />
+                  )}
+                />
+                <label htmlFor="inputPassword4">Customer</label>
+                <Autocomplete
+                  value={listCustomer.find(
+                    (item) => item.id === exportDetail.customer_id
+                  )}
+                  id="combo-box-demo"
+                  style={{ backgroundColor: 'white' }}
+                  options={listCustomer}
+                  getOptionLabel={(option) => option.name}
+                  onChange={handleChangeCustomerImport}
+                  renderInput={(params) => (
+                    <TextField {...params} variant="outlined" label="Name..." />
+                  )}
+                />
+                <label htmlFor="inputAddress">Date</label>
+                <input
+                  type="date"
+                  className="form-control"
+                  value={exportDetail.exported_date}
+                  onChange={changeValue}
+                  name="exported_date"
+                  style={{ height: '56px' }}
+                />
                 <div className="form-row">
                   <div className="form-group col-md-6">
                     <label htmlFor="inputAddress2">Quantity</label>
@@ -166,6 +166,7 @@ function NewExport(): JSX.Element {
                       value={exportDetail.quantity}
                       onChange={changeValue}
                       name="quantity"
+                      style={{ height: '56px' }}
                     />
                   </div>
                   <div className="form-group col-md-6">
@@ -177,25 +178,27 @@ function NewExport(): JSX.Element {
                       value={exportDetail.sell_price}
                       onChange={changeValue}
                       name="sell_price"
+                      style={{ height: '56px' }}
                     />
                   </div>
                 </div>
-                <div className="form-row">
-                  <div className="form-group">
-                    <label>Descripton</label>
-                    <textarea
-                      className="form-control"
-                      rows={3}
-                      cols={60}
-                      onChange={changeValue}
-                      value={exportDetail.description}
-                      name="description"
-                    ></textarea>
-                  </div>
+                <label>Descripton</label>
+                <textarea
+                  className="form-control"
+                  rows={5}
+                  cols={60}
+                  onChange={changeValue}
+                  value={exportDetail.description}
+                  name="description"
+                ></textarea>
+                <div style={{ textAlign: 'center' }}>
+                  <button
+                    type="submit"
+                    className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn mt-1"
+                  >
+                    Create
+                  </button>
                 </div>
-                <button type="submit" className="btn btn-primary">
-                  Create
-                </button>
               </form>
             )}
           </div>
