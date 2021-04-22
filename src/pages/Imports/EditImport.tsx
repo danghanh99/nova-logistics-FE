@@ -16,6 +16,7 @@ import { getSuppliers } from '../Suppliers/SuppliersSlice';
 import Supplier from '../../models/Supplier';
 import Product from '../../models/Product';
 import { useSnackbar } from 'notistack';
+import IMeta from '../../types/MetaType';
 
 type Params = {
   id: string;
@@ -28,7 +29,10 @@ const init: Import = {
   retail_price: 0,
 };
 export interface IStateSupplier {
-  suppliers: Supplier[];
+  suppliers: {
+    data: Supplier[];
+    meta: IMeta;
+  };
 }
 
 const EditImport = (): JSX.Element => {
@@ -49,6 +53,7 @@ const EditImport = (): JSX.Element => {
     });
     SuppliersService.getSuppliers().then((res) => {
       dispatch(getSuppliers(res));
+      console.log(res);
     });
     return () => {
       dispatch(reset(true));
@@ -120,7 +125,7 @@ const EditImport = (): JSX.Element => {
                   <Autocomplete
                     defaultValue={importDetail.supplier}
                     id="combo-box-demo"
-                    options={listSuppliers}
+                    options={listSuppliers.data}
                     getOptionLabel={(option) => option.name}
                     onChange={handleChangeSupplierImport}
                     renderInput={(params) => <TextField {...params} />}
