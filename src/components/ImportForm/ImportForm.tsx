@@ -16,7 +16,9 @@ import { Autocomplete } from '@material-ui/lab';
 import { TextField } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import IMeta from '../../types/MetaType';
-
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import '../../pages/Exports/style.css';
 export interface IState {
   products: {
     data: Product[];
@@ -30,9 +32,22 @@ export interface IState {
 }
 
 const ImportForm = () => {
+  const schema = yup.object().shape({
+    quantity: yup.number().positive().integer().required(),
+    retail_price: yup.number().positive().integer().required(),
+    description: yup.string(),
+  });
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
   const [inputProduct] = useState('');
   const [inputSupplier] = useState('');
-  const { handleSubmit } = useForm();
   const currentDate = new Date().toLocaleDateString('fr-CA');
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
@@ -156,28 +171,26 @@ const ImportForm = () => {
                 <div className="form-group col-md-6">
                   <label>Quantity:</label>
                   <input
-                    type="number"
-                    min="0"
+                    {...register('quantity')}
                     className="form-control"
                     onChange={handleTextChange}
                     autoComplete="off"
-                    required
                     name="quantity"
                     style={{ height: '56px' }}
                   />
+                  <p>{errors.quantity?.message}</p>
                 </div>
                 <div className="form-group col-md-6">
                   <label>Price (VND):</label>
                   <input
-                    type="number"
-                    min="0"
+                    {...register('retail_price')}
                     className="form-control"
                     onChange={handleTextChange}
                     autoComplete="off"
-                    required
                     name="retail_price"
                     style={{ height: '56px' }}
                   />
+                  <p>{errors.retail_price?.message}</p>
                 </div>
               </div>
               <label>Description:</label>

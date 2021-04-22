@@ -14,7 +14,10 @@ import { IState } from '../Products/Products';
 import { getProducts } from '../Products/ProductSlice';
 import { useSnackbar } from 'notistack';
 import IMeta from '../../types/MetaType';
-
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import './style.css';
 type StateCustomer = {
   customers: {
     data: Customer[];
@@ -31,7 +34,21 @@ const init = {
   customer_id: 0,
 };
 
+const schema = yup.object().shape({
+  quantity: yup.number().positive().integer().required(),
+  sell_price: yup.number().positive().integer().required(),
+  date: yup.date().required(),
+  description: yup.string(),
+});
+
 function NewExport(): JSX.Element {
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
   const listProducts = useSelector((state: IState) => state.products.data);
   const listCustomer = useSelector(
     (state: StateCustomer) => state.customers.data
@@ -80,7 +97,7 @@ function NewExport(): JSX.Element {
     product_id,
     customer_id,
   } = exportDetail;
-  const handleSubmit = (e: React.FormEvent) => {
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     ExportsService.createExport(
       sell_price,
@@ -117,7 +134,7 @@ function NewExport(): JSX.Element {
             {listProducts === [] && listCustomer === [] ? (
               <ClipLoader color="#FFC0CB" loading={true} size={400} />
             ) : (
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="inputEmail4">Product</label>
                 <Autocomplete
                   value={listProducts.find(
@@ -156,34 +173,36 @@ function NewExport(): JSX.Element {
                   name="exported_date"
                   style={{ height: '56px' }}
                 />
+
                 <div className="form-row">
                   <div className="form-group col-md-6">
                     <label htmlFor="inputAddress2">Quantity</label>
                     <input
-                      type="number"
+                      {...register('quantity')}
                       className="form-control"
-                      min="0"
                       value={exportDetail.quantity}
                       onChange={changeValue}
                       name="quantity"
                       style={{ height: '56px' }}
                     />
+                    <p>{errors.quantity?.message}</p>
                   </div>
                   <div className="form-group col-md-6">
                     <label htmlFor="inputCity">Price</label>
                     <input
-                      type="number"
+                      {...register('sell_price')}
                       className="form-control"
-                      min="0"
                       value={exportDetail.sell_price}
                       onChange={changeValue}
                       name="sell_price"
                       style={{ height: '56px' }}
                     />
+                    <p>{errors.sell_price?.message}</p>
                   </div>
                 </div>
                 <label>Descripton</label>
                 <textarea
+                  {...register('description')}
                   className="form-control"
                   rows={5}
                   cols={60}
@@ -191,6 +210,7 @@ function NewExport(): JSX.Element {
                   value={exportDetail.description}
                   name="description"
                 ></textarea>
+                <p>{errors.description?.message}</p>
                 <div style={{ textAlign: 'center' }}>
                   <button
                     type="submit"

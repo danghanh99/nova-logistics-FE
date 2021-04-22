@@ -17,7 +17,10 @@ import Supplier from '../../models/Supplier';
 import Product from '../../models/Product';
 import { useSnackbar } from 'notistack';
 import IMeta from '../../types/MetaType';
-
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import '../../pages/Exports/style.css';
+import { useForm } from 'react-hook-form';
 type Params = {
   id: string;
 };
@@ -36,6 +39,19 @@ export interface IStateSupplier {
 }
 
 const EditImport = (): JSX.Element => {
+  const schema = yup.object().shape({
+    quantity: yup.number().positive().integer(),
+    retail_price: yup.number().positive().integer(),
+    description: yup.string(),
+  });
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
   const { id }: Params = useParams();
   const dispatch = useDispatch();
   const listProducts = useSelector((state: IState) => state.products);
@@ -80,8 +96,7 @@ const EditImport = (): JSX.Element => {
     setImport({ ...importDetail, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = (e: React.FormEvent) => {
     ImportsService.updateImport(importDetail).then(
       () => {
         history.push('/admin/imports');
@@ -110,7 +125,7 @@ const EditImport = (): JSX.Element => {
             {importDetail.id === 0 ? (
               <ClipLoader color="#FFC0CB" loading={true} size={400} />
             ) : (
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-group">
                   <label>Product:</label>
                   <Autocomplete
@@ -164,26 +179,26 @@ const EditImport = (): JSX.Element => {
                   <div className="form-group col-md-6">
                     <label htmlFor="inputAddress2">Quantity</label>
                     <input
-                      type="number"
+                      {...register('quantity')}
                       className="form-control"
-                      min="0"
                       defaultValue={importDetail.quantity}
                       onChange={changeValue}
                       name="quantity"
                       style={{ height: '56px' }}
                     />
+                    <p>{errors.quantity?.message}</p>
                   </div>
                   <div className="form-group col-md-6">
                     <label htmlFor="inputCity">Price</label>
                     <input
-                      type="number"
+                      {...register('retail_price')}
                       className="form-control"
-                      min="0"
                       defaultValue={importDetail.retail_price}
                       onChange={changeValue}
                       name="retail_price"
                       style={{ height: '56px' }}
                     />
+                    <p>{errors.retail_price?.message}</p>
                   </div>
                 </div>
                 <label>Descripton</label>

@@ -6,7 +6,11 @@ import Supplier from '../../models/Supplier';
 import { useSnackbar } from 'notistack';
 import Customer from '../../models/Customer';
 import CustomersService from '../../services/CustomersService';
-
+import * as yup from 'yup';
+import '../Exports/style.css';
+import 'yup-phone';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { useForm } from 'react-hook-form';
 type Params = {
   id: string;
 };
@@ -16,6 +20,24 @@ export interface IStateSupplier {
 }
 
 const EditCustomer = (): JSX.Element => {
+  const schema = yup.object().shape({
+    name: yup.string().max(64),
+    phone_number: yup.string().matches(/^\d+$/, {
+      message: 'Please enter valid number',
+      excludeEmptyString: false,
+    }),
+    address: yup.string().max(256),
+    description: yup.string().max(512),
+  });
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
   const initial: Customer = {
     id: 0,
     name: '',
@@ -27,8 +49,7 @@ const EditCustomer = (): JSX.Element => {
   const [customerDetail, setCustomer] = useState(initial);
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = (e: React.FormEvent) => {
     CustomersService.editCustomer(customerDetail).then(
       () => {
         history.push('/admin/customers');
@@ -68,40 +89,52 @@ const EditCustomer = (): JSX.Element => {
             {customerDetail.id === 0 ? (
               <ClipLoader color="#FFC0CB" loading={true} size={400} />
             ) : (
-              <form onSubmit={handleSubmit}>
-                <label>Name:</label>
-                <input
-                  type="text"
-                  placeholder="name..."
-                  className="form-control"
-                  onChange={handleInputChange}
-                  autoComplete="on"
-                  name="name"
-                  defaultValue={customerDetail.name}
-                  style={{ height: '56px' }}
-                />
-                <label>Phone number:</label>
-                <input
-                  type="text"
-                  placeholder="phone number..."
-                  className="form-control"
-                  onChange={handleInputChange}
-                  autoComplete="on"
-                  name="phone_number"
-                  defaultValue={customerDetail.phone_number}
-                  style={{ height: '56px' }}
-                />
-                <label>Address:</label>
-                <textarea
-                  placeholder="address..."
-                  onChange={handleInputChange}
-                  className="form-control"
-                  rows={5}
-                  id="comment"
-                  autoComplete="on"
-                  name="address"
-                  defaultValue={customerDetail.address}
-                />
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="form-row">
+                  <div className="col-md-12">
+                    <label>Name:</label>
+                    <input
+                      {...register('name')}
+                      placeholder="name..."
+                      className="form-control"
+                      onChange={handleInputChange}
+                      autoComplete="on"
+                      name="name"
+                      style={{ height: '56px' }}
+                      defaultValue={customerDetail.name}
+                    />
+                    <p>{errors.name?.message}</p>
+                  </div>
+                  <div className="col-md-12">
+                    <label>Phone number:</label>
+                    <input
+                      {...register('phone_number')}
+                      placeholder="phone number..."
+                      className="form-control"
+                      onChange={handleInputChange}
+                      autoComplete="on"
+                      name="phone_number"
+                      defaultValue={customerDetail.phone_number}
+                      style={{ height: '56px' }}
+                    />
+                    <p>{errors.phone_number?.message}</p>
+                  </div>
+                  <div className="col-md-12">
+                    <label>Address:</label>
+                    <textarea
+                      {...register('address')}
+                      placeholder="address..."
+                      onChange={handleInputChange}
+                      className="form-control"
+                      rows={5}
+                      id="comment"
+                      autoComplete="on"
+                      name="address"
+                      defaultValue={customerDetail.address}
+                    />
+                    <p>{errors.address?.message}</p>
+                  </div>
+                </div>
                 <div style={{ textAlign: 'center' }}>
                   <button
                     type="submit"

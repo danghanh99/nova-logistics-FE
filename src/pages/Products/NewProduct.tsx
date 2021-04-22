@@ -4,14 +4,27 @@ import ProductsService from '../../services/ProductsService';
 import { useDispatch } from 'react-redux';
 import { createProduct } from './ProductSlice';
 import { useHistory } from 'react-router-dom';
-
+import * as yup from 'yup';
+import '../Exports/style.css';
+import { yupResolver } from '@hookform/resolvers/yup';
 type Inputs = {
   name: string;
   description: string;
 };
 
 function NewProduct(): JSX.Element {
-  const { register, handleSubmit } = useForm<Inputs>();
+  const schema = yup.object().shape({
+    name: yup.string().max(64).required(),
+    description: yup.string().max(512),
+  });
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
   const dispatch = useDispatch();
   const history = useHistory();
   const onSubmit = (data: Inputs) => {
@@ -44,23 +57,28 @@ function NewProduct(): JSX.Element {
           >
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="form-row">
-                <label htmlFor="inputAddress2">Name</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  {...register('name')}
-                  name="name"
-                  required
-                  style={{ height: '56px' }}
-                />
-                <label>Descripton</label>
-                <textarea
-                  className="form-control"
-                  rows={5}
-                  cols={60}
-                  {...register('description')}
-                  name="description"
-                ></textarea>
+                <div className="col-md-12">
+                  <label htmlFor="inputAddress2">Name</label>
+                  <input
+                    {...register('name')}
+                    className="form-control"
+                    name="name"
+                    style={{ height: '56px' }}
+                  />
+                  <p>{errors.name?.message}</p>
+                </div>
+                <div className="col-md-12">
+                  <label>Descripton</label>
+                  <textarea
+                    {...register('description')}
+                    className="form-control"
+                    rows={5}
+                    cols={60}
+                    {...register('description')}
+                    name="description"
+                  ></textarea>
+                  <p>{errors.description?.message}</p>
+                </div>
               </div>
               <div style={{ textAlign: 'center' }}>
                 <button
