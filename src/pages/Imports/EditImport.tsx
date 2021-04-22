@@ -39,6 +39,7 @@ const EditImport = (): JSX.Element => {
   const { id }: Params = useParams();
   const dispatch = useDispatch();
   const listProducts = useSelector((state: IState) => state.products);
+
   const listSuppliers = useSelector((state: IStateSupplier) => state.suppliers);
   const history = useHistory();
   const [importDetail, setImport] = useState(init);
@@ -53,7 +54,6 @@ const EditImport = (): JSX.Element => {
     });
     SuppliersService.getSuppliers().then((res) => {
       dispatch(getSuppliers(res));
-      console.log(res);
     });
     return () => {
       dispatch(reset(true));
@@ -107,100 +107,104 @@ const EditImport = (): JSX.Element => {
             className="col-xs-6 col-sm-6 col-md-6 col-lg-6"
             style={{ marginLeft: 'auto', marginRight: 'auto' }}
           >
-            <form onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label>Product:</label>
-                <Autocomplete
-                  defaultValue={importDetail.product}
-                  id="combo-box-demo"
-                  style={{ backgroundColor: 'white' }}
-                  componentName="product"
-                  options={listProducts.data}
-                  getOptionLabel={(option) => option.name}
-                  onChange={handleChangeProductImport}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      label={`${importDetail.product?.name}`}
-                    />
-                  )}
-                />
-              </div>
-              <div className="form-group">
-                <label>Supplier:</label>
-                <Autocomplete
-                  defaultValue={importDetail.supplier}
-                  id="combo-box-demo"
-                  style={{ backgroundColor: 'white' }}
-                  options={listSuppliers.data}
-                  getOptionLabel={(option) => option.name}
-                  onChange={handleChangeSupplierImport}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      variant="outlined"
-                      label={`${importDetail.supplier?.name}`}
-                    />
-                  )}
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="inputAddress">Date</label>
-                <input
-                  type="date"
-                  className="form-control"
-                  defaultValue={importDetail.imported_date}
-                  onChange={changeValue}
-                  name="imported_date"
-                  style={{ height: '56px' }}
-                />
-              </div>
+            {importDetail.id === 0 ? (
+              <ClipLoader color="#FFC0CB" loading={true} size={400} />
+            ) : (
+              <form onSubmit={handleSubmit}>
+                <div className="form-group">
+                  <label>Product:</label>
+                  <Autocomplete
+                    defaultValue={importDetail.product}
+                    id="combo-box-demo"
+                    style={{ backgroundColor: 'white' }}
+                    componentName="product"
+                    options={listProducts.data}
+                    getOptionLabel={(option) => option.name}
+                    onChange={handleChangeProductImport}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        label={`${importDetail.product?.name}`}
+                      />
+                    )}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Supplier:</label>
+                  <Autocomplete
+                    defaultValue={importDetail.supplier}
+                    id="combo-box-demo"
+                    style={{ backgroundColor: 'white' }}
+                    options={listSuppliers.data}
+                    getOptionLabel={(option) => option.name}
+                    onChange={handleChangeSupplierImport}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        variant="outlined"
+                        label={`${importDetail.supplier?.name}`}
+                      />
+                    )}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="inputAddress">Date</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    defaultValue={importDetail.imported_date}
+                    onChange={changeValue}
+                    name="imported_date"
+                    style={{ height: '56px' }}
+                  />
+                </div>
 
-              <div className="form-row">
-                <div className="form-group col-md-6">
-                  <label htmlFor="inputAddress2">Quantity</label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    min="0"
-                    defaultValue={importDetail.quantity}
-                    onChange={changeValue}
-                    name="quantity"
-                    style={{ height: '56px' }}
-                  />
+                <div className="form-row">
+                  <div className="form-group col-md-6">
+                    <label htmlFor="inputAddress2">Quantity</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      min="0"
+                      defaultValue={importDetail.quantity}
+                      onChange={changeValue}
+                      name="quantity"
+                      style={{ height: '56px' }}
+                    />
+                  </div>
+                  <div className="form-group col-md-6">
+                    <label htmlFor="inputCity">Price</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      min="0"
+                      defaultValue={importDetail.retail_price}
+                      onChange={changeValue}
+                      name="retail_price"
+                      style={{ height: '56px' }}
+                    />
+                  </div>
                 </div>
-                <div className="form-group col-md-6">
-                  <label htmlFor="inputCity">Price</label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    min="0"
-                    defaultValue={importDetail.retail_price}
-                    onChange={changeValue}
-                    name="retail_price"
-                    style={{ height: '56px' }}
-                  />
+                <label>Descripton</label>
+                <textarea
+                  className="form-control"
+                  rows={5}
+                  cols={60}
+                  defaultValue={importDetail.description}
+                  onChange={changeValue}
+                  name="description"
+                ></textarea>
+                <div style={{ textAlign: 'center' }}>
+                  <button
+                    type="submit"
+                    className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn mt-1"
+                  >
+                    Save
+                  </button>
                 </div>
-              </div>
-              <label>Descripton</label>
-              <textarea
-                className="form-control"
-                rows={5}
-                cols={60}
-                defaultValue={importDetail.description}
-                onChange={changeValue}
-                name="description"
-              ></textarea>
-              <div style={{ textAlign: 'center' }}>
-                <button
-                  type="submit"
-                  className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn mt-1"
-                >
-                  Create
-                </button>
-              </div>
-            </form>
+              </form>
+            )}
           </div>
         </div>
       </div>

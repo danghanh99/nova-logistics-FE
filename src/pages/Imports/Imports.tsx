@@ -198,9 +198,9 @@ const Imports = (): JSX.Element => {
               <td className="text-left">{value.description}</td>
               <td>
                 <div className="d-flex justify-content-center">
-                  <button className="btn mr-2 d-flex align-items-center btn-success">
+                  {/* <button className="btn mr-2 d-flex align-items-center btn-success">
                     <BiExport className="c-icon" />
-                  </button>
+                  </button> */}
                   <button
                     className="btn mr-2 d-flex align-items-center btn-warning"
                     onClick={() => onHandleEdit(value.id)}

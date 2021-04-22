@@ -189,7 +189,6 @@ const ImportForm = () => {
                 defaultValue={''}
                 autoComplete="off"
                 name="description"
-                style={{ height: '56px' }}
               />
               <div style={{ textAlign: 'center' }}>
                 <button

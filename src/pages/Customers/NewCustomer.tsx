@@ -87,7 +87,6 @@ const NewCustomer = (): JSX.Element => {
                   autoComplete="on"
                   name="address"
                   required
-                  style={{ height: '56px' }}
                 />
               </div>
 
