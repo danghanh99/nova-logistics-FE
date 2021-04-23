@@ -10,20 +10,19 @@ import CustomersService from '../../services/CustomersService';
 import ExportsService from '../../services/ExportsService';
 import ProductsService from '../../services/ProductsService';
 import { getCustomers } from '../Customers/CustomersSlice';
+import { IState } from '../Products/Products';
 import { getProducts } from '../Products/ProductSlice';
 import { useSnackbar } from 'notistack';
 import IMeta from '../../types/MetaType';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import './style.css';
-type IState = {
+import '../../pages/Exports/style.css';
+import useAsync from '../../lib/useAsync';
+import { plainToClass } from 'class-transformer';
+import { yupResolver } from '@hookform/resolvers/yup';
+type StateCustomer = {
   customers: {
     data: Customer[];
-    meta: IMeta;
-  };
-  products: {
-    data: Product[];
     meta: IMeta;
   };
 };
@@ -37,14 +36,13 @@ const init = {
   customer_id: 0,
 };
 
-const schema = yup.object().shape({
-  quantity: yup.number().positive().integer().required(),
-  sell_price: yup.number().positive().integer().required(),
-  date: yup.date().required(),
-  description: yup.string(),
-});
-
 function NewExport(): JSX.Element {
+  const schema = yup.object().shape({
+    quantity: yup.number().positive().integer().max(999999999).required(),
+    sell_price: yup.number().integer().max(999999999).positive().required(),
+    description: yup.string(),
+  });
+
   const {
     register,
     formState: { errors },
@@ -52,14 +50,16 @@ function NewExport(): JSX.Element {
   } = useForm({
     resolver: yupResolver(schema),
   });
+
   const listProducts = useSelector((state: IState) => state.products.data);
-  const listCustomer = useSelector((state: IState) => state.customers.data);
+  const listCustomer = useSelector(
+    (state: StateCustomer) => state.customers.data
+  );
 
   const dispatch = useDispatch();
   const [exportDetail, setExport] = useState(init);
   const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
-
   useEffect(() => {
     ProductsService.getProducts().then((res) => {
       dispatch(getProducts(res));
@@ -99,7 +99,7 @@ function NewExport(): JSX.Element {
     customer_id,
   } = exportDetail;
   const onSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+    // e.preventDefault();
     ExportsService.createExport(
       sell_price,
       quantity,
@@ -138,14 +138,17 @@ function NewExport(): JSX.Element {
               <form onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="inputEmail4">Product</label>
                 <Autocomplete
-                  value={listProducts.find(
-                    (item) => item.id === exportDetail.product_id
-                  )}
+                  // value={listProducts.find(
+                  //   (item) => item.id === exportDetail.product_id
+                  // )}
                   id="combo-box-demo"
                   style={{ backgroundColor: 'white' }}
                   componentName="product"
                   options={listProducts}
                   getOptionLabel={(option) => option.name}
+                  getOptionSelected={(option, value) =>
+                    option.name === value.name
+                  }
                   onChange={handleChangeProductExport}
                   renderInput={(params) => (
                     <TextField {...params} variant="outlined" label="Name..." />
@@ -153,13 +156,16 @@ function NewExport(): JSX.Element {
                 />
                 <label htmlFor="inputPassword4">Customer</label>
                 <Autocomplete
-                  value={listCustomer.find(
-                    (item) => item.id === exportDetail.customer_id
-                  )}
+                  // value={listCustomer.find(
+                  //   (item) => item.id === exportDetail.customer_id
+                  // )}
                   id="combo-box-demo"
                   style={{ backgroundColor: 'white' }}
                   options={listCustomer}
                   getOptionLabel={(option) => option.name}
+                  getOptionSelected={(option, value) =>
+                    option.name === value.name
+                  }
                   onChange={handleChangeCustomerImport}
                   renderInput={(params) => (
                     <TextField {...params} variant="outlined" label="Name..." />
@@ -174,7 +180,6 @@ function NewExport(): JSX.Element {
                   name="exported_date"
                   style={{ height: '56px' }}
                 />
-
                 <div className="form-row">
                   <div className="form-group col-md-6">
                     <label htmlFor="inputAddress2">Quantity</label>
@@ -203,7 +208,6 @@ function NewExport(): JSX.Element {
                 </div>
                 <label>Descripton</label>
                 <textarea
-                  {...register('description')}
                   className="form-control"
                   rows={5}
                   cols={60}
@@ -211,7 +215,6 @@ function NewExport(): JSX.Element {
                   value={exportDetail.description}
                   name="description"
                 ></textarea>
-                <p>{errors.description?.message}</p>
                 <div style={{ textAlign: 'center' }}>
                   <button
                     type="submit"

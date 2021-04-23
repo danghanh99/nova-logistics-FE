@@ -7,13 +7,14 @@ import React, { useEffect } from 'react';
 import ImportsService from '../../services/ImportsService';
 import { getImports, deleteImport, reset } from './ImportsSlice';
 import { plainToClass } from 'class-transformer';
-import { BiExport } from 'react-icons/bi';
 import Pagination from '../../components/Pagination/Pagination';
 import { useState } from 'react';
 import IMeta from '../../types/MetaType';
 import { useHistory } from 'react-router-dom';
 import './Imports.scss';
 import { useSnackbar } from 'notistack';
+import useAsync from '../../lib/useAsync';
+import ClipLoader from 'react-spinners/ClipLoader';
 export interface IState {
   imports: {
     data: Import[];
@@ -47,25 +48,14 @@ const Imports = (): JSX.Element => {
   const [sort, setSort] = useState('updated_at: desc, created_at: desc');
   const dispatch = useDispatch();
 
+  const { execute, status } = useAsync(async () => {
+    return ImportsService.getImports(page, perPage, search, sort).then((res) =>
+      dispatch(getImports(res))
+    );
+  }, false);
+
   useEffect(() => {
-    ImportsService.getImports(page, perPage, search, sort)
-      .then(
-        (res) => {
-          dispatch(getImports(res));
-        },
-        (error) => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-          enqueueSnackbar(resMessage, { variant: 'error' });
-        }
-      )
-      .catch((error) => {
-        throw error;
-      });
+    execute();
     return () => {
       dispatch(reset(true));
     };
@@ -263,14 +253,18 @@ const Imports = (): JSX.Element => {
 
   return (
     <>
-      <Table
-        headers={headers()}
-        modelName="Import"
-        search={onSearch()}
-        children={children()}
-        pagination={<Pagination meta={meta} hanleOnclick={hanleOnclick} />}
-        select={select()}
-      ></Table>
+      {status === 'pending' ? (
+        <ClipLoader color="#FFC0CB" loading={true} size={400} />
+      ) : (
+        <Table
+          headers={headers()}
+          modelName="Import"
+          search={onSearch()}
+          children={children()}
+          pagination={<Pagination meta={meta} hanleOnclick={hanleOnclick} />}
+          select={select()}
+        ></Table>
+      )}
     </>
   );
 };

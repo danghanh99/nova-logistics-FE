@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import ImportsService from '../../services/ImportsService';
-import { reset } from './ImportsSlice';
+import { getImport, getImports, reset } from './ImportsSlice';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { useState } from 'react';
 import Import from '../../models/Import';
@@ -21,19 +21,22 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import '../../pages/Exports/style.css';
 import { useForm } from 'react-hook-form';
+import useAsync from '../../lib/useAsync';
+import { plainToClass } from 'class-transformer';
+
 type Params = {
   id: string;
-};
-const init: Import = {
-  quantity: 0,
-  description: '',
-  id: 0,
-  imported_date: '2021-04-14',
-  retail_price: 0,
 };
 export interface IStateSupplier {
   suppliers: {
     data: Supplier[];
+    meta: IMeta;
+  };
+}
+
+export interface IStateImport {
+  imports: {
+    data: Import[];
     meta: IMeta;
   };
 }
@@ -55,16 +58,25 @@ const EditImport = (): JSX.Element => {
   const { id }: Params = useParams();
   const dispatch = useDispatch();
   const listProducts = useSelector((state: IState) => state.products);
-
   const listSuppliers = useSelector((state: IStateSupplier) => state.suppliers);
   const history = useHistory();
-  const [importDetail, setImport] = useState(init);
+  const { execute, value, status } = useAsync(async () => {
+    return ImportsService.getImport(parseInt(id, undefined)).then((res) => {
+      dispatch(getImport(res.data.import));
+    });
+  }, false);
+  const [importForm, setImportForm] = useState<Import>(
+    plainToClass(Import, value)
+  );
+  const importDetail = plainToClass(
+    Import,
+    useSelector((state: IStateImport) => state.imports.data)[0]
+  );
+
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
-    ImportsService.getImport(parseInt(id, undefined)).then((res) => {
-      setImport(res.data.import);
-    });
+    execute();
     ProductsService.getProducts().then((res) => {
       dispatch(getProducts(res));
     });
@@ -80,20 +92,20 @@ const EditImport = (): JSX.Element => {
     e: ChangeEvent<{}>,
     value: Product | null
   ) => {
-    setImport({ ...importDetail, product: value });
+    setImportForm({ ...importForm, product: value });
   };
 
   const handleChangeSupplierImport = (
     e: ChangeEvent<{}>,
     value: Supplier | null
   ) => {
-    setImport({ ...importDetail, supplier: value });
+    setImportForm({ ...importForm, supplier: value });
   };
 
   const changeValue = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setImport({ ...importDetail, [e.target.name]: e.target.value });
+    setImportForm({ ...importDetail, [e.target.name]: e.target.value });
   };
 
   const onSubmit = (e: React.FormEvent) => {
@@ -122,14 +134,14 @@ const EditImport = (): JSX.Element => {
             className="col-xs-6 col-sm-6 col-md-6 col-lg-6"
             style={{ marginLeft: 'auto', marginRight: 'auto' }}
           >
-            {importDetail.id === 0 ? (
+            {status === 'pending' ? (
               <ClipLoader color="#FFC0CB" loading={true} size={400} />
             ) : (
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-group">
                   <label>Product:</label>
                   <Autocomplete
-                    defaultValue={importDetail.product}
+                    defaultValue={importDetail?.product}
                     id="combo-box-demo"
                     style={{ backgroundColor: 'white' }}
                     componentName="product"
@@ -140,7 +152,7 @@ const EditImport = (): JSX.Element => {
                       <TextField
                         {...params}
                         variant="outlined"
-                        label={`${importDetail.product?.name}`}
+                        label={`${importDetail?.product?.name}`}
                       />
                     )}
                   />
@@ -148,7 +160,7 @@ const EditImport = (): JSX.Element => {
                 <div className="form-group">
                   <label>Supplier:</label>
                   <Autocomplete
-                    defaultValue={importDetail.supplier}
+                    defaultValue={importDetail?.supplier}
                     id="combo-box-demo"
                     style={{ backgroundColor: 'white' }}
                     options={listSuppliers.data}
@@ -158,7 +170,7 @@ const EditImport = (): JSX.Element => {
                       <TextField
                         {...params}
                         variant="outlined"
-                        label={`${importDetail.supplier?.name}`}
+                        label={`${importDetail?.supplier?.name}`}
                       />
                     )}
                   />
@@ -168,7 +180,7 @@ const EditImport = (): JSX.Element => {
                   <input
                     type="date"
                     className="form-control"
-                    defaultValue={importDetail.imported_date}
+                    defaultValue={importDetail?.imported_date}
                     onChange={changeValue}
                     name="imported_date"
                     style={{ height: '56px' }}
@@ -206,7 +218,7 @@ const EditImport = (): JSX.Element => {
                   className="form-control"
                   rows={5}
                   cols={60}
-                  defaultValue={importDetail.description}
+                  defaultValue={importDetail?.description}
                   onChange={changeValue}
                   name="description"
                 ></textarea>

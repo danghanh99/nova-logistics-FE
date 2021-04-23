@@ -12,44 +12,44 @@ import { freeSet } from '@coreui/icons';
 import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import AuthService from '../../services/AuthService';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSnackbar } from 'notistack';
+import useAsync from '../../lib/useAsync';
+import { isLoggedIn } from './LoginSlice';
+
 interface IFormInputs {
   username: string;
   password: string;
 }
 
 const LoginForm = (): JSX.Element => {
-  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
   const { register, handleSubmit } = useForm<IFormInputs>({
     criteriaMode: 'all',
   });
-  const { enqueueSnackbar } = useSnackbar();
-  const onSubmit = (data: IFormInputs) => {
-    setLoading(true);
-    try {
-      AuthService.Login(data.username, data.password).then(
-        () => {
-          history.push('/admin/exports');
-        },
-        (error) => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-          setLoading(false);
-          enqueueSnackbar(resMessage, { variant: 'error' });
-        }
-      );
-      dispatch(true);
-    } catch (error) {
-      return error;
-    }
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  const { execute, status } = useAsync(async () => {
+    return AuthService.Login(username, password).then(() => {
+      history.push('/admin/exports');
+      dispatch(isLoggedIn(true));
+    });
+  }, false);
+
+  const onSubmit = () => {
+    execute();
+  };
+
+  const onHandleChangeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUsername(e.target.value);
+  };
+
+  const onHandleChangeUserPassword = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setPassword(e.target.value);
   };
   return (
     <CForm onSubmit={handleSubmit(onSubmit)}>
@@ -67,6 +67,7 @@ const LoginForm = (): JSX.Element => {
           required
           autoComplete="username"
           {...register('username')}
+          onChange={onHandleChangeUserName}
         />
       </CInputGroup>
       <CInputGroup className="mb-4">
@@ -81,6 +82,7 @@ const LoginForm = (): JSX.Element => {
           autoComplete="current-password"
           required
           {...register('password')}
+          onChange={onHandleChangeUserPassword}
         />
       </CInputGroup>
       <CRow>
@@ -88,13 +90,13 @@ const LoginForm = (): JSX.Element => {
           <CButton
             color="primary"
             className="px-4"
-            disabled={loading}
+            disabled={status === 'pending'}
             type="submit"
           >
-            {loading && (
+            {status === 'pending' && (
               <span className="spinner-border spinner-border-sm"></span>
             )}
-            Login
+            &nbsp;{status !== 'pending' ? 'Login' : 'Loading...'}
           </CButton>
         </CCol>
         <CCol xs="6" className="text-right">
