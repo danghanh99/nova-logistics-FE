@@ -28,7 +28,6 @@ const todo = createSlice({
       state.data = state.data.filter((item: Export) => item.id !== payload);
       return state;
     },
-    
   },
 });
 

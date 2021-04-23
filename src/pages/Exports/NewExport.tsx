@@ -10,7 +10,6 @@ import CustomersService from '../../services/CustomersService';
 import ExportsService from '../../services/ExportsService';
 import ProductsService from '../../services/ProductsService';
 import { getCustomers } from '../Customers/CustomersSlice';
-import { IState } from '../Products/Products';
 import { getProducts } from '../Products/ProductSlice';
 import { useSnackbar } from 'notistack';
 import IMeta from '../../types/MetaType';
@@ -18,9 +17,13 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import './style.css';
-type StateCustomer = {
+type IState = {
   customers: {
     data: Customer[];
+    meta: IMeta;
+  };
+  products: {
+    data: Product[];
     meta: IMeta;
   };
 };
@@ -50,9 +53,7 @@ function NewExport(): JSX.Element {
     resolver: yupResolver(schema),
   });
   const listProducts = useSelector((state: IState) => state.products.data);
-  const listCustomer = useSelector(
-    (state: StateCustomer) => state.customers.data
-  );
+  const listCustomer = useSelector((state: IState) => state.customers.data);
 
   const dispatch = useDispatch();
   const [exportDetail, setExport] = useState(init);
@@ -67,7 +68,7 @@ function NewExport(): JSX.Element {
     CustomersService.getCustomers().then((res) => {
       dispatch(getCustomers(res));
     });
-  });
+  }, []);
 
   const changeValue = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
