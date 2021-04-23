@@ -49,16 +49,19 @@ const Imports = (): JSX.Element => {
   const dispatch = useDispatch();
 
   const { execute, status } = useAsync(async () => {
-    return ImportsService.getImports(page, perPage, search, sort).then((res) =>
+    return ImportsService.getImports(page, perPage, sort).then((res) =>
       dispatch(getImports(res))
     );
   }, false);
 
   useEffect(() => {
-    execute();
-    return () => {
-      dispatch(reset(true));
-    };
+    if (status !== 'success') {
+      execute();
+    } else {
+      ImportsService.getImports(page, perPage, search, sort).then((res) =>
+        dispatch(getImports(res))
+      );
+    }
   }, [page, perPage, search, sort]);
 
   const onchangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -151,10 +154,6 @@ const Imports = (): JSX.Element => {
     );
   };
 
-  const onHandleEdit = (id: number) => {
-    history.push(`/admin/imports/edit/${id}`);
-  };
-
   const onHandleDelete = (id: number) => {
     ImportsService.deleteImport(id).then(
       () => {
@@ -193,7 +192,9 @@ const Imports = (): JSX.Element => {
                   </button> */}
                   <button
                     className="btn mr-2 d-flex align-items-center btn-warning"
-                    onClick={() => onHandleEdit(value.id)}
+                    onClick={() =>
+                      history.push(`/admin/imports/edit/${value.id}`)
+                    }
                   >
                     <CIcon content={freeSet.cilColorBorder}></CIcon>
                   </button>

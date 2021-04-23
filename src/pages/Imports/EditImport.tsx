@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
 import ImportsService from '../../services/ImportsService';
-import { getImport, getImports, reset } from './ImportsSlice';
+import { getImport, reset } from './ImportsSlice';
 import ClipLoader from 'react-spinners/ClipLoader';
 import { useState } from 'react';
 import Import from '../../models/Import';
@@ -93,26 +93,18 @@ const EditImport = (): JSX.Element => {
     setImportForm({ ...importDetail, [e.target.name]: e.target.value });
   };
 
-  // const handleSubmit = (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   ImportsService.updateImport(importDetail).then(
-  //     () => {
-  //       history.push('/admin/imports');
-  //       enqueueSnackbar('Update import success', { variant: 'success' });
-  //     },
-  //     (error) => {
-  //       const resMessage =
-  //         (error.response &&
-  //           error.response.data &&
-  //           error.response.data.message) ||
-  //         error.message ||
-  //         error.toString();
-  //       enqueueSnackbar(resMessage, { variant: 'error' });
-  //     }
-  //   );
-  // };
+  const submitImport = useAsync(async () => {
+    return ImportsService.updateImport(importForm).then(() => {
+      history.push('/admin/imports');
+      setTimeout(() => {
+        enqueueSnackbar('Update import success', { variant: 'success' });
+      }, 500);
+    });
+  }, false);
 
-  const onSubmit = () => {};
+  const onSubmit = () => {
+    submitImport.execute();
+  };
 
   return (
     <>
@@ -214,8 +206,13 @@ const EditImport = (): JSX.Element => {
                   <button
                     type="submit"
                     className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn mt-1"
+                    disabled={submitImport.status === 'pending'}
                   >
-                    Save
+                    {submitImport.status === 'pending' && (
+                      <span className="spinner-border spinner-border-sm"></span>
+                    )}
+                    &nbsp;
+                    {submitImport.status !== 'pending' ? 'Save' : 'Loading...'}
                   </button>
                 </div>
               </form>

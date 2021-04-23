@@ -4,8 +4,6 @@ import ClipLoader from 'react-spinners/ClipLoader';
 import { useState } from 'react';
 import Supplier from '../../models/Supplier';
 import { useSnackbar } from 'notistack';
-import Customer from '../../models/Customer';
-import CustomersService from '../../services/CustomersService';
 import SuppliersService from '../../services/SuppliersService';
 
 type Params = {

@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Supplier from '../../models/Supplier';
-import CustomersService from '../../services/CustomersService';
 import SuppliersService from '../../services/SuppliersService';
 import { reset } from '../Imports/ImportsSlice';
 import { newSupplier } from './SuppliersSlice';

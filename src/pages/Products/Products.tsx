@@ -31,7 +31,7 @@ const Products = (): JSX.Element => {
   const meta = useSelector((state: IState) => state.products.meta);
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
-  const [sort, setSort] = useState('updated_at: desc, created_at: desc');
+  const sort = 'updated_at: desc, created_at: desc';
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
 
