@@ -50,7 +50,7 @@ function NewExport(): JSX.Element {
     CustomersService.getCustomers().then((res) => {
       dispatch(getCustomers(res));
     });
-  });
+  }, []);
 
   const changeValue = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
