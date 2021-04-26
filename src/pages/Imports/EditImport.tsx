@@ -168,18 +168,19 @@ const EditImport = (): JSX.Element => {
                   )}
                 />
               </div>
-              <div className="form-group col-md-6">
-                <label htmlFor="inputCity">Price</label>
+              <div className="form-group">
+                <label>Date:</label>
                 <input
-                  type="number"
+                  {...register('imported_date')}
+                  type="date"
                   className="form-control height-56"
-                  min="0"
-                  defaultValue={importDetail?.retail_price}
                   onChange={changeValue}
+                  autoComplete="off"
+                  defaultValue={importDetail.imported_date}
+                  required
                   name="imported_date"
                 />
               </div>
-
               <div className="form-row">
                 <div className="col-6">
                   <label htmlFor="inputAddress2">Quantity</label>
@@ -219,6 +220,7 @@ const EditImport = (): JSX.Element => {
                   className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn mt-1"
                   // disabled={submitImport.status === 'pending'}
                 >
+                  Save
                   {/* {submitImport.status === 'pending' && (
                       <span className="spinner-border spinner-border-sm"></span>
                     )}
