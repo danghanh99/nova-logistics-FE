@@ -94,7 +94,7 @@ const EditCustomer = (): JSX.Element => {
                     <input
                       {...register('name')}
                       placeholder="name..."
-                      className="form-control"
+                      className="form-control height-56"
                       onChange={handleInputChange}
                       autoComplete="on"
                       name="name"
@@ -107,7 +107,7 @@ const EditCustomer = (): JSX.Element => {
                     <input
                       {...register('phone_number')}
                       placeholder="phone number..."
-                      className="form-control"
+                      className="form-control height-56"
                       onChange={handleInputChange}
                       autoComplete="on"
                       name="phone_number"
@@ -121,7 +121,7 @@ const EditCustomer = (): JSX.Element => {
                       {...register('address')}
                       placeholder="address..."
                       onChange={handleInputChange}
-                      className="form-control"
+                      className="form-control height-56"
                       rows={5}
                       id="comment"
                       autoComplete="on"

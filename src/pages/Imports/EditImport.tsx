@@ -172,7 +172,7 @@ const EditImport = (): JSX.Element => {
                 <label htmlFor="inputCity">Price</label>
                 <input
                   type="number"
-                  className="form-control"
+                  className="form-control height-56"
                   min="0"
                   defaultValue={importDetail?.retail_price}
                   onChange={changeValue}
@@ -185,7 +185,7 @@ const EditImport = (): JSX.Element => {
                   <label htmlFor="inputAddress2">Quantity</label>
                   <input
                     {...register('quantity')}
-                    className="form-control"
+                    className="form-control height-56"
                     defaultValue={importDetail.quantity}
                     onChange={changeValue}
                     name="quantity"
@@ -196,7 +196,7 @@ const EditImport = (): JSX.Element => {
                   <label htmlFor="inputCity">Price</label>
                   <input
                     {...register('retail_price')}
-                    className="form-control"
+                    className="form-control height-56"
                     defaultValue={importDetail.retail_price}
                     onChange={changeValue}
                     name="retail_price"
@@ -206,7 +206,7 @@ const EditImport = (): JSX.Element => {
               </div>
               <label>Descripton</label>
               <textarea
-                className="form-control"
+                className="form-control height-56"
                 rows={5}
                 cols={60}
                 defaultValue={importDetail?.description}

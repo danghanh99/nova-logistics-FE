@@ -85,7 +85,7 @@ const Imports = (): JSX.Element => {
   const headers = (): JSX.Element => {
     return (
       <tr>
-        <th className="width-50  text-right ">ID</th>
+        <th className="width-50 text-right ">ID</th>
         <th>Product</th>
         <th>Supplier</th>
         <th>
