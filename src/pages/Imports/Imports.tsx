@@ -9,17 +9,11 @@ import { getImports, deleteImport, reset } from './ImportsSlice';
 import { plainToClass } from 'class-transformer';
 import Pagination from '../../components/Pagination/Pagination';
 import { useState } from 'react';
-import IMeta from '../../types/MetaType';
 import { useHistory } from 'react-router-dom';
 import './Imports.scss';
 import { useSnackbar } from 'notistack';
 import Loader from '../../components/Loader/Loader';
-export interface IState {
-  imports: {
-    data: Import[];
-    meta: IMeta;
-  };
-}
+import IState from '../../types/StateType';
 
 const initIconSort = {
   quantity_desc: '',
@@ -40,7 +34,7 @@ const Imports = (): JSX.Element => {
   const [iconSort, setIconSort] = useState(initIconSort);
   const meta = useSelector((state: IState) => state.imports.meta);
 
-  const loading = useSelector((state: any) => state.isLoading);
+  const loading = useSelector((state: IState) => state.isLoading);
 
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
