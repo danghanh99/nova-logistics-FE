@@ -59,9 +59,7 @@ const Suppliers = (): JSX.Element => {
     });
   };
 
-  const showForm = useSelector((state: IState) => state.newSupplier);
   const dispatch = useDispatch();
-
   const headers = (): JSX.Element => {
     return (
       <tr>
