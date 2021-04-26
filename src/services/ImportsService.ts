@@ -1,7 +1,6 @@
 import axios from 'axios';
 import Import from '../models/Import';
 import IMeta from '../types/MetaType';
-
 const API_URL = 'https://nova-logistics-backend.herokuapp.com/api/v1/';
 
 interface IState {
@@ -9,7 +8,7 @@ interface IState {
   meta: IMeta;
 }
 
-const getImports = (
+const getImports = async (
   page?: number,
   perPage?: number,
   search?: string,

@@ -6,6 +6,7 @@ import customerReducer from './pages/Customers/CustomersSlice';
 import importReducer from './pages/Imports/ImportsSlice';
 import exportReducer from './pages/Exports/ExportsSlice';
 import productReducer from './pages/Products/ProductSlice';
+import loadingReducer from './LoadingSlice';
 const rootReducer = {
   sidebar: sidebarReducer,
   suppliers: supplierReducer,
@@ -14,6 +15,7 @@ const rootReducer = {
   exports: exportReducer,
   products: productReducer,
   isLoggedIn: loginReducer,
+  isLoading: loadingReducer,
 };
 const store = configureStore({
   reducer: rootReducer,

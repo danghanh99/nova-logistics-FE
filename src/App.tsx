@@ -5,6 +5,7 @@ import TheLayout from './containers/TheLayout';
 import { useSelector } from 'react-redux';
 import AuthService from './services/AuthService';
 import { setAuthToken } from './services/AuthService';
+import AxiosInterceptors from './lib/interceptor';
 
 type State = {
   isLoggedIn: boolean;
@@ -21,6 +22,7 @@ function App() {
 
   return (
     <Router>
+      {AxiosInterceptors()}
       {isLoggedIn ? setAuthToken() : null}
       {redirect()}
       <Route

@@ -14,7 +14,7 @@ import { useDispatch } from 'react-redux';
 import AuthService from '../../services/AuthService';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import useAsync from '../../lib/useAsync';
+// import useAsync from '../../lib/useAsync';
 import { isLoggedIn } from './LoginSlice';
 
 interface IFormInputs {
@@ -31,15 +31,15 @@ const LoginForm = (): JSX.Element => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
-  const { execute, status } = useAsync(async () => {
-    return AuthService.Login(username, password).then(() => {
-      history.push('/admin/exports');
-      dispatch(isLoggedIn(true));
-    });
-  }, false);
+  // const { execute, status } = useAsync(async () => {
+  //   return AuthService.Login(username, password).then(() => {
+  //     history.push('/admin/exports');
+  //     dispatch(isLoggedIn(true));
+  //   });
+  // }, false);
 
   const onSubmit = () => {
-    execute();
+    // execute();
   };
 
   const onHandleChangeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -90,13 +90,13 @@ const LoginForm = (): JSX.Element => {
           <CButton
             color="primary"
             className="px-4"
-            disabled={status === 'pending'}
+            // disabled={status === 'pending'}
             type="submit"
           >
-            {status === 'pending' && (
+            {/* {status === 'pending' && (
               <span className="spinner-border spinner-border-sm"></span>
             )}
-            &nbsp;{status !== 'pending' ? 'Login' : 'Loading...'}
+            &nbsp;{status !== 'pending' ? 'Login' : 'Loading...'} */}
           </CButton>
         </CCol>
         <CCol xs="6" className="text-right">

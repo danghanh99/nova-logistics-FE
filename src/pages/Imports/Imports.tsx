@@ -13,8 +13,7 @@ import IMeta from '../../types/MetaType';
 import { useHistory } from 'react-router-dom';
 import './Imports.scss';
 import { useSnackbar } from 'notistack';
-import useAsync from '../../lib/useAsync';
-import ClipLoader from 'react-spinners/ClipLoader';
+import Loader from '../../components/Loader/Loader';
 export interface IState {
   imports: {
     data: Import[];
@@ -41,6 +40,8 @@ const Imports = (): JSX.Element => {
   const [iconSort, setIconSort] = useState(initIconSort);
   const meta = useSelector((state: IState) => state.imports.meta);
 
+  const loading = useSelector((state: any) => state.isLoading);
+
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const [search, setSearch] = useState('');
@@ -48,20 +49,10 @@ const Imports = (): JSX.Element => {
   const [sort, setSort] = useState('updated_at: desc, created_at: desc');
   const dispatch = useDispatch();
 
-  const { execute, status } = useAsync(async () => {
-    return ImportsService.getImports(page, perPage, sort).then((res) =>
+  useEffect(() => {
+    ImportsService.getImports(page, perPage, search, sort).then((res) =>
       dispatch(getImports(res))
     );
-  }, false);
-
-  useEffect(() => {
-    if (status !== 'success') {
-      execute();
-    } else {
-      ImportsService.getImports(page, perPage, search, sort).then((res) =>
-        dispatch(getImports(res))
-      );
-    }
   }, [page, perPage, search, sort]);
 
   const onchangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -187,9 +178,6 @@ const Imports = (): JSX.Element => {
               <td className="text-left">{value.description}</td>
               <td>
                 <div className="d-flex justify-content-center">
-                  {/* <button className="btn mr-2 d-flex align-items-center btn-success">
-                    <BiExport className="c-icon" />
-                  </button> */}
                   <button
                     className="btn mr-2 d-flex align-items-center btn-warning"
                     onClick={() =>
@@ -254,18 +242,15 @@ const Imports = (): JSX.Element => {
 
   return (
     <>
-      {status === 'pending' ? (
-        <ClipLoader color="#FFC0CB" loading={true} size={400} />
-      ) : (
-        <Table
-          headers={headers()}
-          modelName="Import"
-          search={onSearch()}
-          children={children()}
-          pagination={<Pagination meta={meta} hanleOnclick={hanleOnclick} />}
-          select={select()}
-        ></Table>
-      )}
+      <Table
+        headers={headers()}
+        modelName="Import"
+        search={onSearch()}
+        children={children()}
+        pagination={<Pagination meta={meta} hanleOnclick={hanleOnclick} />}
+        select={select()}
+      ></Table>
+      <Loader isLoading={loading}></Loader>
     </>
   );
 };
