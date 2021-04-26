@@ -21,7 +21,7 @@ const Exports = (): JSX.Element => {
       <>
         {nameCol.map((value, index) => {
           return (
-            <th key={index} style={{ textAlign: 'center' }} scope="col">
+            <th key={index} scope="col" className="text-center">
               {value}
             </th>
           );

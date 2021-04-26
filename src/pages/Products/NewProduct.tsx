@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import * as yup from 'yup';
 import '../Exports/style.css';
 import { yupResolver } from '@hookform/resolvers/yup';
+import './../Imports/Imports.scss';
 type Inputs = {
   name: string;
   description: string;
@@ -51,23 +52,19 @@ function NewProduct(): JSX.Element {
     <>
       <div className="container">
         <div className="row">
-          <div
-            className="col-xs-5 col-sm-5 col-md-5 col-lg-5"
-            style={{ marginLeft: 'auto', marginRight: 'auto' }}
-          >
+          <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5 auto-center-form">
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="form-row">
-                <div className="col-md-12">
+                <div className="col-12">
                   <label htmlFor="inputAddress2">Name</label>
                   <input
                     {...register('name')}
                     className="form-control"
                     name="name"
-                    style={{ height: '56px' }}
                   />
                   <p>{errors.name?.message}</p>
                 </div>
-                <div className="col-md-12">
+                <div className="col-12">
                   <label>Descripton</label>
                   <textarea
                     {...register('description')}
@@ -80,7 +77,7 @@ function NewProduct(): JSX.Element {
                   <p>{errors.description?.message}</p>
                 </div>
               </div>
-              <div style={{ textAlign: 'center' }}>
+              <div className="btn-right">
                 <button
                   type="submit"
                   className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn mt-1"

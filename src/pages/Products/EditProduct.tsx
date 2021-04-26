@@ -10,6 +10,7 @@ import ClipLoader from 'react-spinners/ClipLoader';
 import * as yup from 'yup';
 import '../Exports/style.css';
 import { yupResolver } from '@hookform/resolvers/yup';
+import './../Imports/Imports.scss';
 type Inputs = {
   name: string;
   description: string;
@@ -69,10 +70,7 @@ function EditProduct(): JSX.Element {
     <>
       <div className="container">
         <div className="row">
-          <div
-            className="col-xs-5 col-sm-5 col-md-5 col-lg-5"
-            style={{ marginLeft: 'auto', marginRight: 'auto' }}
-          >
+          <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5 auto-center-form">
             {product === undefined ? (
               <ClipLoader color="#FFC0CB" loading={true} size={400} />
             ) : (
@@ -85,7 +83,6 @@ function EditProduct(): JSX.Element {
                       className="form-control"
                       defaultValue={product?.name}
                       name="name"
-                      style={{ height: '56px' }}
                     />
                     <p>{errors.name?.message}</p>
                   </div>
@@ -103,7 +100,7 @@ function EditProduct(): JSX.Element {
                     <p>{errors.description?.message}</p>
                   </div>
                 </div>
-                <div style={{ textAlign: 'center' }}>
+                <div className="btn-right">
                   <button
                     type="submit"
                     className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn mt-1"

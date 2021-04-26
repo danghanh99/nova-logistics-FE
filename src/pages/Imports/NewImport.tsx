@@ -19,7 +19,6 @@ import IMeta from '../../types/MetaType';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import '../../pages/Exports/style.css';
-
 export interface IState {
   products: {
     data: Product[];
@@ -31,7 +30,6 @@ export interface IState {
   };
   imports: Import[];
 }
-
 const NewImport = (): JSX.Element => {
   const schema = yup.object().shape({
     quantity: yup.number().positive().integer().required(),
@@ -123,19 +121,16 @@ const NewImport = (): JSX.Element => {
     <>
       <div className="container">
         <div className="row">
-          <div
-            className="col-xs-6 col-sm-6 col-md-6 col-lg-6"
-            style={{ marginLeft: 'auto', marginRight: 'auto' }}
-          >
+          <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 auto-center-form">
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="form-group">
                 <label>Product:</label>
                 <Autocomplete
                   id="combo-box-demo"
+                  className="bgc-white"
                   options={listProducts}
                   getOptionLabel={(option: Product) => option.name}
                   onChange={handleProductChange}
-                  style={{ backgroundColor: 'white' }}
                   renderInput={(params) => (
                     <TextField {...params} variant="outlined" label="Name..." />
                   )}
@@ -148,7 +143,7 @@ const NewImport = (): JSX.Element => {
                   options={listSuppliers}
                   getOptionLabel={(option: Supplier) => option.name}
                   onChange={handleSupplierChange}
-                  style={{ backgroundColor: 'white' }}
+                  className="bgc-white"
                   renderInput={(params) => (
                     <TextField {...params} variant="outlined" label="Name..." />
                   )}
@@ -164,12 +159,10 @@ const NewImport = (): JSX.Element => {
                   defaultValue={currentDate}
                   required
                   name="imported_date"
-                  style={{ height: '56px' }}
                 />
               </div>
-
               <div className="form-row">
-                <div className="form-group col-md-6">
+                <div className="col-6">
                   <label>Quantity:</label>
                   <input
                     {...register('quantity')}
@@ -177,11 +170,10 @@ const NewImport = (): JSX.Element => {
                     onChange={handleTextChange}
                     autoComplete="off"
                     name="quantity"
-                    style={{ height: '56px' }}
                   />
                   <p>{errors.quantity?.message}</p>
                 </div>
-                <div className="form-group col-md-6">
+                <div className="col-6">
                   <label>Price (VND):</label>
                   <input
                     {...register('retail_price')}
@@ -189,7 +181,6 @@ const NewImport = (): JSX.Element => {
                     onChange={handleTextChange}
                     autoComplete="off"
                     name="retail_price"
-                    style={{ height: '56px' }}
                   />
                   <p>{errors.retail_price?.message}</p>
                 </div>
@@ -204,10 +195,10 @@ const NewImport = (): JSX.Element => {
                 autoComplete="off"
                 name="description"
               />
-              <div style={{ textAlign: 'center' }}>
+              <div className="btn-right">
                 <button
                   type="submit"
-                  className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn mt-1"
+                  className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn mt-3 justify-content-center"
                 >
                   Create
                 </button>

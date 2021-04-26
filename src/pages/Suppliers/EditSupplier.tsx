@@ -10,6 +10,7 @@ import '../Exports/style.css';
 import 'yup-phone';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
+import './../Imports/Imports.scss';
 type Params = {
   id: string;
 };
@@ -82,10 +83,7 @@ const EditSupplier = (): JSX.Element => {
     <>
       <div className="container">
         <div className="row">
-          <div
-            className="col-xs-5 col-sm-5 col-md-5 col-lg-5"
-            style={{ marginLeft: 'auto', marginRight: 'auto' }}
-          >
+          <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5 auto-center-form">
             {supplierDetail.id === 0 ? (
               <ClipLoader color="#FFC0CB" loading={true} size={400} />
             ) : (
@@ -101,7 +99,6 @@ const EditSupplier = (): JSX.Element => {
                       autoComplete="on"
                       name="name"
                       defaultValue={supplierDetail.name}
-                      style={{ height: '56px' }}
                     />
                     <p>{errors.name?.message}</p>
                   </div>
@@ -115,11 +112,10 @@ const EditSupplier = (): JSX.Element => {
                       autoComplete="on"
                       name="phone"
                       defaultValue={supplierDetail.phone}
-                      style={{ height: '56px' }}
                     />
                     <p>{errors.phone?.message}</p>
                   </div>{' '}
-                  <div className="col-md-12">
+                  <div className="col-12">
                     <label>Address:</label>
                     <input
                       {...register('address')}
@@ -130,11 +126,10 @@ const EditSupplier = (): JSX.Element => {
                       autoComplete="on"
                       name="address"
                       defaultValue={supplierDetail.address}
-                      style={{ height: '56px' }}
                     />
                     <p>{errors.address?.message}</p>
                   </div>
-                  <div className="col-md-12">
+                  <div className="col-12">
                     <label>Description:</label>
                     <textarea
                       {...register('description')}
@@ -151,12 +146,12 @@ const EditSupplier = (): JSX.Element => {
                   </div>
                 </div>
 
-                <div style={{ textAlign: 'center' }}>
+                <div className="btn-right">
                   <button
                     type="submit"
                     className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn mt-1"
                   >
-                    Update
+                    Save
                   </button>
                 </div>
               </form>

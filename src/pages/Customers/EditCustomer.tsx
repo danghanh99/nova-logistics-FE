@@ -11,6 +11,7 @@ import '../Exports/style.css';
 import 'yup-phone';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
+import './../Imports/Imports.scss';
 type Params = {
   id: string;
 };
@@ -82,10 +83,7 @@ const EditCustomer = (): JSX.Element => {
     <>
       <div className="container">
         <div className="row">
-          <div
-            className="col-xs-5 col-sm-5 col-md-5 col-lg-5"
-            style={{ marginLeft: 'auto', marginRight: 'auto' }}
-          >
+          <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5 auto-center-form">
             {customerDetail.id === 0 ? (
               <ClipLoader color="#FFC0CB" loading={true} size={400} />
             ) : (
@@ -100,7 +98,6 @@ const EditCustomer = (): JSX.Element => {
                       onChange={handleInputChange}
                       autoComplete="on"
                       name="name"
-                      style={{ height: '56px' }}
                       defaultValue={customerDetail.name}
                     />
                     <p>{errors.name?.message}</p>
@@ -115,7 +112,6 @@ const EditCustomer = (): JSX.Element => {
                       autoComplete="on"
                       name="phone_number"
                       defaultValue={customerDetail.phone_number}
-                      style={{ height: '56px' }}
                     />
                     <p>{errors.phone_number?.message}</p>
                   </div>
@@ -135,12 +131,12 @@ const EditCustomer = (): JSX.Element => {
                     <p>{errors.address?.message}</p>
                   </div>
                 </div>
-                <div style={{ textAlign: 'center' }}>
+                <div className="btn-right">
                   <button
                     type="submit"
                     className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn mt-1"
                   >
-                    Update
+                    Save
                   </button>
                 </div>
               </form>

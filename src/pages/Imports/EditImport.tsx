@@ -23,6 +23,7 @@ import '../../pages/Exports/style.css';
 import { useForm } from 'react-hook-form';
 import useAsync from '../../lib/useAsync';
 import { plainToClass } from 'class-transformer';
+import './Imports.scss';
 
 type Params = {
   id: string;
@@ -125,10 +126,7 @@ const EditImport = (): JSX.Element => {
     <>
       <div className="container">
         <div className="row">
-          <div
-            className="col-xs-6 col-sm-6 col-md-6 col-lg-6"
-            style={{ marginLeft: 'auto', marginRight: 'auto' }}
-          >
+          <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 auto-center-form">
             {status === 'pending' ? (
               <ClipLoader color="#FFC0CB" loading={true} size={400} />
             ) : (
@@ -138,7 +136,7 @@ const EditImport = (): JSX.Element => {
                   <Autocomplete
                     defaultValue={importDetail?.product}
                     id="combo-box-demo"
-                    style={{ backgroundColor: 'white' }}
+                    className="bgc-white"
                     componentName="product"
                     options={listProducts.data}
                     getOptionLabel={(option) => option.name}
@@ -157,7 +155,7 @@ const EditImport = (): JSX.Element => {
                   <Autocomplete
                     defaultValue={importDetail?.supplier}
                     id="combo-box-demo"
-                    style={{ backgroundColor: 'white' }}
+                    className="bgc-white"
                     options={listSuppliers.data}
                     getOptionLabel={(option) => option.name}
                     onChange={handleChangeSupplierImport}
@@ -178,12 +176,11 @@ const EditImport = (): JSX.Element => {
                     defaultValue={importDetail?.imported_date}
                     onChange={changeValue}
                     name="imported_date"
-                    style={{ height: '56px' }}
                   />
                 </div>
 
                 <div className="form-row">
-                  <div className="form-group col-md-6">
+                  <div className="col-6">
                     <label htmlFor="inputAddress2">Quantity</label>
                     <input
                       {...register('quantity')}
@@ -191,11 +188,10 @@ const EditImport = (): JSX.Element => {
                       defaultValue={importDetail.quantity}
                       onChange={changeValue}
                       name="quantity"
-                      style={{ height: '56px' }}
                     />
                     <p>{errors.quantity?.message}</p>
                   </div>
-                  <div className="form-group col-md-6">
+                  <div className="col-6">
                     <label htmlFor="inputCity">Price</label>
                     <input
                       {...register('retail_price')}
@@ -203,7 +199,6 @@ const EditImport = (): JSX.Element => {
                       defaultValue={importDetail.retail_price}
                       onChange={changeValue}
                       name="retail_price"
-                      style={{ height: '56px' }}
                     />
                     <p>{errors.retail_price?.message}</p>
                   </div>
@@ -217,7 +212,7 @@ const EditImport = (): JSX.Element => {
                   onChange={changeValue}
                   name="description"
                 ></textarea>
-                <div style={{ textAlign: 'center' }}>
+                <div className="btn-right">
                   <button
                     type="submit"
                     className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn mt-1"

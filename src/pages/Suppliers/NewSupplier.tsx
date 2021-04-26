@@ -11,6 +11,7 @@ import * as yup from 'yup';
 import '../Exports/style.css';
 import 'yup-phone';
 import { yupResolver } from '@hookform/resolvers/yup';
+import './../Imports/Imports.scss';
 const NewSupplier = (): JSX.Element => {
   const schema = yup.object().shape({
     name: yup.string().max(64).required(),
@@ -70,10 +71,7 @@ const NewSupplier = (): JSX.Element => {
     <>
       <div className="container">
         <div className="row">
-          <div
-            className="col-xs-5 col-sm-5 col-md-5 col-lg-5"
-            style={{ marginLeft: 'auto', marginRight: 'auto' }}
-          >
+          <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5 auto-center-form">
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="form-row">
                 <div className="col-md-12">
@@ -85,7 +83,6 @@ const NewSupplier = (): JSX.Element => {
                     onChange={handleInputChange}
                     autoComplete="on"
                     name="name"
-                    style={{ height: '56px' }}
                   />
                   <p>{errors.name?.message}</p>
                 </div>
@@ -98,7 +95,6 @@ const NewSupplier = (): JSX.Element => {
                     onChange={handleInputChange}
                     autoComplete="on"
                     name="phone"
-                    style={{ height: '56px' }}
                   />
                   <p>{errors.phone?.message}</p>
                 </div>
@@ -113,7 +109,6 @@ const NewSupplier = (): JSX.Element => {
                     defaultValue={''}
                     autoComplete="on"
                     name="address"
-                    style={{ height: '56px' }}
                   />
                   <p>{errors.address?.message}</p>
                 </div>
@@ -133,7 +128,7 @@ const NewSupplier = (): JSX.Element => {
                   <p>{errors.description?.message}</p>
                 </div>
               </div>
-              <div style={{ textAlign: 'center' }}>
+              <div className="btn-right">
                 <button
                   type="submit"
                   className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn mt-1"
