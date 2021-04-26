@@ -21,3 +21,31 @@ a:hover {
   background-color: gray;
   color: white;
 }
+
+.text-center {
+  text-align: center;
+}
+
+.width-44 {
+  width: 44%;
+}
+
+.width-50 {
+  width: 50px;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.width-200 {
+  width: 200px;
+}
+
+.width-auto {
+  width: auto;
+}

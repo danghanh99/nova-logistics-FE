@@ -7,7 +7,10 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Product from '../../models/Product';
 import ClipLoader from 'react-spinners/ClipLoader';
-
+import * as yup from 'yup';
+import '../Exports/style.css';
+import { yupResolver } from '@hookform/resolvers/yup';
+import './../Imports/Imports.scss';
 type Inputs = {
   name: string;
   description: string;
@@ -17,6 +20,18 @@ type Params = {
 };
 
 function EditProduct(): JSX.Element {
+  const schema = yup.object().shape({
+    name: yup.string().max(64),
+    description: yup.string().max(512),
+  });
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<Inputs>({
+    resolver: yupResolver(schema),
+  });
   const { id }: Params = useParams();
   const [product, setProduct] = useState<Product>();
   useEffect(() => {
@@ -24,7 +39,6 @@ function EditProduct(): JSX.Element {
       setProduct(res.data.product);
     });
   });
-  const { register, handleSubmit } = useForm<Inputs>();
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -56,36 +70,37 @@ function EditProduct(): JSX.Element {
     <>
       <div className="container">
         <div className="row">
-          <div
-            className="col-xs-5 col-sm-5 col-md-5 col-lg-5"
-            style={{ marginLeft: 'auto', marginRight: 'auto' }}
-          >
+          <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5 auto-center-form">
             {product === undefined ? (
               <ClipLoader color="#FFC0CB" loading={true} size={400} />
             ) : (
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="form-row">
-                  <label htmlFor="inputAddress2">Name</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    defaultValue={product?.name}
-                    {...register('name')}
-                    name="name"
-                    style={{ height: '56px' }}
-                    required
-                  />
-                  <label>Descripton</label>
-                  <textarea
-                    className="form-control"
-                    rows={5}
-                    cols={60}
-                    {...register('description')}
-                    defaultValue={product?.description}
-                    name="description"
-                  ></textarea>
+                  <div className="col-md-12">
+                    <label htmlFor="inputAddress2">Name</label>
+                    <input
+                      {...register('name')}
+                      className="form-control"
+                      defaultValue={product?.name}
+                      name="name"
+                    />
+                    <p>{errors.name?.message}</p>
+                  </div>
+                  <div className="col-md-12">
+                    <label>Descripton</label>
+                    <textarea
+                      {...register('description')}
+                      className="form-control"
+                      rows={5}
+                      cols={60}
+                      {...register('description')}
+                      defaultValue={product?.description}
+                      name="description"
+                    ></textarea>
+                    <p>{errors.description?.message}</p>
+                  </div>
                 </div>
-                <div style={{ textAlign: 'center' }}>
+                <div className="btn-right">
                   <button
                     type="submit"
                     className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn mt-1"

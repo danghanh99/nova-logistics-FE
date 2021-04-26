@@ -83,7 +83,7 @@ const Exports = (): JSX.Element => {
   const headers = (): JSX.Element => {
     return (
       <tr>
-        <th style={{ width: '50px', textAlign: 'right' }}>ID</th>
+        <th className="width-50  text-right ">ID</th>
         <th>Product</th>
         <th>Supplier</th>
         <th>
@@ -132,7 +132,7 @@ const Exports = (): JSX.Element => {
           </i>
         </th>
         <th>Description</th>
-        <th style={{ width: '200px' }}>Action</th>
+        <th className="width-200">Action</th>
       </tr>
     );
   };
@@ -223,8 +223,7 @@ const Exports = (): JSX.Element => {
     return (
       <>
         <select
-          className="form-control d-inline-block"
-          style={{ width: 'auto' }}
+          className="form-control d-inline-block width-auto"
           id="perpage"
           onChange={handleChange}
           value={perPage}

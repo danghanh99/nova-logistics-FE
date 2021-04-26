@@ -59,15 +59,15 @@ const Products = (): JSX.Element => {
   const headers = (): JSX.Element => {
     return (
       <>
-        <th style={{ width: '50px', textAlign: 'right' }}>ID</th>
+        <th className="width-50  text-right ">ID</th>
         {nameCol.map((value, index) => {
           return (
-            <th key={index} style={{ textAlign: 'center' }} scope="col">
+            <th key={index} className="text-center" scope="col">
               {value}
             </th>
           );
         })}
-        <th style={{ width: '200px' }}>Action</th>
+        <th className="width-200">Action</th>
       </>
     );
   };
@@ -143,8 +143,7 @@ const Products = (): JSX.Element => {
     return (
       <>
         <select
-          className="form-control d-inline-block"
-          style={{ width: 'auto' }}
+          className="form-control d-inline-block width-auto"
           id="perpage"
           onChange={handleChange}
           value={perPage}

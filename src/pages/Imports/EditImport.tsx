@@ -17,8 +17,13 @@ import Supplier from '../../models/Supplier';
 import Product from '../../models/Product';
 import { useSnackbar } from 'notistack';
 import IMeta from '../../types/MetaType';
-import { plainToClass } from 'class-transformer';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import '../../pages/Exports/style.css';
 import { useForm } from 'react-hook-form';
+// import useAsync from '../../lib/useAsync';
+import { plainToClass } from 'class-transformer';
+import './Imports.scss';
 
 type Params = {
   id: string;
@@ -38,12 +43,30 @@ export interface IStateImport {
 }
 
 const EditImport = (): JSX.Element => {
+  const schema = yup.object().shape({
+    quantity: yup.number().positive().integer(),
+    retail_price: yup.number().positive().integer(),
+    description: yup.string(),
+  });
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
   const { id }: Params = useParams();
   const dispatch = useDispatch();
   const listProducts = useSelector((state: IState) => state.products);
   const listSuppliers = useSelector((state: IStateSupplier) => state.suppliers);
   const history = useHistory();
-  const { handleSubmit } = useForm();
+  // const { handleSubmit } = useForm();
+  // const { execute, value, status } = useAsync(async () => {
+  //   return ImportsService.getImport(parseInt(id, undefined)).then((res) => {
+  //     dispatch(getImport(res.data.import));
+  //   });
+  // }, false);
   const [importForm, setImportForm] = useState<Import>(
     plainToClass(Import, {})
   );
@@ -103,12 +126,9 @@ const EditImport = (): JSX.Element => {
     <>
       <div className="container">
         <div className="row">
-          <div
-            className="col-xs-6 col-sm-6 col-md-6 col-lg-6"
-            style={{ marginLeft: 'auto', marginRight: 'auto' }}
-          >
-            {/* {status === 'pending' ? ( */}
-            {/* <ClipLoader color="#FFC0CB" loading={true} size={400} />
+          <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 auto-center-form">
+            {/* {status === 'pending' ? (
+              <ClipLoader color="#FFC0CB" loading={true} size={400} />
             ) : ( */}
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="form-group">
@@ -116,7 +136,7 @@ const EditImport = (): JSX.Element => {
                 <Autocomplete
                   defaultValue={importDetail?.product}
                   id="combo-box-demo"
-                  style={{ backgroundColor: 'white' }}
+                  className="bgc-white"
                   componentName="product"
                   options={listProducts.data}
                   getOptionLabel={(option) => option.name}
@@ -135,7 +155,7 @@ const EditImport = (): JSX.Element => {
                 <Autocomplete
                   defaultValue={importDetail?.supplier}
                   id="combo-box-demo"
-                  style={{ backgroundColor: 'white' }}
+                  className="bgc-white"
                   options={listSuppliers.data}
                   getOptionLabel={(option) => option.name}
                   onChange={handleChangeSupplierImport}
@@ -148,42 +168,40 @@ const EditImport = (): JSX.Element => {
                   )}
                 />
               </div>
-              <div className="form-group">
-                <label htmlFor="inputAddress">Date</label>
+              <div className="form-group col-md-6">
+                <label htmlFor="inputCity">Price</label>
                 <input
-                  type="date"
+                  type="number"
                   className="form-control"
-                  defaultValue={importDetail?.imported_date}
+                  min="0"
+                  defaultValue={importDetail?.retail_price}
                   onChange={changeValue}
                   name="imported_date"
-                  style={{ height: '56px' }}
                 />
               </div>
 
               <div className="form-row">
-                <div className="form-group col-md-6">
+                <div className="col-6">
                   <label htmlFor="inputAddress2">Quantity</label>
                   <input
-                    type="number"
+                    {...register('quantity')}
                     className="form-control"
-                    min="0"
-                    defaultValue={importDetail?.quantity}
+                    defaultValue={importDetail.quantity}
                     onChange={changeValue}
                     name="quantity"
-                    style={{ height: '56px' }}
                   />
+                  <p>{errors.quantity?.message}</p>
                 </div>
-                <div className="form-group col-md-6">
+                <div className="col-6">
                   <label htmlFor="inputCity">Price</label>
                   <input
-                    type="number"
+                    {...register('retail_price')}
                     className="form-control"
-                    min="0"
-                    defaultValue={importDetail?.retail_price}
+                    defaultValue={importDetail.retail_price}
                     onChange={changeValue}
                     name="retail_price"
-                    style={{ height: '56px' }}
                   />
+                  <p>{errors.retail_price?.message}</p>
                 </div>
               </div>
               <label>Descripton</label>
@@ -195,7 +213,7 @@ const EditImport = (): JSX.Element => {
                 onChange={changeValue}
                 name="description"
               ></textarea>
-              <div style={{ textAlign: 'center' }}>
+              <div className="btn-right">
                 <button
                   type="submit"
                   className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn mt-1"
@@ -205,7 +223,7 @@ const EditImport = (): JSX.Element => {
                       <span className="spinner-border spinner-border-sm"></span>
                     )}
                     &nbsp;
-                    {submitImport.status !== 'pending' ? 'Save' : 'Loading...'} */}
+                    {submitImport.status !== 'pending' ? 'Save' : 'Loading...'} */}{' '}
                 </button>
               </div>
             </form>

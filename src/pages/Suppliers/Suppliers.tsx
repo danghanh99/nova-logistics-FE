@@ -63,7 +63,7 @@ const Suppliers = (): JSX.Element => {
   const headers = (): JSX.Element => {
     return (
       <tr>
-        <th style={{ width: '50px', textAlign: 'right' }}>ID</th>
+        <th className="width-50  text-right ">ID</th>
         <th>
           Name{' '}
           <CIcon
@@ -104,7 +104,7 @@ const Suppliers = (): JSX.Element => {
           />
         </th>
         <th>Description</th>
-        <th style={{ width: '200px' }}>Action</th>
+        <th className="width-200">Action</th>
       </tr>
     );
   };
@@ -178,8 +178,7 @@ const Suppliers = (): JSX.Element => {
     return (
       <>
         <select
-          className="form-control d-inline-block"
-          style={{ width: 'auto' }}
+          className="form-control d-inline-block width-auto"
           id="perpage"
           onChange={handleChange}
           value={perPage}

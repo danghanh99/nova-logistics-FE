@@ -14,6 +14,11 @@ import { IState } from '../Products/Products';
 import { getProducts } from '../Products/ProductSlice';
 import { useSnackbar } from 'notistack';
 import IMeta from '../../types/MetaType';
+import { useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import '../../pages/Exports/style.css';
+import { yupResolver } from '@hookform/resolvers/yup';
+import './../Imports/Imports.scss';
 
 type StateCustomer = {
   customers: {
@@ -22,16 +27,30 @@ type StateCustomer = {
   };
 };
 
-const init = {
-  sell_price: 0,
-  quantity: 0,
-  description: '',
-  exported_date: Date.now.toString(),
-  product_id: 0,
-  customer_id: 0,
-};
-
 function NewExport(): JSX.Element {
+  const currentDate = new Date().toLocaleDateString('fr-CA');
+  const init = {
+    sell_price: 0,
+    quantity: 0,
+    description: '',
+    exported_date: `${currentDate}`,
+    product_id: 0,
+    customer_id: 0,
+  };
+  const schema = yup.object().shape({
+    quantity: yup.number().positive().integer().max(999999999).required(),
+    sell_price: yup.number().integer().max(999999999).positive().required(),
+    description: yup.string(),
+  });
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
   const listProducts = useSelector((state: IState) => state.products.data);
   const listCustomer = useSelector(
     (state: StateCustomer) => state.customers.data
@@ -41,7 +60,6 @@ function NewExport(): JSX.Element {
   const [exportDetail, setExport] = useState(init);
   const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
-
   useEffect(() => {
     ProductsService.getProducts().then((res) => {
       dispatch(getProducts(res));
@@ -80,8 +98,7 @@ function NewExport(): JSX.Element {
     product_id,
     customer_id,
   } = exportDetail;
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = () => {
     ExportsService.createExport(
       sell_price,
       quantity,
@@ -110,24 +127,21 @@ function NewExport(): JSX.Element {
     <>
       <div className="container">
         <div className="row">
-          <div
-            className="col-xs-6 col-sm-6 col-md-6 col-lg-6"
-            style={{ marginLeft: 'auto', marginRight: 'auto' }}
-          >
+          <div className="col-xs-6 col-sm-6 col-md-6 col-lg-6 auto-center-form">
             {listProducts === [] && listCustomer === [] ? (
               <ClipLoader color="#FFC0CB" loading={true} size={400} />
             ) : (
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <label htmlFor="inputEmail4">Product</label>
                 <Autocomplete
-                  value={listProducts.find(
-                    (item) => item.id === exportDetail.product_id
-                  )}
                   id="combo-box-demo"
-                  style={{ backgroundColor: 'white' }}
+                  className="bgc-white"
                   componentName="product"
                   options={listProducts}
                   getOptionLabel={(option) => option.name}
+                  getOptionSelected={(option, value) =>
+                    option.name === value.name
+                  }
                   onChange={handleChangeProductExport}
                   renderInput={(params) => (
                     <TextField {...params} variant="outlined" label="Name..." />
@@ -135,13 +149,13 @@ function NewExport(): JSX.Element {
                 />
                 <label htmlFor="inputPassword4">Customer</label>
                 <Autocomplete
-                  value={listCustomer.find(
-                    (item) => item.id === exportDetail.customer_id
-                  )}
                   id="combo-box-demo"
-                  style={{ backgroundColor: 'white' }}
+                  className="bgc-white"
                   options={listCustomer}
                   getOptionLabel={(option) => option.name}
+                  getOptionSelected={(option, value) =>
+                    option.name === value.name
+                  }
                   onChange={handleChangeCustomerImport}
                   renderInput={(params) => (
                     <TextField {...params} variant="outlined" label="Name..." />
@@ -154,32 +168,28 @@ function NewExport(): JSX.Element {
                   value={exportDetail.exported_date}
                   onChange={changeValue}
                   name="exported_date"
-                  style={{ height: '56px' }}
+                  defaultValue={currentDate}
                 />
                 <div className="form-row">
-                  <div className="form-group col-md-6">
+                  <div className="col-6">
                     <label htmlFor="inputAddress2">Quantity</label>
                     <input
-                      type="number"
+                      {...register('quantity')}
                       className="form-control"
-                      min="0"
-                      value={exportDetail.quantity}
                       onChange={changeValue}
                       name="quantity"
-                      style={{ height: '56px' }}
                     />
+                    <p>{errors.quantity?.message}</p>
                   </div>
-                  <div className="form-group col-md-6">
+                  <div className="col-6">
                     <label htmlFor="inputCity">Price</label>
                     <input
-                      type="number"
+                      {...register('sell_price')}
                       className="form-control"
-                      min="0"
-                      value={exportDetail.sell_price}
                       onChange={changeValue}
                       name="sell_price"
-                      style={{ height: '56px' }}
                     />
+                    <p>{errors.sell_price?.message}</p>
                   </div>
                 </div>
                 <label>Descripton</label>
@@ -188,13 +198,12 @@ function NewExport(): JSX.Element {
                   rows={5}
                   cols={60}
                   onChange={changeValue}
-                  value={exportDetail.description}
                   name="description"
                 ></textarea>
-                <div style={{ textAlign: 'center' }}>
+                <div className="btn-right">
                   <button
                     type="submit"
-                    className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn mt-1"
+                    className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn mt-3"
                   >
                     Create
                   </button>

@@ -60,7 +60,7 @@ const Customers = (): JSX.Element => {
   const headers = (): JSX.Element => {
     return (
       <tr>
-        <th style={{ width: '50px', textAlign: 'right' }}>ID</th>
+        <th className="width-50 text-right">ID</th>
         <th>
           Name
           <CIcon
@@ -100,28 +100,10 @@ const Customers = (): JSX.Element => {
             onClick={(e) => onSort(e, 'address', 'asc')}
           />
         </th>
-        <th style={{ width: '200px' }}>Action</th>
+        <th className="width-200">Action</th>
       </tr>
     );
   };
-
-  // const handleDelete = (id: number) => {
-  //   CustomersService.deleteCustomer(id).then(
-  //     () => {
-  //       dispatch(deleteCustomer(id));
-  //       enqueueSnackbar('Delete customer success', { variant: 'success' });
-  //     },
-  //     (error) => {
-  //       const resMessage =
-  //         (error.response &&
-  //           error.response.data &&
-  //           error.response.data.message) ||
-  //         error.message ||
-  //         error.toString();
-  //       enqueueSnackbar(resMessage, { variant: 'error' });
-  //     }
-  //   );
-  // };
 
   const history = useHistory();
   const handleEdit = (id: number) => {
@@ -134,7 +116,7 @@ const Customers = (): JSX.Element => {
           return (
             <tr key={index}>
               <td className="text-right">{index + 1}</td>
-              <td className="text-right">{value.name}</td>
+              <td className="text-left">{value.name}</td>
               <td className="text-right">{value.phone_number}</td>
               <td className="text-left">{value.address}</td>
               <td>
@@ -145,9 +127,6 @@ const Customers = (): JSX.Element => {
                   >
                     <CIcon content={freeSet.cilColorBorder}></CIcon>
                   </button>
-                  {/* <button className="btn mr-2 d-flex align-items-center btn-danger">
-                    <CIcon content={freeSet.cilTrash}></CIcon>
-                  </button> */}
                 </div>
               </td>
             </tr>
@@ -197,8 +176,7 @@ const Customers = (): JSX.Element => {
     return (
       <>
         <select
-          className="form-control d-inline-block"
-          style={{ width: 'auto' }}
+          className="form-control d-inline-block width-auto"
           id="perpage"
           onChange={handleChange}
           value={perPage}
