@@ -168,24 +168,25 @@ const EditImport = (): JSX.Element => {
                   )}
                 />
               </div>
-              <div className="form-group col-md-6">
-                <label htmlFor="inputCity">Price</label>
+              <div className="form-group">
+                <label>Date:</label>
                 <input
-                  type="number"
-                  className="form-control"
-                  min="0"
-                  defaultValue={importDetail?.retail_price}
+                  {...register('imported_date')}
+                  type="date"
+                  className="form-control height-56"
                   onChange={changeValue}
+                  autoComplete="off"
+                  defaultValue={importDetail.imported_date}
+                  required
                   name="imported_date"
                 />
               </div>
-
               <div className="form-row">
                 <div className="col-6">
                   <label htmlFor="inputAddress2">Quantity</label>
                   <input
                     {...register('quantity')}
-                    className="form-control"
+                    className="form-control height-56"
                     defaultValue={importDetail.quantity}
                     onChange={changeValue}
                     name="quantity"
@@ -196,7 +197,7 @@ const EditImport = (): JSX.Element => {
                   <label htmlFor="inputCity">Price</label>
                   <input
                     {...register('retail_price')}
-                    className="form-control"
+                    className="form-control height-56"
                     defaultValue={importDetail.retail_price}
                     onChange={changeValue}
                     name="retail_price"
@@ -206,7 +207,7 @@ const EditImport = (): JSX.Element => {
               </div>
               <label>Descripton</label>
               <textarea
-                className="form-control"
+                className="form-control height-56"
                 rows={5}
                 cols={60}
                 defaultValue={importDetail?.description}
@@ -219,6 +220,7 @@ const EditImport = (): JSX.Element => {
                   className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn mt-1"
                   // disabled={submitImport.status === 'pending'}
                 >
+                  Save
                   {/* {submitImport.status === 'pending' && (
                       <span className="spinner-border spinner-border-sm"></span>
                     )}

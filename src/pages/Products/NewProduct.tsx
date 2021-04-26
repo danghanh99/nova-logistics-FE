@@ -59,7 +59,7 @@ function NewProduct(): JSX.Element {
                   <label htmlFor="inputAddress2">Name</label>
                   <input
                     {...register('name')}
-                    className="form-control"
+                    className="form-control height-56"
                     name="name"
                   />
                   <p>{errors.name?.message}</p>
@@ -68,7 +68,7 @@ function NewProduct(): JSX.Element {
                   <label>Descripton</label>
                   <textarea
                     {...register('description')}
-                    className="form-control"
+                    className="form-control height-56"
                     rows={5}
                     cols={60}
                     {...register('description')}

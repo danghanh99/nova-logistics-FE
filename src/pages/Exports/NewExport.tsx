@@ -164,7 +164,7 @@ function NewExport(): JSX.Element {
                 <label htmlFor="inputAddress">Date</label>
                 <input
                   type="date"
-                  className="form-control"
+                  className="form-control height-56"
                   value={exportDetail.exported_date}
                   onChange={changeValue}
                   name="exported_date"
@@ -175,7 +175,7 @@ function NewExport(): JSX.Element {
                     <label htmlFor="inputAddress2">Quantity</label>
                     <input
                       {...register('quantity')}
-                      className="form-control"
+                      className="form-control height-56"
                       onChange={changeValue}
                       name="quantity"
                     />
@@ -185,7 +185,7 @@ function NewExport(): JSX.Element {
                     <label htmlFor="inputCity">Price</label>
                     <input
                       {...register('sell_price')}
-                      className="form-control"
+                      className="form-control height-56"
                       onChange={changeValue}
                       name="sell_price"
                     />
@@ -194,7 +194,7 @@ function NewExport(): JSX.Element {
                 </div>
                 <label>Descripton</label>
                 <textarea
-                  className="form-control"
+                  className="form-control height-56"
                   rows={5}
                   cols={60}
                   onChange={changeValue}

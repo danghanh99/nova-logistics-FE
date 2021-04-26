@@ -153,7 +153,7 @@ const NewImport = (): JSX.Element => {
                 <label>Date:</label>
                 <input
                   type="date"
-                  className="form-control"
+                  className="form-control height-56"
                   onChange={handleTextChange}
                   autoComplete="off"
                   defaultValue={currentDate}
@@ -166,7 +166,7 @@ const NewImport = (): JSX.Element => {
                   <label>Quantity:</label>
                   <input
                     {...register('quantity')}
-                    className="form-control"
+                    className="form-control height-56"
                     onChange={handleTextChange}
                     autoComplete="off"
                     name="quantity"
@@ -177,7 +177,7 @@ const NewImport = (): JSX.Element => {
                   <label>Price (VND):</label>
                   <input
                     {...register('retail_price')}
-                    className="form-control"
+                    className="form-control height-56"
                     onChange={handleTextChange}
                     autoComplete="off"
                     name="retail_price"
@@ -188,7 +188,7 @@ const NewImport = (): JSX.Element => {
               <label>Description:</label>
               <textarea
                 onChange={handleTextChange}
-                className="form-control"
+                className="form-control height-56"
                 rows={5}
                 id="comment"
                 defaultValue={''}
