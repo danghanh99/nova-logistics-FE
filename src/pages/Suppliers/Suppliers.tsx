@@ -9,7 +9,6 @@ import SuppliersService from '../../services/SuppliersService';
 import { getSuppliers } from './SuppliersSlice';
 import { plainToClass } from 'class-transformer';
 import Pagination from '../../components/Pagination/Pagination';
-import IMeta from '../../types/MetaType';
 import { useHistory } from 'react-router-dom';
 import Loader from '../../components/Loader/Loader';
 import IState from '../../types/StateType';

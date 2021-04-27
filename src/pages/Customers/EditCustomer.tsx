@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import ClipLoader from 'react-spinners/ClipLoader';
 import { useState } from 'react';
 import Supplier from '../../models/Supplier';
 import { useSnackbar } from 'notistack';
@@ -71,7 +70,7 @@ const EditCustomer = (): JSX.Element => {
     CustomersService.getCustomer(parseInt(id, undefined)).then((res) => {
       setCustomer(res.data.customer);
     });
-  }, []);
+  }, [id]);
   if (customerDetail.id === 0) {
     return <Loader isLoading={loading} />;
   }
