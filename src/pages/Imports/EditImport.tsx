@@ -21,7 +21,7 @@ import { plainToClass } from 'class-transformer';
 import './Imports.scss';
 import IState from '../../types/StateType';
 import Loader from '../../components/Loader/Loader';
-import { getImport } from './ImportsSlice';
+import { getImports, reset } from './ImportsSlice';
 
 type Params = {
   id: string;
@@ -49,28 +49,28 @@ const EditImport = (): JSX.Element => {
   const loading = useSelector((state: IState) => state.isLoading);
   const importDetail = plainToClass(
     Import,
-    useSelector((state: IState) => state.imports.data)[0]
+    useSelector((state: IState) => state.imports.data).filter(
+      (item: Import) => item.id === parseInt(id, undefined)
+    )[0]
   );
   const [importForm, setImportForm] = useState<Import>(importDetail);
 
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
-    if (!importDetail) {
-      ImportsService.getImport(parseInt(id, undefined)).then((res) => {
-        dispatch(getImport(res.data.import));
-        if (!importForm) {
-          setImportForm(res.data.import);
-        }
-      });
-    }
+    ImportsService.getImports().then((res) => {
+      dispatch(getImports(res));
+    });
     ProductsService.getProducts().then((res) => {
       dispatch(getProducts(res));
     });
     SuppliersService.getSuppliers().then((res) => {
       dispatch(getSuppliers(res));
     });
-  }, [dispatch, id, importDetail, importForm]);
+    return () => {
+      dispatch(reset(true));
+    };
+  }, [dispatch, id]);
 
   const handleChangeProductImport = (
     e: ChangeEvent<{}>,
