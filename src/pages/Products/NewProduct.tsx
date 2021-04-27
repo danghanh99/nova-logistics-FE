@@ -9,6 +9,7 @@ import '../Exports/style.css';
 import { yupResolver } from '@hookform/resolvers/yup';
 import './../Imports/Imports.scss';
 import IState from '../../types/StateType';
+import { isLoading } from '../../LoadingSlice';
 type Inputs = {
   name: string;
   description: string;
@@ -30,11 +31,17 @@ function NewProduct(): JSX.Element {
   const dispatch = useDispatch();
   const history = useHistory();
   const onSubmit = (data: Inputs) => {
-    ProductsService.createProduct(data.name, data.description).then((res) => {
-      dispatch(createProduct(res.data.product));
-      enqueueSnackbar('Create Product Success', { variant: 'success' });
-      history.push('/admin/products');
-    });
+    ProductsService.createProduct(data.name, data.description)
+      .then((res) => {
+        dispatch(createProduct(res.data.product));
+        enqueueSnackbar('Create Product Success', { variant: 'success' });
+        history.push('/admin/products');
+      })
+      .catch((error) => {
+        dispatch(isLoading(false));
+        enqueueSnackbar(error, { variant: 'error' });
+        return error;
+      });
   };
   const loading = useSelector((state: IState) => state.isLoading);
   const { enqueueSnackbar } = useSnackbar();

@@ -12,8 +12,9 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import './../Imports/Imports.scss';
 import IState from '../../types/StateType';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Loader from '../../components/Loader/Loader';
+import { isLoading } from '../../LoadingSlice';
 type Params = {
   id: string;
 };
@@ -53,11 +54,18 @@ const EditCustomer = (): JSX.Element => {
   const [customerDetail, setCustomer] = useState(initial);
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
+  const dispatch = useDispatch();
   const onSubmit = (e: React.FormEvent) => {
-    CustomersService.editCustomer(customerDetail).then(() => {
-      history.push('/admin/customers');
-      enqueueSnackbar('Update customer success', { variant: 'success' });
-    });
+    CustomersService.editCustomer(customerDetail)
+      .then(() => {
+        history.push('/admin/customers');
+        enqueueSnackbar('Update customer success', { variant: 'success' });
+      })
+      .catch((error) => {
+        dispatch(isLoading(false));
+        enqueueSnackbar(error, { variant: 'error' });
+        return error;
+      });
   };
 
   const handleInputChange = (

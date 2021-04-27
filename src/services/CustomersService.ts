@@ -25,7 +25,7 @@ const getCustomers = (
     });
 };
 
-const newCustomer = (customer: Customer): Promise<Customer> => {
+const newCustomer = async (customer: Customer): Promise<Customer> => {
   return axios
     .post(API_URL + 'customers', {
       name: customer.name,
@@ -37,26 +37,14 @@ const newCustomer = (customer: Customer): Promise<Customer> => {
     });
 };
 
-// const deleteCustomer = (id: number) => {
-//   const response = axios.delete(`${API_URL}customers/${id}`);
-//   console.log(response);
-
-//   response.then((res) => {
-//     if (res.data) return res.data;
-//   });
-//   return response;
-// };
-
-const editCustomer = (customer: Customer) => {
+const editCustomer = async (customer: Customer) => {
   const { name, phone_number, address } = customer;
-  const response = axios.patch(`${API_URL}customers/${customer.id}`, {
+  const response = await axios.patch(`${API_URL}customers/${customer.id}`, {
     name,
     phone_number,
     address,
   });
-  response.then((res) => {
-    if (res.data) return res.data;
-  });
+  if (response.data) return response.data;
   return response;
 };
 

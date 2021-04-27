@@ -10,9 +10,10 @@ import 'yup-phone';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import './../Imports/Imports.scss';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import IState from '../../types/StateType';
 import Loader from '../../components/Loader/Loader';
+import { isLoading } from '../../LoadingSlice';
 type Params = {
   id: string;
 };
@@ -49,15 +50,21 @@ const EditSupplier = (): JSX.Element => {
     description: '',
   };
   const { id }: Params = useParams();
-
+  const dispatch = useDispatch();
   const [supplierDetail, setSupplier] = useState(initial);
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
   const onSubmit = (e: React.FormEvent) => {
-    SuppliersService.editSupplier(supplierDetail).then(() => {
-      history.push('/admin/suppliers');
-      enqueueSnackbar('Update supplier success', { variant: 'success' });
-    });
+    SuppliersService.editSupplier(supplierDetail)
+      .then(() => {
+        history.push('/admin/suppliers');
+        enqueueSnackbar('Update supplier success', { variant: 'success' });
+      })
+      .catch((error) => {
+        dispatch(isLoading(false));
+        enqueueSnackbar(error, { variant: 'error' });
+        return error;
+      });
   };
 
   const handleInputChange = (
