@@ -8,16 +8,9 @@ import { useEffect, useState } from 'react';
 import ProductsService from '../../services/ProductsService';
 import { getProducts } from './ProductSlice';
 import Pagination from '../../components/Pagination/Pagination';
-import IMeta from '../../types/MetaType';
-import { useSnackbar } from 'notistack';
 import { useHistory } from 'react-router-dom';
-
-export interface IState {
-  products: {
-    data: Product[];
-    meta: IMeta;
-  };
-}
+import Loader from '../../components/Loader/Loader';
+import IState from '../../types/StateType';
 
 const Products = (): JSX.Element => {
   const listProducts = plainToClass(
@@ -32,29 +25,18 @@ const Products = (): JSX.Element => {
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const sort = 'updated_at: desc, created_at: desc';
-  const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
+  const loading = useSelector((state: IState) => state.isLoading);
 
   useEffect(() => {
     ProductsService.getProducts(search, page, perPage, sort)
-      .then(
-        (res) => {
-          dispatch(getProducts(res));
-        },
-        (error) => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-          enqueueSnackbar(resMessage, { variant: 'error' });
-        }
-      )
+      .then((res) => {
+        dispatch(getProducts(res));
+      })
       .catch((error) => {
         throw error;
       });
-  }, [search, page, perPage, sort]);
+  }, [search, page, perPage, sort, dispatch]);
 
   const headers = (): JSX.Element => {
     return (
@@ -169,6 +151,7 @@ const Products = (): JSX.Element => {
         pagination={<Pagination meta={meta} hanleOnclick={hanleOnclick} />}
         select={select()}
       ></Table>
+      <Loader isLoading={loading} />
     </>
   );
 };

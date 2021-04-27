@@ -55,21 +55,10 @@ const EditSupplier = (): JSX.Element => {
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
   const onSubmit = (e: React.FormEvent) => {
-    SuppliersService.editSupplier(supplierDetail).then(
-      () => {
-        history.push('/admin/suppliers');
-        enqueueSnackbar('Update supplier success', { variant: 'success' });
-      },
-      (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        enqueueSnackbar(resMessage, { variant: 'error' });
-      }
-    );
+    SuppliersService.editSupplier(supplierDetail).then(() => {
+      history.push('/admin/suppliers');
+      enqueueSnackbar('Update supplier success', { variant: 'success' });
+    });
   };
 
   const handleInputChange = (

@@ -70,7 +70,7 @@ const EditImport = (): JSX.Element => {
     SuppliersService.getSuppliers().then((res) => {
       dispatch(getSuppliers(res));
     });
-  }, []);
+  }, [dispatch, id, importDetail, importForm]);
 
   const handleChangeProductImport = (
     e: ChangeEvent<{}>,

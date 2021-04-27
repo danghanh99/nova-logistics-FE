@@ -1,13 +1,14 @@
 import { useForm } from 'react-hook-form';
 import { useSnackbar } from 'notistack';
 import ProductsService from '../../services/ProductsService';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createProduct } from './ProductSlice';
 import { useHistory } from 'react-router-dom';
 import * as yup from 'yup';
 import '../Exports/style.css';
 import { yupResolver } from '@hookform/resolvers/yup';
 import './../Imports/Imports.scss';
+import IState from '../../types/StateType';
 type Inputs = {
   name: string;
   description: string;
@@ -29,23 +30,13 @@ function NewProduct(): JSX.Element {
   const dispatch = useDispatch();
   const history = useHistory();
   const onSubmit = (data: Inputs) => {
-    ProductsService.createProduct(data.name, data.description).then(
-      (res) => {
-        dispatch(createProduct(res.data.product));
-        enqueueSnackbar('Create Product Success', { variant: 'success' });
-        history.push('/admin/products');
-      },
-      (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        enqueueSnackbar(resMessage, { variant: 'error' });
-      }
-    );
+    ProductsService.createProduct(data.name, data.description).then((res) => {
+      dispatch(createProduct(res.data.product));
+      enqueueSnackbar('Create Product Success', { variant: 'success' });
+      history.push('/admin/products');
+    });
   };
+  const loading = useSelector((state: IState) => state.isLoading);
   const { enqueueSnackbar } = useSnackbar();
 
   return (
@@ -81,8 +72,12 @@ function NewProduct(): JSX.Element {
                 <button
                   type="submit"
                   className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn mt-1"
+                  disabled={loading}
                 >
-                  Create
+                  {loading && (
+                    <span className="spinner-border spinner-border-sm"></span>
+                  )}
+                  &nbsp;{!loading ? 'Create' : 'Loading...'}
                 </button>
               </div>
             </form>

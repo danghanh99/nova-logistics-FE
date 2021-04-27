@@ -10,7 +10,6 @@ import { getCustomers } from './CustomersSlice';
 import CustomersService from '../../services/CustomersService';
 import Pagination from '../../components/Pagination/Pagination';
 import IMeta from '../../types/MetaType';
-import { useSnackbar } from 'notistack';
 import { reset } from '../Imports/ImportsSlice';
 import { useHistory } from 'react-router-dom';
 import Loader from '../../components/Loader/Loader';
@@ -189,30 +188,18 @@ const Customers = (): JSX.Element => {
   };
 
   const [sort, setSort] = useState('updated_at: desc, created_at: desc');
-  const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     CustomersService.getCustomers(page, perPage, search, sort)
-      .then(
-        (res) => {
-          dispatch(getCustomers(res));
-        },
-        (error) => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-          enqueueSnackbar(resMessage, { variant: 'error' });
-        }
-      )
+      .then((res) => {
+        dispatch(getCustomers(res));
+      })
       .catch((error) => {
         throw error;
       });
     return () => {
       dispatch(reset(true));
     };
-  }, [page, perPage, search, sort]);
+  }, [page, perPage, search, sort, dispatch]);
   return (
     <>
       <Table

@@ -10,7 +10,6 @@ import { getSuppliers } from './SuppliersSlice';
 import { plainToClass } from 'class-transformer';
 import Pagination from '../../components/Pagination/Pagination';
 import IMeta from '../../types/MetaType';
-import { useSnackbar } from 'notistack';
 import { useHistory } from 'react-router-dom';
 import Loader from '../../components/Loader/Loader';
 import IState from '../../types/StateType';
@@ -189,27 +188,15 @@ const Suppliers = (): JSX.Element => {
       </>
     );
   };
-  const { enqueueSnackbar } = useSnackbar();
   useEffect(() => {
     SuppliersService.getSuppliers(page, perPage, search, sort)
-      .then(
-        (res) => {
-          dispatch(getSuppliers(res));
-        },
-        (error) => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-          enqueueSnackbar(resMessage, { variant: 'error' });
-        }
-      )
+      .then((res) => {
+        dispatch(getSuppliers(res));
+      })
       .catch((error) => {
         throw error;
       });
-  }, [page, perPage, search, sort]);
+  }, [page, perPage, search, sort, dispatch]);
 
   return (
     <>

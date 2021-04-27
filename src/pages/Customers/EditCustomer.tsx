@@ -55,21 +55,10 @@ const EditCustomer = (): JSX.Element => {
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
   const onSubmit = (e: React.FormEvent) => {
-    CustomersService.editCustomer(customerDetail).then(
-      () => {
-        history.push('/admin/customers');
-        enqueueSnackbar('Update customer success', { variant: 'success' });
-      },
-      (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        enqueueSnackbar(resMessage, { variant: 'error' });
-      }
-    );
+    CustomersService.editCustomer(customerDetail).then(() => {
+      history.push('/admin/customers');
+      enqueueSnackbar('Update customer success', { variant: 'success' });
+    });
   };
 
   const handleInputChange = (

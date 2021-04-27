@@ -8,15 +8,9 @@ import { useEffect, useState } from 'react';
 import ExportsService from '../../services/ExportsService';
 import { deleteExport, getExports } from './ExportsSlice';
 import Pagination from '../../components/Pagination/Pagination';
-import IMeta from '../../types/MetaType';
 import { useSnackbar } from 'notistack';
-
-export interface IState {
-  exports: {
-    data: Export[];
-    meta: IMeta;
-  };
-}
+import Loader from '../../components/Loader/Loader';
+import IState from '../../types/StateType';
 
 const Exports = (): JSX.Element => {
   const listExports = plainToClass(
@@ -40,29 +34,19 @@ const Exports = (): JSX.Element => {
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const [sort, setSort] = useState('updated_at: desc, created_at: desc');
+  const loading = useSelector((state: IState) => state.isLoading);
 
   const { enqueueSnackbar } = useSnackbar();
 
   useEffect(() => {
     ExportsService.getExports(page, perPage, search, sort)
-      .then(
-        (res) => {
-          dispatch(getExports(res));
-        },
-        (error) => {
-          const resMessage =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-          enqueueSnackbar(resMessage, { variant: 'error' });
-        }
-      )
+      .then((res) => {
+        dispatch(getExports(res));
+      })
       .catch((error) => {
         throw error;
       });
-  }, [page, perPage, search, sort]);
+  }, [page, perPage, search, sort, dispatch]);
 
   const onSort = (e: React.MouseEvent, name: string, value: string): void => {
     const sortType = `${name}: ${value}`;
@@ -138,21 +122,10 @@ const Exports = (): JSX.Element => {
   };
 
   const onHandleDelete = (id: number) => {
-    ExportsService.deleteExport(id).then(
-      () => {
-        dispatch(deleteExport(id));
-        enqueueSnackbar('Delete export success', { variant: 'success' });
-      },
-      (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        enqueueSnackbar(resMessage, { variant: 'error' });
-      }
-    );
+    ExportsService.deleteExport(id).then(() => {
+      dispatch(deleteExport(id));
+      enqueueSnackbar('Delete export success', { variant: 'success' });
+    });
   };
 
   const children = (): React.ReactNode => {
@@ -249,6 +222,7 @@ const Exports = (): JSX.Element => {
         pagination={<Pagination meta={meta} hanleOnclick={hanleOnclick} />}
         select={select()}
       ></Table>
+      <Loader isLoading={loading} />
     </>
   );
 };
