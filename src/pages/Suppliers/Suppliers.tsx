@@ -11,13 +11,8 @@ import { plainToClass } from 'class-transformer';
 import Pagination from '../../components/Pagination/Pagination';
 import IMeta from '../../types/MetaType';
 import { useHistory } from 'react-router-dom';
-export interface IState {
-  suppliers: {
-    data: ISupplier[];
-    meta: IMeta;
-  };
-  newSupplier: boolean;
-}
+import Loader from '../../components/Loader/Loader';
+import IState from '../../types/StateType';
 
 const initIconSort = {
   name_desc: '',
@@ -31,6 +26,7 @@ const initIconSort = {
 };
 
 const Suppliers = (): JSX.Element => {
+  const loading = useSelector((state: IState) => state.isLoading);
   const [search, setSearch] = useState('');
   const [perPage, setPerPage] = useState(10);
   const [iconSort, setIconSort] = useState(initIconSort);
@@ -212,6 +208,7 @@ const Suppliers = (): JSX.Element => {
         pagination={<Pagination meta={meta} hanleOnclick={hanleOnclick} />}
         select={select()}
       ></Table>
+      <Loader isLoading={loading}></Loader>
     </>
   );
 };

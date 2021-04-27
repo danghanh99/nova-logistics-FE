@@ -1,7 +1,7 @@
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Customer from '../../models/Customer';
 import CustomersService from '../../services/CustomersService';
@@ -12,8 +12,10 @@ import '../Exports/style.css';
 import 'yup-phone';
 import { yupResolver } from '@hookform/resolvers/yup';
 import './../Imports/Imports.scss';
+import IState from '../../types/StateType';
 
 const NewCustomer = (): JSX.Element => {
+  const loading = useSelector((state: IState) => state.isLoading);
   const schema = yup.object().shape({
     name: yup.string().max(64).required(),
     phone_number: yup.string().required().matches(/^\d+$/, {
@@ -120,7 +122,10 @@ const NewCustomer = (): JSX.Element => {
                   type="submit"
                   className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn "
                 >
-                  Create
+                  {loading && (
+                    <span className="spinner-border spinner-border-sm"></span>
+                  )}
+                  &nbsp;{!loading ? 'Create' : 'Create...'}
                 </button>
               </div>
             </form>

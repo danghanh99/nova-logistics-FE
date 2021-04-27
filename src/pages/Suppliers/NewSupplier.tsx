@@ -1,7 +1,7 @@
 import { useSnackbar } from 'notistack';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Supplier from '../../models/Supplier';
 import SuppliersService from '../../services/SuppliersService';
@@ -12,6 +12,7 @@ import '../Exports/style.css';
 import 'yup-phone';
 import { yupResolver } from '@hookform/resolvers/yup';
 import './../Imports/Imports.scss';
+import IState from '../../types/StateType';
 const NewSupplier = (): JSX.Element => {
   const schema = yup.object().shape({
     name: yup.string().max(64).required(),
@@ -38,6 +39,7 @@ const NewSupplier = (): JSX.Element => {
     address: '',
     description: '',
   };
+  const loading = useSelector((state: IState) => state.isLoading);
   const [inputText, setInputText] = useState(initial);
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -53,7 +55,9 @@ const NewSupplier = (): JSX.Element => {
         dispatch(newSupplier(res));
         dispatch(reset(true));
         history.push('/admin/suppliers');
-        enqueueSnackbar('New supplier success', { variant: 'success' });
+        setTimeout(() => {
+          enqueueSnackbar('New supplier success', { variant: 'success' });
+        }, 500);
       },
       (error) => {
         const resMessage =
@@ -132,8 +136,12 @@ const NewSupplier = (): JSX.Element => {
                 <button
                   type="submit"
                   className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn mt-1"
+                  disabled={loading}
                 >
-                  Create
+                  {loading && (
+                    <span className="spinner-border spinner-border-sm"></span>
+                  )}
+                  &nbsp;{!loading ? 'Create' : 'Create...'}
                 </button>
               </div>
             </form>
