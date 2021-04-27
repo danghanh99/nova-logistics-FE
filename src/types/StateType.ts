@@ -29,6 +29,7 @@ interface IState {
   };
   isLoggedIn: boolean;
   isLoading: boolean;
+  newSupplier: boolean;
 }
 
 export default IState;

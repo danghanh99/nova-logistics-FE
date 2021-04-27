@@ -13,13 +13,8 @@ import IMeta from '../../types/MetaType';
 import { useSnackbar } from 'notistack';
 import { reset } from '../Imports/ImportsSlice';
 import { useHistory } from 'react-router-dom';
-
-export interface IState {
-  customers: {
-    data: Customer[];
-    meta: IMeta;
-  };
-}
+import Loader from '../../components/Loader/Loader';
+import IState from '../../types/StateType';
 
 const initIconSort = {
   name_desc: '',
@@ -31,6 +26,7 @@ const initIconSort = {
 };
 
 const Customers = (): JSX.Element => {
+  const loading = useSelector((state: IState) => state.isLoading);
   const [search, setSearch] = useState('');
   const [iconSort, setIconSort] = useState(initIconSort);
   const meta = useSelector((state: IState) => state.customers.meta);
@@ -227,6 +223,7 @@ const Customers = (): JSX.Element => {
         pagination={<Pagination meta={meta} hanleOnclick={hanleOnclick} />}
         select={select()}
       ></Table>
+      <Loader isLoading={loading}></Loader>
     </>
   );
 };

@@ -129,6 +129,7 @@ const EditImport = (): JSX.Element => {
                   )}
                 />
               </div>
+              {console.log(importDetail)}
               <div className="form-group">
                 <label>Supplier:</label>
                 <Autocomplete
