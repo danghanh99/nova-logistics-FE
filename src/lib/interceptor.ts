@@ -14,7 +14,7 @@ const AxiosInterceptors = () => {
   });
   axios.interceptors.response.use(
     (response) => {
-      if (response.data) {
+      if (response.data || response.status === 204) {
         dispatch(isLoading(false));
       }
       return response;
