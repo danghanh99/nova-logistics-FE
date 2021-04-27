@@ -23,7 +23,7 @@ const getImports = async (
     });
 };
 
-const newImport = (Import: Import): Promise<Import> => {
+const newImport = async (Import: Import): Promise<Import> => {
   return axios
     .post(API_URL + 'imports', {
       product_id: Import.product?.id,
@@ -38,11 +38,9 @@ const newImport = (Import: Import): Promise<Import> => {
     });
 };
 
-const deleteImport = (id: number) => {
-  const response = axios.delete(`${API_URL}imports/${id}`);
-  response.then((res) => {
-    if (res.data) return res.data;
-  });
+const deleteImport = async (id: number) => {
+  const response = await axios.delete(`${API_URL}imports/${id}`);
+  if (response.data) return response.data;
   return response;
 };
 

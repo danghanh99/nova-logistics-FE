@@ -15,21 +15,12 @@ import { getSuppliers } from '../../pages/Suppliers/SuppliersSlice';
 import { Autocomplete } from '@material-ui/lab';
 import { TextField } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
-import IMeta from '../../types/MetaType';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import '../../pages/Exports/style.css';
-export interface IState {
-  products: {
-    data: Product[];
-    meta: IMeta;
-  };
-  suppliers: {
-    data: Supplier[];
-    meta: IMeta;
-  };
-  imports: Import[];
-}
+import IState from '../../types/StateType';
+import { isLoading } from '../../LoadingSlice';
+
 const NewImport = (): JSX.Element => {
   const schema = yup.object().shape({
     quantity: yup.number().positive().integer().required(),
@@ -50,6 +41,7 @@ const NewImport = (): JSX.Element => {
   const currentDate = new Date().toLocaleDateString('fr-CA');
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
+  const loading = useSelector((state: IState) => state.isLoading);
   const initial: Import = {
     quantity: 0,
     description: '',
@@ -93,13 +85,8 @@ const NewImport = (): JSX.Element => {
         }, 500);
       },
       (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        enqueueSnackbar(resMessage, { variant: 'error' });
+        dispatch(isLoading(false));
+        enqueueSnackbar(error, { variant: 'error' });
       }
     );
   };
@@ -201,8 +188,12 @@ const NewImport = (): JSX.Element => {
                 <button
                   type="submit"
                   className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn mt-3 justify-content-center"
+                  disabled={loading}
                 >
-                  Create
+                  {loading && (
+                    <span className="spinner-border spinner-border-sm"></span>
+                  )}
+                  &nbsp;{!loading ? 'Create' : 'Loading...'}
                 </button>
               </div>
             </form>

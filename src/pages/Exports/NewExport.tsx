@@ -18,6 +18,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import './../Imports/Imports.scss';
 import IState from '../../types/StateType';
 import Loader from '../../components/Loader/Loader';
+import { isLoading } from '../../LoadingSlice';
 
 function NewExport(): JSX.Element {
   const currentDate = new Date().toLocaleDateString('fr-CA');
@@ -97,12 +98,18 @@ function NewExport(): JSX.Element {
       exported_date,
       product_id,
       customer_id
-    ).then(() => {
-      history.push('/admin/exports');
-      setTimeout(() => {
-        enqueueSnackbar('Create export success', { variant: 'success' });
-      }, 500);
-    });
+    )
+      .then(() => {
+        history.push('/admin/exports');
+        setTimeout(() => {
+          enqueueSnackbar('Create export success', { variant: 'success' });
+        }, 500);
+      })
+      .catch((error) => {
+        dispatch(isLoading(false));
+        enqueueSnackbar(error, { variant: 'error' });
+        return error;
+      });
   };
 
   return (

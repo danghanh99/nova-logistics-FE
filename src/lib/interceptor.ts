@@ -1,11 +1,9 @@
 import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { isLoading } from '../LoadingSlice';
-import { useSnackbar } from 'notistack';
 
 const AxiosInterceptors = () => {
   const dispatch = useDispatch();
-  const { enqueueSnackbar } = useSnackbar();
   axios.interceptors.request.use((request) => {
     if (request) {
       dispatch(isLoading(true));
@@ -20,13 +18,10 @@ const AxiosInterceptors = () => {
       return response;
     },
     (error) => {
-      const resMessage =
-        (error.response &&
-          error.response.data &&
-          error.response.data.message) ||
-        error.message ||
-        error.toString();
-      enqueueSnackbar(resMessage, { variant: 'error' });
+      if (error.response && error.response.data) {
+        return Promise.reject(error.response.data);
+      }
+      return Promise.reject(error.message);
     }
   );
 };

@@ -12,6 +12,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import './../Imports/Imports.scss';
 import IState from '../../types/StateType';
 import Loader from '../../components/Loader/Loader';
+import { isLoading } from '../../LoadingSlice';
 type Inputs = {
   name: string;
   description: string;
@@ -50,13 +51,19 @@ function EditProduct(): JSX.Element {
       id: parseInt(id, undefined),
       name: data.name,
       description: data.description,
-    }).then((res) => {
-      dispatch(createProduct(res.data.product));
-      history.push('/admin/products');
-      setTimeout(() => {
-        enqueueSnackbar('Update Product Success', { variant: 'success' });
-      }, 500);
-    });
+    })
+      .then((res) => {
+        dispatch(createProduct(res.product));
+        history.push('/admin/products');
+        setTimeout(() => {
+          enqueueSnackbar('Update Product Success', { variant: 'success' });
+        }, 500);
+      })
+      .catch((error) => {
+        dispatch(isLoading(false));
+        enqueueSnackbar(error, { variant: 'error' });
+        return error;
+      });
   };
   const { enqueueSnackbar } = useSnackbar();
 

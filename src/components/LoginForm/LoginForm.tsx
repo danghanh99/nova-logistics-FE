@@ -16,6 +16,8 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { isLoggedIn } from './LoginSlice';
 import IState from '../../types/StateType';
+import { isLoading } from '../../LoadingSlice';
+import { useSnackbar } from 'notistack';
 
 interface IFormInputs {
   username: string;
@@ -31,12 +33,19 @@ const LoginForm = (): JSX.Element => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const loading = useSelector((state: IState) => state.isLoading);
+  const { enqueueSnackbar } = useSnackbar();
 
   const onSubmit = () => {
-    AuthService.Login(username, password).then(() => {
-      history.push('/admin/exports');
-      dispatch(isLoggedIn(true));
-    });
+    AuthService.Login(username, password)
+      .then(() => {
+        history.push('/admin/exports');
+        dispatch(isLoggedIn(true));
+      })
+      .catch((error) => {
+        dispatch(isLoading(false));
+        enqueueSnackbar(error, { variant: 'error' });
+        return error;
+      });
   };
 
   const onHandleChangeUserName = (e: React.ChangeEvent<HTMLInputElement>) => {

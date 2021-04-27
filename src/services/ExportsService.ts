@@ -23,15 +23,13 @@ const getExports = (
     });
 };
 
-const deleteExport = (id: number) => {
-  const response = axios.delete(`${API_URL}exports/${id}`);
-  response.then((res) => {
-    if (res.data) return res.data;
-  });
+const deleteExport = async (id: number) => {
+  const response = await axios.delete(`${API_URL}exports/${id}`);
+  if (response.data) return response.data;
   return response;
 };
 
-const createExport = (
+const createExport = async (
   sellPrice: number,
   quantity: number,
   description: string,
@@ -39,7 +37,7 @@ const createExport = (
   productId: number,
   customerId: number
 ) => {
-  const response = axios.post(`${API_URL}exports`, {
+  const response = await axios.post(`${API_URL}exports`, {
     sell_price: sellPrice,
     quantity,
     description,
@@ -47,9 +45,7 @@ const createExport = (
     product_id: productId,
     customer_id: customerId,
   });
-  response.then((res) => {
-    if (res.data) return res.data;
-  });
+  if (response.data) return response.data;
   return response;
 };
 

@@ -42,15 +42,13 @@ const getDetailProduct = (id: number) => {
   return response;
 };
 
-const updateProduct = (newProduct: Product) => {
+const updateProduct = async (newProduct: Product) => {
   const { name, description } = newProduct;
-  const response = axios.patch(`${API_URL}products/${newProduct.id}`, {
+  const response = await axios.patch(`${API_URL}products/${newProduct.id}`, {
     name,
     description,
   });
-  response.then((res) => {
-    if (res.data) return res.data;
-  });
+  if (response.data) return response.data;
   return response;
 };
 const ProductsService = {

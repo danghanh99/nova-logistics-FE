@@ -15,6 +15,7 @@ import Search from './Search/Search';
 import Headers from './Headers/Headers';
 import Children from './Children/Children';
 import Select from './Select/Select';
+import { isLoading } from '../../LoadingSlice';
 
 const initIconSort = {
   quantity_desc: '',
@@ -58,10 +59,16 @@ const Imports = (): JSX.Element => {
   };
 
   const onHandleDelete = (id: number) => {
-    ImportsService.deleteImport(id).then(() => {
-      dispatch(deleteImport(id));
-      enqueueSnackbar('Delete import success', { variant: 'success' });
-    });
+    ImportsService.deleteImport(id)
+      .then(() => {
+        dispatch(deleteImport(id));
+        enqueueSnackbar('Delete import success', { variant: 'success' });
+      })
+      .catch((error) => {
+        dispatch(isLoading(false));
+        enqueueSnackbar(error, { variant: 'error' });
+        return error;
+      });
   };
 
   const handleChange = (value: string) => {
