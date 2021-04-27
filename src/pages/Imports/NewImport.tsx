@@ -88,7 +88,9 @@ const NewImport = (): JSX.Element => {
         dispatch(newImport(res));
         dispatch(reset(true));
         history.push('/admin/imports');
-        enqueueSnackbar('New import success', { variant: 'success' });
+        setTimeout(() => {
+          enqueueSnackbar('New import success', { variant: 'success' });
+        }, 500);
       },
       (error) => {
         const resMessage =

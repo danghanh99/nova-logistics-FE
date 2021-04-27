@@ -51,6 +51,7 @@ const EditImport = (): JSX.Element => {
     Import,
     useSelector((state: IState) => state.imports.data)[0]
   );
+  const [importForm, setImportForm] = useState<Import>(importDetail);
 
   const { enqueueSnackbar } = useSnackbar();
 
@@ -58,6 +59,9 @@ const EditImport = (): JSX.Element => {
     if (!importDetail) {
       ImportsService.getImport(parseInt(id, undefined)).then((res) => {
         dispatch(getImport(res.data.import));
+        if (!importForm) {
+          setImportForm(res.data.import);
+        }
       });
     }
     ProductsService.getProducts().then((res) => {
@@ -72,37 +76,34 @@ const EditImport = (): JSX.Element => {
     e: ChangeEvent<{}>,
     value: Product | null
   ) => {
-    // setImportForm({ ...importDetail, product: value });
+    setImportForm({ ...importDetail, product: value });
   };
 
   const handleChangeSupplierImport = (
     e: ChangeEvent<{}>,
     value: Supplier | null
   ) => {
-    // setImportForm({ ...importDetail, supplier: value });
+    setImportForm({ ...importDetail, supplier: value });
   };
 
   const changeValue = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    // setImportForm({ ...importDetail, [e.target.name]: e.target.value });
+    setImportForm({ ...importDetail, [e.target.name]: e.target.value });
   };
-
-  // const submitImport = useAsync(async () => {
-  //   return ImportsService.updateImport(importForm).then(() => {
-  //     history.push('/admin/imports');
-  //     setTimeout(() => {
-  //       enqueueSnackbar('Update import success', { variant: 'success' });
-  //     }, 500);
-  //   });
-  // }, false);
-
-  console.log(importDetail);
 
   const onSubmit = () => {
-    // submitImport.execute();
+    ImportsService.updateImport(importForm).then(() => {
+      history.push('/admin/imports');
+      setTimeout(() => {
+        enqueueSnackbar('Update import success', { variant: 'success' });
+      }, 500);
+    });
   };
 
+  if (!importDetail) {
+    return <></>;
+  }
   return (
     <>
       <div className="container">
