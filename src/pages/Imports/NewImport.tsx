@@ -118,7 +118,7 @@ const NewImport = (): JSX.Element => {
       .catch((error) => {
         throw error;
       });
-  }, [inputProduct, inputSupplier]);
+  }, [inputProduct, inputSupplier, dispatch]);
   return (
     <>
       <div className="container">

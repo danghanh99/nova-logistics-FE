@@ -12,7 +12,7 @@ const Loader = (props: Props): JSX.Element => {
     <>
       <div className="loader-container">
         <div className="loader">
-          <img src={LoaderGif} className="gif" />
+          <img src={LoaderGif} className="gif" alt="gif" />
         </div>
       </div>
     </>

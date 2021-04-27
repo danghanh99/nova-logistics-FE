@@ -36,8 +36,9 @@ export const setAuthToken = (): void => {
   axios.defaults.headers.common[`Authorization`] = `${token}`;
 };
 
-export default {
+const AuthService = {
   Login,
   isExpired,
   logout,
 };
+export default AuthService;

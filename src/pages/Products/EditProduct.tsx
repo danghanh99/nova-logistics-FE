@@ -39,7 +39,7 @@ function EditProduct(): JSX.Element {
     ProductsService.getDetailProduct(parseInt(id, undefined)).then((res) => {
       setProduct(res.data.product);
     });
-  }, []);
+  }, [id]);
   const loading = useSelector((state: IState) => state.isLoading);
 
   const dispatch = useDispatch();

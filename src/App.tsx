@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import './App.css';
 import Login from './pages/Login';
 import TheLayout from './containers/TheLayout';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import AuthService from './services/AuthService';
 import { setAuthToken } from './services/AuthService';
 import AxiosInterceptors from './lib/interceptor';
@@ -13,7 +13,6 @@ type State = {
 
 function App() {
   const isLoggedIn = useSelector((state: State) => state.isLoggedIn);
-  const dispatch = useDispatch();
   const redirect = () => {
     if (!isLoggedIn || !AuthService.isExpired()) {
       return <Redirect to="/" />;

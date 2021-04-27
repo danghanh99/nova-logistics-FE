@@ -45,7 +45,7 @@ const Imports = (): JSX.Element => {
     ImportsService.getImports(page, perPage, search, sort).then((res) =>
       dispatch(getImports(res))
     );
-  }, [page, perPage, search, sort]);
+  }, [page, perPage, search, sort, dispatch]);
 
   const onSort = (e: React.MouseEvent, name: string, value: string): void => {
     const sortType = `${name}: ${value}`;

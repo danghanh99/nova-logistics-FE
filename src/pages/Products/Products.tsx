@@ -36,7 +36,7 @@ const Products = (): JSX.Element => {
       .catch((error) => {
         throw error;
       });
-  }, [search, page, perPage, sort]);
+  }, [search, page, perPage, sort, dispatch]);
 
   const headers = (): JSX.Element => {
     return (
