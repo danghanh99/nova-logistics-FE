@@ -30,7 +30,7 @@ interface IFormInputs {
 const schema = yup.object().shape({
   username: yup
     .string()
-    .email('email invalid')
+    .email('you seem have invalid email')
     .required('username must be exist'),
   password: yup.string().required('password must be exist'),
 });
@@ -97,8 +97,8 @@ const LoginForm = (): JSX.Element => {
           value={username}
           onChange={onHandleChangeUserName}
         />
+        <p>{errors.username?.message}</p>
       </CInputGroup>
-      <p>{errors.username?.message}</p>
       <CInputGroup className="mb-4">
         <CInputGroupPrepend>
           <CInputGroupText>
@@ -113,8 +113,8 @@ const LoginForm = (): JSX.Element => {
           {...register('password')}
           onChange={onHandleChangeUserPassword}
         />
+        <p>{errors.password?.message}</p>
       </CInputGroup>
-      <p>{errors.password?.message}</p>
       <CRow>
         <CCol xs="6">
           <CButton
