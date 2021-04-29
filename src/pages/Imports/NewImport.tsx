@@ -23,9 +23,24 @@ import { isLoading } from '../../LoadingSlice';
 
 const NewImport = (): JSX.Element => {
   const schema = yup.object().shape({
-    quantity: yup.number().positive().integer().required(),
-    retail_price: yup.number().positive().integer().required(),
+    quantity: yup
+      .number()
+      .typeError('quantity must be a number')
+      .positive()
+      .integer()
+      .required()
+      .label('quantity'),
+    retail_price: yup
+      .number()
+      .typeError('quantity must be a number')
+      .positive()
+      .integer()
+      .required()
+      .label('price'),
     description: yup.string(),
+    product: yup.string().required('product must be exist'),
+    supplier: yup.string().required('supplier must be exist'),
+    imported_date: yup.string().required('date must be exist'),
   });
 
   const {
@@ -115,40 +130,55 @@ const NewImport = (): JSX.Element => {
               <div className="form-group">
                 <label>Product:</label>
                 <Autocomplete
+                  {...register('product')}
                   id="combo-box-demo"
                   className="bgc-white"
                   options={listProducts}
                   getOptionLabel={(option: Product) => option.name}
                   onChange={handleProductChange}
                   renderInput={(params) => (
-                    <TextField {...params} variant="outlined" label="Name..." />
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      label="Name..."
+                      name="product"
+                    />
                   )}
                 />
+                <p>{errors.product?.message}</p>
               </div>
               <div className="form-group">
                 <label>Supplier:</label>
                 <Autocomplete
+                  {...register('supplier')}
                   id="combo-box-demo"
                   options={listSuppliers}
                   getOptionLabel={(option: Supplier) => option.name}
                   onChange={handleSupplierChange}
                   className="bgc-white"
                   renderInput={(params) => (
-                    <TextField {...params} variant="outlined" label="Name..." />
+                    <TextField
+                      {...params}
+                      variant="outlined"
+                      label="Name..."
+                      name="supplier"
+                    />
                   )}
                 />
+                <p>{errors.supplier?.message}</p>
               </div>
               <div className="form-group">
                 <label>Date:</label>
                 <input
+                  {...register('imported_date')}
                   type="date"
                   className="form-control height-56"
                   onChange={handleTextChange}
                   autoComplete="off"
                   defaultValue={currentDate}
-                  required
                   name="imported_date"
                 />
+                <p>{errors.imported_date?.message}</p>
               </div>
               <div className="form-row">
                 <div className="col-6">
