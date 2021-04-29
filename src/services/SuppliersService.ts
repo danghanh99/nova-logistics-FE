@@ -24,30 +24,25 @@ const getSuppliers = (
     });
 };
 
-const newSupplier = (supplier: Supplier): Promise<Supplier> => {
-  return axios
-    .post(API_URL + 'suppliers', {
-      name: supplier.name,
-      phone: supplier.phone,
-      address: supplier.address,
-      description: supplier.description,
-    })
-    .then((response) => {
-      return response.data.supplier;
-    });
+const newSupplier = async (supplier: Supplier): Promise<Supplier> => {
+  const response = await axios.post(API_URL + 'suppliers', {
+    name: supplier.name,
+    phone: supplier.phone,
+    address: supplier.address,
+    description: supplier.description,
+  });
+  return response.data.supplier;
 };
 
-const editSupplier = (supplier: Supplier) => {
+const editSupplier = async (supplier: Supplier) => {
   const { name, phone, address, description } = supplier;
-  const response = axios.patch(`${API_URL}suppliers/${supplier.id}`, {
+  const response = await axios.patch(`${API_URL}suppliers/${supplier.id}`, {
     name,
     phone,
     address,
     description,
   });
-  response.then((res) => {
-    if (res.data) return res.data;
-  });
+  if (response.data) return response.data;
   return response;
 };
 

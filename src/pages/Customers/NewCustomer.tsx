@@ -13,6 +13,7 @@ import 'yup-phone';
 import { yupResolver } from '@hookform/resolvers/yup';
 import './../Imports/Imports.scss';
 import IState from '../../types/StateType';
+import { isLoading } from '../../LoadingSlice';
 
 const NewCustomer = (): JSX.Element => {
   const loading = useSelector((state: IState) => state.isLoading);
@@ -50,23 +51,18 @@ const NewCustomer = (): JSX.Element => {
   const dispatch = useDispatch();
   const history = useHistory();
   const onSubmit = () => {
-    CustomersService.newCustomer(inputText).then(
-      (res) => {
+    CustomersService.newCustomer(inputText)
+      .then((res) => {
         dispatch(newCustomer(res));
         dispatch(reset(true));
         history.push('/admin/customers');
         enqueueSnackbar('New customer success', { variant: 'success' });
-      },
-      (error) => {
-        const resMessage =
-          (error.response &&
-            error.response.data &&
-            error.response.data.message) ||
-          error.message ||
-          error.toString();
-        enqueueSnackbar(resMessage, { variant: 'error' });
-      }
-    );
+      })
+      .catch((error) => {
+        dispatch(isLoading(false));
+        enqueueSnackbar(error, { variant: 'error' });
+        return error;
+      });
   };
 
   return (
