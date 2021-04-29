@@ -8,7 +8,7 @@ type Props = {
   onHandleDelete: (id: number) => void;
 };
 
-const Children = (props: Props): JSX.Element => {
+const Content = (props: Props): JSX.Element => {
   const { listImports, onHandleDelete } = props;
   const history = useHistory();
   return (
@@ -48,4 +48,4 @@ const Children = (props: Props): JSX.Element => {
   );
 };
 
-export default Children;
+export default Content;

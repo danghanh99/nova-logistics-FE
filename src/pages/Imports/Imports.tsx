@@ -13,7 +13,7 @@ import Loader from '../../components/Loader/Loader';
 import IState from '../../types/StateType';
 import Search from './Search/Search';
 import Headers from './Headers/Headers';
-import Children from './Children/Children';
+import Content from './Content/Content';
 import Select from './Select/Select';
 import { isLoading } from '../../LoadingSlice';
 
@@ -100,7 +100,7 @@ const Imports = (): JSX.Element => {
         modelName="Import"
         search={<Search onsearch={onsearch} />}
         children={
-          <Children listImports={listImports} onHandleDelete={onHandleDelete} />
+          <Content listImports={listImports} onHandleDelete={onHandleDelete} />
         }
         pagination={<Pagination meta={meta} hanleOnclick={hanleOnclick} />}
         select={<Select handleChange={handleChange} perPage={perPage} />}
