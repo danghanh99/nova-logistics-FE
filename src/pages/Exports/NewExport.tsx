@@ -31,9 +31,24 @@ function NewExport(): JSX.Element {
     customer_id: 0,
   };
   const schema = yup.object().shape({
-    quantity: yup.number().positive().integer().max(999999999).required(),
-    sell_price: yup.number().integer().max(999999999).positive().required(),
+    quantity: yup
+      .number()
+      .typeError('quantity must be a number')
+      .positive()
+      .integer()
+      .max(999999999)
+      .required(),
+    sell_price: yup
+      .number()
+      .typeError('price must be a number')
+      .integer()
+      .max(999999999)
+      .positive()
+      .required(),
     description: yup.string(),
+    product: yup.string().required('product must be exist'),
+    customer: yup.string().required('customer must be exist'),
+    exported_date: yup.string().required('date must be exist'),
   });
 
   const {
@@ -120,6 +135,7 @@ function NewExport(): JSX.Element {
             <form onSubmit={handleSubmit(onSubmit)}>
               <label htmlFor="inputEmail4">Product</label>
               <Autocomplete
+                {...register('product')}
                 id="combo-box-demo"
                 className="bgc-white"
                 componentName="product"
@@ -130,11 +146,18 @@ function NewExport(): JSX.Element {
                 }
                 onChange={handleChangeProductExport}
                 renderInput={(params) => (
-                  <TextField {...params} variant="outlined" label="Name..." />
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    label="Name..."
+                    name="product"
+                  />
                 )}
               />
+              <p>{errors.product?.message}</p>
               <label htmlFor="inputPassword4">Customer</label>
               <Autocomplete
+                {...register('customer')}
                 id="combo-box-demo"
                 className="bgc-white"
                 options={listCustomer}
@@ -144,11 +167,18 @@ function NewExport(): JSX.Element {
                 }
                 onChange={handleChangeCustomerImport}
                 renderInput={(params) => (
-                  <TextField {...params} variant="outlined" label="Name..." />
+                  <TextField
+                    {...params}
+                    variant="outlined"
+                    label="Name..."
+                    name="customer"
+                  />
                 )}
               />
+              <p>{errors.customer?.message}</p>
               <label htmlFor="inputAddress">Date</label>
               <input
+                {...register('exported_date')}
                 type="date"
                 className="form-control height-56"
                 value={exportDetail.exported_date}
@@ -156,6 +186,7 @@ function NewExport(): JSX.Element {
                 name="exported_date"
                 defaultValue={currentDate}
               />
+              <p>{errors.exported_date?.message}</p>
               <div className="form-row">
                 <div className="col-6">
                   <label htmlFor="inputAddress2">Quantity</label>

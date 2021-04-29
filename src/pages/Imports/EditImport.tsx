@@ -29,9 +29,18 @@ type Params = {
 
 const EditImport = (): JSX.Element => {
   const schema = yup.object().shape({
-    quantity: yup.number().positive().integer(),
-    retail_price: yup.number().positive().integer(),
+    quantity: yup
+      .number()
+      .typeError('quantity must be a number')
+      .positive()
+      .integer(),
+    retail_price: yup
+      .number()
+      .typeError('price must be a number')
+      .positive()
+      .integer(),
     description: yup.string(),
+    imported_date: yup.string().required('date must be exist'),
   });
 
   const {
@@ -129,7 +138,6 @@ const EditImport = (): JSX.Element => {
                   )}
                 />
               </div>
-              {console.log(importDetail)}
               <div className="form-group">
                 <label>Supplier:</label>
                 <Autocomplete
@@ -157,9 +165,9 @@ const EditImport = (): JSX.Element => {
                   onChange={changeValue}
                   autoComplete="off"
                   defaultValue={importDetail?.imported_date}
-                  required
                   name="imported_date"
                 />
+                <p>{errors.imported_date?.message}</p>
               </div>
               <div className="form-row">
                 <div className="col-6">

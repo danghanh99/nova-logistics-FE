@@ -32,7 +32,7 @@ const NewImport = (): JSX.Element => {
       .label('quantity'),
     retail_price: yup
       .number()
-      .typeError('quantity must be a number')
+      .typeError('price must be a number')
       .positive()
       .integer()
       .required()
