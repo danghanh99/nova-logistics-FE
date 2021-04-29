@@ -97,10 +97,8 @@ const LoginForm = (): JSX.Element => {
           value={username}
           onChange={onHandleChangeUserName}
         />
-        <div>
-          <p>{errors.username?.message}</p>
-        </div>
       </CInputGroup>
+      <p>{errors.username?.message}</p>
       <CInputGroup className="mb-4">
         <CInputGroupPrepend>
           <CInputGroupText>
@@ -115,8 +113,8 @@ const LoginForm = (): JSX.Element => {
           {...register('password')}
           onChange={onHandleChangeUserPassword}
         />
-        <p>{errors.password?.message}</p>
       </CInputGroup>
+      <p>{errors.password?.message}</p>
       <CRow>
         <CCol xs="6">
           <CButton
