@@ -18,17 +18,34 @@ import { isLoggedIn } from './LoginSlice';
 import IState from '../../types/StateType';
 import { isLoading } from '../../LoadingSlice';
 import { useSnackbar } from 'notistack';
+import { useEffect } from 'react';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 interface IFormInputs {
   username: string;
   password: string;
 }
 
+const schema = yup.object().shape({
+  username: yup
+    .string()
+    .email('email invalid')
+    .required('username must be exist'),
+  password: yup.string().required('password must be exist'),
+});
+
 const LoginForm = (): JSX.Element => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const { register, handleSubmit } = useForm<IFormInputs>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<IFormInputs>({
     criteriaMode: 'all',
+    resolver: yupResolver(schema),
   });
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -57,6 +74,12 @@ const LoginForm = (): JSX.Element => {
   ) => {
     setPassword(e.target.value);
   };
+
+  useEffect(() => {
+    setValue('username', username);
+    setValue('password', password);
+  }, [username, password, setValue]);
+
   return (
     <CForm onSubmit={handleSubmit(onSubmit)}>
       <h1>Login</h1>
@@ -68,13 +91,15 @@ const LoginForm = (): JSX.Element => {
           </CInputGroupText>
         </CInputGroupPrepend>
         <input
-          type="email"
-          placeholder="Username"
-          required
-          autoComplete="username"
           {...register('username')}
+          placeholder="Username"
+          autoComplete="username"
+          value={username}
           onChange={onHandleChangeUserName}
         />
+        <div>
+          <p>{errors.username?.message}</p>
+        </div>
       </CInputGroup>
       <CInputGroup className="mb-4">
         <CInputGroupPrepend>
@@ -86,10 +111,11 @@ const LoginForm = (): JSX.Element => {
           type="password"
           placeholder="Password"
           autoComplete="current-password"
-          required
+          value={password}
           {...register('password')}
           onChange={onHandleChangeUserPassword}
         />
+        <p>{errors.password?.message}</p>
       </CInputGroup>
       <CRow>
         <CCol xs="6">
