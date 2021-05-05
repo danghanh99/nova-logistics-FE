@@ -27,7 +27,7 @@ export default function PaginationControlled(props: IProps) {
   return (
     <div className={classes.root}>
       <Pagination
-        count={props.meta.total_count}
+        count={props.meta.total_pages}
         page={props.meta.current_page}
         onChange={handleChange}
       />
