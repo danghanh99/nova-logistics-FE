@@ -5,13 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Customer from '../../models/Customer';
 import CustomersService from '../../services/CustomersService';
-import { reset } from '../Imports/ImportsSlice';
 import { newCustomer } from './CustomersSlice';
 import * as yup from 'yup';
-import '../Exports/style.css';
+// import '../Exports/style.css';
 import 'yup-phone';
 import { yupResolver } from '@hookform/resolvers/yup';
-import './../Imports/Imports.scss';
+// import './../Imports/Imports.scss';
 import IState from '../../types/StateType';
 import { isLoading } from '../../LoadingSlice';
 
@@ -57,7 +56,6 @@ const NewCustomer = (): JSX.Element => {
     CustomersService.newCustomer(inputText)
       .then((res) => {
         dispatch(newCustomer(res));
-        dispatch(reset(true));
         history.push('/admin/customers');
         enqueueSnackbar('New customer success', { variant: 'success' });
       })

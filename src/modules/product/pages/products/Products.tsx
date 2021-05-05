@@ -2,39 +2,36 @@ import { useEffect, useState } from 'react';
 import CIcon from '@coreui/icons-react';
 import { cilPlaylistAdd } from '../../../../assets/icons';
 import Table from '../../../common/UI/Table';
-import Headers from '../../components/Header/Header';
 import Search from '../../../common/components/Search/Search';
-import Content from '../../components/Content/Content';
-import ImportsService from '../../services/api/importApiClient';
 import { useDispatch, useSelector } from 'react-redux';
 import { plainToClass } from 'class-transformer';
 import IState from '../../../../types/StateType';
-import Import from '../../../../models/Import';
 import Loader from '../../../common/components/Loader/Loader';
 import { useHistory } from 'react-router-dom';
 import Pagination from '../../../common/components/Pagination/Pagination';
-import { isLoading } from '../../../../LoadingSlice';
-import { useSnackbar } from 'notistack';
-import { deleteImport, getImports } from '../../services/state/ImportsSlice';
 import Select from '../../../common/components/Select/Select';
+import ProductsService from '../../services/api/productApiClitent';
+import { getProducts } from '../../services/state/ProductSlice';
+import Headers from '../../components/Headers/Headers';
+import Content from '../../components/Content/Content';
+import Product from '../../../../models/Product';
 
 const Imports = (): JSX.Element => {
   const dispatch = useDispatch();
-  const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
-  const listImports = plainToClass(
-    Import,
-    useSelector((state: IState) => state.imports.data)
+  const listProducts = plainToClass(
+    Product,
+    useSelector((state: IState) => state.products.data)
   );
   const loading = useSelector((state: IState) => state.isLoading);
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const [search, setSearch] = useState('');
-  const [sort, setSort] = useState('updated_at: desc, created_at: desc');
-  const meta = useSelector((state: IState) => state.imports.meta);
+  const sort = 'updated_at: desc, created_at: desc';
+  const meta = useSelector((state: IState) => state.products.meta);
   useEffect(() => {
-    ImportsService.getImports(page, perPage, search, sort).then((res) => {
-      dispatch(getImports(res));
+    ProductsService.getProducts(search, page, perPage, sort).then((res) => {
+      dispatch(getProducts(res));
     });
   }, [dispatch, search, perPage, page, sort]);
   const onHandlerSeach = (value: string) => {
@@ -47,23 +44,6 @@ const Imports = (): JSX.Element => {
   const handlerPage = (value: number) => {
     setPage(value);
   };
-  const onSort = (name: string, value: string) => {
-    const sortType = `${name}: ${value}`;
-    setSort(sortType);
-  };
-
-  const onHandleDelete = (id: number) => {
-    ImportsService.deleteImport(id)
-      .then(() => {
-        dispatch(deleteImport(id));
-        enqueueSnackbar('Delete import success', { variant: 'success' });
-      })
-      .catch((error) => {
-        dispatch(isLoading(false));
-        enqueueSnackbar(error, { variant: 'error' });
-        return error;
-      });
-  };
 
   return (
     <>
@@ -72,7 +52,7 @@ const Imports = (): JSX.Element => {
         <Select handleChange={onHandleChange} perPage={perPage} />
         <div className="col-4 text-right">
           <button
-            onClick={() => history.push('/admin/imports/new')}
+            onClick={() => history.push('/admin/products/new')}
             type="button"
             className="btn btn-info"
           >
@@ -82,8 +62,8 @@ const Imports = (): JSX.Element => {
         </div>
       </div>
       <Table className="table table-bordered table-striped table-hover">
-        <Headers onSort={onSort} />
-        <Content listImports={listImports} onHandleDelete={onHandleDelete} />
+        <Headers />
+        <Content listProducts={listProducts} />
       </Table>
       <div className="col-12 pr-0">
         <Pagination meta={meta} handlerPage={handlerPage} />

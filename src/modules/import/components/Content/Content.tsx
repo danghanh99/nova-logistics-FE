@@ -1,12 +1,15 @@
 import CIcon from '@coreui/icons-react';
+import { useHistory } from 'react-router-dom';
 import { cilColorBorder, cilTrash } from '../../../../assets/icons';
 import Import from '../../../../models/Import';
 
 interface IProps {
   listImports: Import[];
+  onHandleDelete: (id: number) => void;
 }
 
 const Content = (props: IProps): JSX.Element => {
+  const history = useHistory();
   return (
     <>
       {props.listImports.map((value, index) => {
@@ -23,15 +26,15 @@ const Content = (props: IProps): JSX.Element => {
               <div className="d-flex justify-content-center">
                 <button
                   className="btn mr-2 d-flex align-items-center btn-warning"
-                  //   onClick={() =>
-                  //     // history.push(`/admin/imports/edit/${value.id}`)
-                  //   }
+                  onClick={() =>
+                    history.push(`/admin/imports/edit/${value.id}`)
+                  }
                 >
                   <CIcon content={cilColorBorder}></CIcon>
                 </button>
                 <button
                   className="btn mr-2 d-flex align-items-center btn-danger"
-                  //   onClick={() => onHandleDelete(value.id)}
+                  onClick={() => props.onHandleDelete(value.id)}
                 >
                   <CIcon content={cilTrash}></CIcon>
                 </button>

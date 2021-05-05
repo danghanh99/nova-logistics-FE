@@ -5,13 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Supplier from '../../models/Supplier';
 import SuppliersService from '../../services/SuppliersService';
-import { reset } from '../Imports/ImportsSlice';
 import { newSupplier } from './SuppliersSlice';
 import * as yup from 'yup';
-import '../Exports/style.css';
+// import '../Exports/style.css';
 import 'yup-phone';
 import { yupResolver } from '@hookform/resolvers/yup';
-import './../Imports/Imports.scss';
+// import './../Imports/Imports.scss';
 import IState from '../../types/StateType';
 import { isLoading } from '../../LoadingSlice';
 
@@ -55,7 +54,6 @@ const NewSupplier = (): JSX.Element => {
     SuppliersService.newSupplier(inputText)
       .then((res) => {
         dispatch(newSupplier(res));
-        dispatch(reset(true));
         history.push('/admin/suppliers');
         setTimeout(() => {
           enqueueSnackbar('New supplier success', { variant: 'success' });

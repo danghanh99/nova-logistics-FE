@@ -9,7 +9,6 @@ import { plainToClass } from 'class-transformer';
 import { getCustomers } from './CustomersSlice';
 import CustomersService from '../../services/CustomersService';
 import Pagination from '../../components/Pagination/Pagination';
-import { reset } from '../Imports/ImportsSlice';
 import { useHistory } from 'react-router-dom';
 import Loader from '../../modules/common/components/Loader/Loader';
 import IState from '../../types/StateType';
@@ -195,9 +194,6 @@ const Customers = (): JSX.Element => {
       .catch((error) => {
         throw error;
       });
-    return () => {
-      dispatch(reset(true));
-    };
   }, [page, perPage, search, sort, dispatch]);
   return (
     <>

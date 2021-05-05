@@ -3,9 +3,9 @@ import sidebarReducer from './containers/SidebarSlice';
 import loginReducer from './components/LoginForm/LoginSlice';
 import supplierReducer from './pages/Suppliers/SuppliersSlice';
 import customerReducer from './pages/Customers/CustomersSlice';
-import importReducer from './pages/Imports/ImportsSlice';
-import exportReducer from './pages/Exports/ExportsSlice';
-import productReducer from './pages/Products/ProductSlice';
+import importReducer from './modules/import/services/state/ImportsSlice';
+import exportReducer from './modules/export/services/state/ExportsSlice';
+import productReducer from './modules/product/services/state/ProductSlice';
 import loadingReducer from './LoadingSlice';
 const rootReducer = {
   sidebar: sidebarReducer,

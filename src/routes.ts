@@ -1,18 +1,19 @@
-import Exports from './pages/Exports/Exports';
-import Products from './pages/Products/Products';
 import { IRoute } from './types/RouteType';
 import Suppliers from './pages/Suppliers/Suppliers';
 import Customers from './pages/Customers/Customers';
-import NewImport from './pages/Imports/NewImport';
-import EditImport from './pages/Imports/EditImport';
 import NewCustomer from './pages/Customers/NewCustomer';
-import NewExport from './pages/Exports/NewExport';
 import EditCustomer from './pages/Customers/EditCustomer';
-import NewProduct from './pages/Products/NewProduct';
-import EditProduct from './pages/Products/EditProduct';
+import NewProduct from './modules/product/pages/products/NewProduct';
 import EditSupplier from './pages/Suppliers/EditSupplier';
 import NewSupplier from './pages/Suppliers/NewSupplier';
 import imports from './modules/import/pages/imports/Imports';
+import NewImport from './modules/import/pages/imports/NewImport';
+import EditImport from './modules/import/pages/imports/EditImport';
+import Exports from './modules/export/pages/exports/Exports';
+import NewExport from './modules/export/pages/exports/NewExport';
+import Products from './modules/product/pages/products/Products';
+import EditProduct from './modules/product/pages/products/EditProduct';
+
 const routes: IRoute[] = [
   {
     path: '/admin/imports',
