@@ -3,17 +3,14 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import Customer from '../../models/Customer';
-import CustomersService from '../../services/CustomersService';
-import { reset } from '../../modules/import/services/state/importsSlice';
-import { newCustomer } from './CustomersSlice';
 import * as yup from 'yup';
-// import '../Exports/style.css';
 import 'yup-phone';
 import { yupResolver } from '@hookform/resolvers/yup';
-// import './../Imports/Imports.scss';
-import IState from '../../types/StateType';
-import { isLoading } from '../../LoadingSlice';
+import IState from '../../../common/services/api/types/StateType';
+import Customer from '../../services/api/types/Customer';
+import CustomersService from '../../services/api/customerApiClient';
+import { newCustomer, reset } from '../../services/state/CustomersSlice';
+import { isLoading } from '../../../common/services/state/LoadingSlice';
 
 const NewCustomer = (): JSX.Element => {
   const loading = useSelector((state: IState) => state.isLoading);

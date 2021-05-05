@@ -7,7 +7,7 @@ import Search from '../../components/Search/Search';
 import Content from '../../components/Content/Content';
 import ImportsService from '../../services/api/importApiClient';
 import { useDispatch, useSelector } from 'react-redux';
-import { getImports } from '../../../../pages/Imports/ImportsSlice';
+import { getImports } from '../../services/state/importsSlice';
 import { plainToClass } from 'class-transformer';
 import IState from '../../../../types/StateType';
 import Import from '../../../../models/Import';
@@ -28,6 +28,7 @@ const Imports = (): JSX.Element => {
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState('updated_at: desc, created_at: desc');
   const meta = useSelector((state: IState) => state.imports.meta);
+
   useEffect(() => {
     ImportsService.getImports(page, perPage, search, sort).then((res) => {
       dispatch(getImports(res));

@@ -9,7 +9,7 @@ import { plainToClass } from 'class-transformer';
 import { getCustomers } from './CustomersSlice';
 import CustomersService from '../../services/CustomersService';
 import Pagination from '../../components/Pagination/Pagination';
-import { reset } from '../Imports/ImportsSlice';
+import { reset } from '../../modules/import/services/state/importsSlice';
 import { useHistory } from 'react-router-dom';
 import Loader from '../../modules/common/components/Loader/Loader';
 import IState from '../../types/StateType';

@@ -7,11 +7,14 @@ import Supplier from '../../models/Supplier';
 import Import from '../../models/Import';
 import { useForm } from 'react-hook-form';
 import ImportsService from '../../services/ImportsService';
-import { newImport, reset } from '../../pages/Imports/ImportsSlice';
+import {
+  newImport,
+  reset,
+} from '../../modules/import/services/state/importsSlice';
 import ProductsService from '../../services/ProductsService';
 import { getProducts } from '../../pages/Products/ProductSlice';
 import SuppliersService from '../../services/SuppliersService';
-import { getSuppliers } from '../../pages/Suppliers/SuppliersSlice';
+import { getSuppliers } from '../../modules/supplier/services/state/SuppliersSlice';
 import { Autocomplete } from '@material-ui/lab';
 import { TextField } from '@material-ui/core';
 import { useSnackbar } from 'notistack';

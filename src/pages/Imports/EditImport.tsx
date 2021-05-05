@@ -9,19 +9,22 @@ import { getProducts } from '../Products/ProductSlice';
 import { Autocomplete } from '@material-ui/lab';
 import TextField from '@material-ui/core/TextField';
 import SuppliersService from '../../services/SuppliersService';
-import { getSuppliers } from '../Suppliers/SuppliersSlice';
+import { getSuppliers } from '../../modules/supplier/services/state/SuppliersSlice';
 import Supplier from '../../models/Supplier';
 import Product from '../../models/Product';
 import { useSnackbar } from 'notistack';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import '../../pages/Exports/style.css';
+// import '../../pages/Exports/style.css';
 import { useForm } from 'react-hook-form';
 import { plainToClass } from 'class-transformer';
-import './Imports.scss';
+// import './Imports.scss';
 import IState from '../../types/StateType';
 import Loader from '../../modules/common/components/Loader/Loader';
-import { getImports, reset } from './ImportsSlice';
+import {
+  getImports,
+  reset,
+} from '../../modules/import/services/state/importsSlice';
 
 type Params = {
   id: string;

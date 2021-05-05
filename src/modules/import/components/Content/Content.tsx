@@ -1,6 +1,7 @@
 import CIcon from '@coreui/icons-react';
 import { cilColorBorder, cilTrash } from '../../../../assets/icons';
 import Import from '../../../../models/Import';
+import Supplier from '../../../supplier/services/api/types/Supplier';
 
 interface IProps {
   listImports: Import[];

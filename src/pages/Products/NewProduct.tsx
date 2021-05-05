@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createProduct } from './ProductSlice';
 import { useHistory } from 'react-router-dom';
 import * as yup from 'yup';
-import '../Exports/style.css';
+// import '../Exports/style.css';
 import { yupResolver } from '@hookform/resolvers/yup';
-import './../Imports/Imports.scss';
+// import './../Imports/Imports.scss';
 import IState from '../../types/StateType';
 import { isLoading } from '../../LoadingSlice';
 type Inputs = {

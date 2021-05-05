@@ -1,20 +1,17 @@
 import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { useState } from 'react';
-import Supplier from '../../models/Supplier';
+import Supplier from '../../services/api/types/Supplier';
 import { useSnackbar } from 'notistack';
-import Customer from '../../models/Customer';
-import CustomersService from '../../services/CustomersService';
+import SuppliersService from '../../services/api/supplierApiClient';
 import * as yup from 'yup';
-// import '../Exports/style.css';
 import 'yup-phone';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
-// import './../Imports/Imports.scss';
-import IState from '../../types/StateType';
 import { useDispatch, useSelector } from 'react-redux';
-import Loader from '../../modules/common/components/Loader/Loader';
-import { isLoading } from '../../LoadingSlice';
+import IState from '../../../common/services/api/types/StateType';
+import Loader from '../../../../modules/common/components/Loader/Loader';
+import { isLoading } from '../../../common/services/state/LoadingSlice';
 type Params = {
   id: string;
 };
@@ -23,11 +20,11 @@ export interface IStateSupplier {
   suppliers: Supplier[];
 }
 
-const EditCustomer = (): JSX.Element => {
+const EditSupplier = (): JSX.Element => {
   const loading = useSelector((state: IState) => state.isLoading);
   const schema = yup.object().shape({
     name: yup.string().max(64),
-    phone_number: yup.string().matches(/^\d+$/, {
+    phone: yup.string().matches(/^\d+$/, {
       message: 'Please enter valid number',
       excludeEmptyString: false,
     }),
@@ -43,23 +40,23 @@ const EditCustomer = (): JSX.Element => {
     resolver: yupResolver(schema),
   });
 
-  const initial: Customer = {
+  const initial: Supplier = {
     id: 0,
     name: '',
-    phone_number: '',
+    phone: '',
     address: '',
+    description: '',
   };
   const { id }: Params = useParams();
-
-  const [customerDetail, setCustomer] = useState(initial);
+  const dispatch = useDispatch();
+  const [supplierDetail, setSupplier] = useState(initial);
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
-  const dispatch = useDispatch();
   const onSubmit = (e: React.FormEvent) => {
-    CustomersService.editCustomer(customerDetail)
+    SuppliersService.editSupplier(supplierDetail)
       .then(() => {
-        history.push('/admin/customers');
-        enqueueSnackbar('Update customer success', { variant: 'success' });
+        history.push('/admin/suppliers');
+        enqueueSnackbar('Update supplier success', { variant: 'success' });
       })
       .catch((error) => {
         dispatch(isLoading(false));
@@ -71,15 +68,16 @@ const EditCustomer = (): JSX.Element => {
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
-    setCustomer({ ...customerDetail, [e.target.name]: e.target.value });
+    setSupplier({ ...supplierDetail, [e.target.name]: e.target.value });
   };
 
   useEffect(() => {
-    CustomersService.getCustomer(parseInt(id, undefined)).then((res) => {
-      setCustomer(res.data.customer);
+    SuppliersService.getSupplier(parseInt(id, undefined)).then((res) => {
+      setSupplier(res.data.supplier);
     });
   }, [id]);
-  if (customerDetail.id === 0) {
+
+  if (supplierDetail.id === 0) {
     return <Loader isLoading={loading} />;
   }
   return (
@@ -98,39 +96,54 @@ const EditCustomer = (): JSX.Element => {
                     onChange={handleInputChange}
                     autoComplete="on"
                     name="name"
-                    defaultValue={customerDetail.name}
+                    defaultValue={supplierDetail.name}
                   />
                   <p>{errors.name?.message}</p>
                 </div>
                 <div className="col-md-12">
                   <label>Phone number:</label>
                   <input
-                    {...register('phone_number')}
+                    {...register('phone')}
                     placeholder="phone number..."
                     className="form-control height-56"
                     onChange={handleInputChange}
                     autoComplete="on"
-                    name="phone_number"
-                    defaultValue={customerDetail.phone_number}
+                    name="phone"
+                    defaultValue={supplierDetail.phone}
                   />
-                  <p>{errors.phone_number?.message}</p>
-                </div>
-                <div className="col-md-12">
+                  <p>{errors.phone?.message}</p>
+                </div>{' '}
+                <div className="col-12">
                   <label>Address:</label>
-                  <textarea
+                  <input
                     {...register('address')}
                     placeholder="address..."
+                    onChange={handleInputChange}
+                    className="form-control height-56"
+                    id="comment"
+                    autoComplete="on"
+                    name="address"
+                    defaultValue={supplierDetail.address}
+                  />
+                  <p>{errors.address?.message}</p>
+                </div>
+                <div className="col-12">
+                  <label>Description:</label>
+                  <textarea
+                    {...register('description')}
+                    placeholder="description..."
                     onChange={handleInputChange}
                     className="form-control height-56"
                     rows={5}
                     id="comment"
                     autoComplete="on"
-                    name="address"
-                    defaultValue={customerDetail.address}
+                    name="description"
+                    defaultValue={supplierDetail.description}
                   />
-                  <p>{errors.address?.message}</p>
+                  <p>{errors.description?.message}</p>
                 </div>
               </div>
+
               <div className="btn-right">
                 <button
                   type="submit"
@@ -148,4 +161,4 @@ const EditCustomer = (): JSX.Element => {
   );
 };
 
-export default EditCustomer;
+export default EditSupplier;

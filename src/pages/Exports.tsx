@@ -1,6 +1,5 @@
 import CIcon from '@coreui/icons-react';
 import Table from '../components/Table/Table';
-import data from './Suppliers/SuppliersData';
 import { freeSet } from '@coreui/icons';
 import Pagination from '../components/Pagination/Pagination';
 
@@ -33,7 +32,7 @@ const Exports = (): JSX.Element => {
   const children = (): React.ReactNode => {
     return (
       <>
-        {data.map((value, index) => {
+        {/* {data.map((value, index) => {
           return (
             <tr key={index}>
               <td>{value.ID}</td>
@@ -49,7 +48,7 @@ const Exports = (): JSX.Element => {
               </td>
             </tr>
           );
-        })}
+        })} */}
       </>
     );
   };

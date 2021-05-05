@@ -1,17 +1,17 @@
 import Exports from './pages/Exports/Exports';
 import Products from './pages/Products/Products';
 import { IRoute } from './types/RouteType';
-import Suppliers from './pages/Suppliers/Suppliers';
-import Customers from './pages/Customers/Customers';
+import Suppliers from './modules/supplier/pages/suppliers/Suppliers';
+import Customers from './modules/customer/pages/customers/Customers';
 import NewImport from './pages/Imports/NewImport';
 import EditImport from './pages/Imports/EditImport';
-import NewCustomer from './pages/Customers/NewCustomer';
+import NewCustomer from './modules/customer/pages/customers/NewCustomer';
 import NewExport from './pages/Exports/NewExport';
-import EditCustomer from './pages/Customers/EditCustomer';
+import EditCustomer from './modules/customer/pages/customers/EditCustomer';
 import NewProduct from './pages/Products/NewProduct';
 import EditProduct from './pages/Products/EditProduct';
-import EditSupplier from './pages/Suppliers/EditSupplier';
-import NewSupplier from './pages/Suppliers/NewSupplier';
+import EditSupplier from './modules/supplier/pages/suppliers/EditSupplier';
+import NewSupplier from './modules/supplier/pages/suppliers/NewSupplier';
 import imports from './modules/import/pages/imports/Imports';
 const routes: IRoute[] = [
   {

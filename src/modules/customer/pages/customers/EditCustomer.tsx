@@ -1,32 +1,30 @@
-import { useSnackbar } from 'notistack';
+import React, { useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
-import Customer from '../../models/Customer';
-import CustomersService from '../../services/CustomersService';
-import { reset } from '../../modules/import/services/state/importsSlice';
-import { newCustomer } from './CustomersSlice';
+import { useSnackbar } from 'notistack';
 import * as yup from 'yup';
-// import '../Exports/style.css';
 import 'yup-phone';
 import { yupResolver } from '@hookform/resolvers/yup';
-// import './../Imports/Imports.scss';
-import IState from '../../types/StateType';
-import { isLoading } from '../../LoadingSlice';
+import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import IState from '../../../common/services/api/types/StateType';
+import Customer from '../../services/api/types/Customer';
+import CustomersService from '../../services/api/customerApiClient';
+import { isLoading } from '../../../common/services/state/LoadingSlice';
+import Loader from '../../../common/components/Loader/Loader';
+type Params = {
+  id: string;
+};
 
-const NewCustomer = (): JSX.Element => {
+const EditCustomer = (): JSX.Element => {
   const loading = useSelector((state: IState) => state.isLoading);
   const schema = yup.object().shape({
-    name: yup.string().max(64).required(),
-    phone_number: yup
-      .string()
-      .required('phone is a required field')
-      .matches(/^\d+$/, {
-        message: 'Please enter valid number',
-        excludeEmptyString: false,
-      }),
-    address: yup.string().max(256).required(),
+    name: yup.string().max(64),
+    phone_number: yup.string().matches(/^\d+$/, {
+      message: 'Please enter valid number',
+      excludeEmptyString: false,
+    }),
+    address: yup.string().max(256),
     description: yup.string().max(512),
   });
 
@@ -44,22 +42,17 @@ const NewCustomer = (): JSX.Element => {
     phone_number: '',
     address: '',
   };
-  const [inputText, setInputText] = useState(initial);
-  const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ): void => {
-    setInputText({ ...inputText, [e.target.name]: e.target.value });
-  };
+  const { id }: Params = useParams();
+
+  const [customerDetail, setCustomer] = useState(initial);
   const { enqueueSnackbar } = useSnackbar();
-  const dispatch = useDispatch();
   const history = useHistory();
-  const onSubmit = () => {
-    CustomersService.newCustomer(inputText)
-      .then((res) => {
-        dispatch(newCustomer(res));
-        dispatch(reset(true));
+  const dispatch = useDispatch();
+  const onSubmit = (e: React.FormEvent) => {
+    CustomersService.editCustomer(customerDetail)
+      .then(() => {
         history.push('/admin/customers');
-        enqueueSnackbar('New customer success', { variant: 'success' });
+        enqueueSnackbar('Update customer success', { variant: 'success' });
       })
       .catch((error) => {
         dispatch(isLoading(false));
@@ -68,6 +61,20 @@ const NewCustomer = (): JSX.Element => {
       });
   };
 
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setCustomer({ ...customerDetail, [e.target.name]: e.target.value });
+  };
+
+  useEffect(() => {
+    CustomersService.getCustomer(parseInt(id, undefined)).then((res) => {
+      setCustomer(res.data.customer);
+    });
+  }, [id]);
+  if (customerDetail.id === 0) {
+    return <Loader isLoading={loading} />;
+  }
   return (
     <>
       <div className="container">
@@ -75,7 +82,7 @@ const NewCustomer = (): JSX.Element => {
           <div className="col-xs-5 col-sm-5 col-md-5 col-lg-5 auto-center-form">
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="form-row">
-                <div className="col-12">
+                <div className="col-md-12">
                   <label>Name:</label>
                   <input
                     {...register('name')}
@@ -84,10 +91,11 @@ const NewCustomer = (): JSX.Element => {
                     onChange={handleInputChange}
                     autoComplete="on"
                     name="name"
+                    defaultValue={customerDetail.name}
                   />
                   <p>{errors.name?.message}</p>
                 </div>
-                <div className="col-12">
+                <div className="col-md-12">
                   <label>Phone number:</label>
                   <input
                     {...register('phone_number')}
@@ -96,10 +104,11 @@ const NewCustomer = (): JSX.Element => {
                     onChange={handleInputChange}
                     autoComplete="on"
                     name="phone_number"
+                    defaultValue={customerDetail.phone_number}
                   />
                   <p>{errors.phone_number?.message}</p>
                 </div>
-                <div className="col-12">
+                <div className="col-md-12">
                   <label>Address:</label>
                   <textarea
                     {...register('address')}
@@ -108,26 +117,23 @@ const NewCustomer = (): JSX.Element => {
                     className="form-control height-56"
                     rows={5}
                     id="comment"
-                    defaultValue={''}
                     autoComplete="on"
                     name="address"
+                    defaultValue={customerDetail.address}
                   />
                   <p>{errors.address?.message}</p>
                 </div>
               </div>
-
               <div className="btn-right">
                 <button
                   type="submit"
-                  className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn "
+                  className="btn-success add btn btn-primary font-weight-bold todo-list-add-btn mt-1"
                 >
-                  {loading && (
-                    <span className="spinner-border spinner-border-sm"></span>
-                  )}
-                  &nbsp;{!loading ? 'Create' : 'Create...'}
+                  Save
                 </button>
               </div>
             </form>
+            <Loader isLoading={loading} />
           </div>
         </div>
       </div>
@@ -135,4 +141,4 @@ const NewCustomer = (): JSX.Element => {
   );
 };
 
-export default NewCustomer;
+export default EditCustomer;
