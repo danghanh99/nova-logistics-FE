@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import Supplier from '../../services/api/types/Supplier';
 import SuppliersService from '../../services/api/supplierApiClient';
-import { reset, newSupplier } from '../../services/state/SuppliersSlice';
+import { newSupplier } from '../../services/state/SuppliersSlice';
 import * as yup from 'yup';
 import 'yup-phone';
 import { yupResolver } from '@hookform/resolvers/yup';
