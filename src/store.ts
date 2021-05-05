@@ -2,10 +2,10 @@ import { configureStore } from '@reduxjs/toolkit';
 import sidebarReducer from './containers/SidebarSlice';
 import loginReducer from './components/LoginForm/LoginSlice';
 import supplierReducer from './modules/supplier/services/state/SuppliersSlice';
-import customerReducer from './pages/Customers/CustomersSlice';
+import customerReducer from './modules/customer/services/state/CustomersSlice';
 import importReducer from './modules/import/services/state/importsSlice';
-import exportReducer from './pages/Exports/ExportsSlice';
-import productReducer from './pages/Products/ProductSlice';
+import exportReducer from './modules/export/services/state/ExportsSlice';
+import productReducer from './modules/product/services/state/ProductSlice';
 import loadingReducer from './LoadingSlice';
 const rootReducer = {
   sidebar: sidebarReducer,

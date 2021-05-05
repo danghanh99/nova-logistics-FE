@@ -1,62 +1,51 @@
-import { useEffect, useState } from 'react';
+import Select from '../../../common/components/Select/Select';
+import Search from '../../../common/components/Search/Search';
+import { useHistory } from 'react-router-dom';
 import CIcon from '@coreui/icons-react';
 import { cilPlaylistAdd } from '../../../../assets/icons';
+import { useEffect, useState } from 'react';
 import Table from '../../../common/UI/Table';
-import Headers from '../../components/Header/Header';
-import Search from '../../../common/components/Search/Search';
-import Content from '../../components/Content/Content';
-import ImportsService from '../../services/api/importApiClient';
-import { useDispatch, useSelector } from 'react-redux';
-import { plainToClass } from 'class-transformer';
-import IState from '../../../../types/StateType';
-import Import from '../../../../models/Import';
+import PaginationControlled from '../../../common/components/Pagination/Pagination';
 import Loader from '../../../common/components/Loader/Loader';
-import { useHistory } from 'react-router-dom';
-import Pagination from '../../../common/components/Pagination/Pagination';
-import { isLoading } from '../../../../LoadingSlice';
+import Headers from '../../components/Headers/Headers';
+import Content from '../../components/Content/Content';
+import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
-import { deleteImport, getImports } from '../../services/state/importsSlice';
-import Select from '../../../common/components/Select/Select';
+import { plainToClass } from 'class-transformer';
+import Export from '../../../../models/Export';
+import IState from '../../../../types/StateType';
+import ExportsService from '../../services/api/exportApiClient';
+import { deleteExport, getExports } from '../../services/state/ExportsSlice';
+import { isLoading } from '../../../../LoadingSlice';
 
-const Imports = (): JSX.Element => {
+const Exports = () => {
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
-  const history = useHistory();
-  const listImports = plainToClass(
-    Import,
-    useSelector((state: IState) => state.imports.data)
+  const listExports = plainToClass(
+    Export,
+    useSelector((state: IState) => state.exports.data)
   );
+  const history = useHistory();
   const loading = useSelector((state: IState) => state.isLoading);
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(10);
   const [search, setSearch] = useState('');
   const [sort, setSort] = useState('updated_at: desc, created_at: desc');
-  const meta = useSelector((state: IState) => state.imports.meta);
-
-  useEffect(() => {
-    ImportsService.getImports(page, perPage, search, sort).then((res) => {
-      dispatch(getImports(res));
-    });
-  }, [dispatch, search, perPage, page, sort]);
+  const meta = useSelector((state: IState) => state.exports.meta);
   const onHandlerSeach = (value: string) => {
     setSearch(value);
   };
   const onHandleChange = (value: number) => {
     setPerPage(value);
   };
-
-  const handlerPage = (value: number) => {
-    setPage(value);
-  };
   const onSort = (name: string, value: string) => {
     const sortType = `${name}: ${value}`;
     setSort(sortType);
   };
-
   const onHandleDelete = (id: number) => {
-    ImportsService.deleteImport(id)
+    ExportsService.deleteExport(id)
       .then(() => {
-        dispatch(deleteImport(id));
+        dispatch(deleteExport(id));
         enqueueSnackbar('Delete import success', { variant: 'success' });
       })
       .catch((error) => {
@@ -65,7 +54,14 @@ const Imports = (): JSX.Element => {
         return error;
       });
   };
-
+  const handlerPage = (value: number) => {
+    setPage(value);
+  };
+  useEffect(() => {
+    ExportsService.getExports(page, perPage, search, sort).then((res) => {
+      dispatch(getExports(res));
+    });
+  }, [dispatch, search, perPage, page, sort]);
   return (
     <>
       <div className="row mb-4">
@@ -73,7 +69,7 @@ const Imports = (): JSX.Element => {
         <Select handleChange={onHandleChange} perPage={perPage} />
         <div className="col-4 text-right">
           <button
-            onClick={() => history.push('/admin/imports/new')}
+            onClick={() => history.push('/admin/exports/new')}
             type="button"
             className="btn btn-info"
           >
@@ -84,14 +80,14 @@ const Imports = (): JSX.Element => {
       </div>
       <Table className="table table-bordered table-striped table-hover">
         <Headers onSort={onSort} />
-        <Content listImports={listImports} onHandleDelete={onHandleDelete} />
+        <Content listExports={listExports} onHandleDelete={onHandleDelete} />
       </Table>
       <div className="col-12 pr-0">
-        <Pagination meta={meta} handlerPage={handlerPage} />
+        <PaginationControlled meta={meta} handlerPage={handlerPage} />
       </div>
       <Loader isLoading={loading}></Loader>
     </>
   );
 };
 
-export default Imports;
+export default Exports;

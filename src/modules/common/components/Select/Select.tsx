@@ -1,4 +1,4 @@
-import SelectUI from '../../../common/UI/Select';
+import SelectUI from '../../UI/Select';
 
 export interface IProps {
   handleChange: (value: number) => void;

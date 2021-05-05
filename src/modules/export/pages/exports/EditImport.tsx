@@ -1,30 +1,26 @@
 import React, { ChangeEvent, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import ImportsService from '../../services/ImportsService';
 import { useState } from 'react';
-import Import from '../../models/Import';
-import ProductsService from '../../services/ProductsService';
-import { getProducts } from '../Products/ProductSlice';
 import { Autocomplete } from '@material-ui/lab';
 import TextField from '@material-ui/core/TextField';
-import SuppliersService from '../../services/SuppliersService';
-import { getSuppliers } from '../../modules/supplier/services/state/SuppliersSlice';
-import Supplier from '../../models/Supplier';
-import Product from '../../models/Product';
 import { useSnackbar } from 'notistack';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-// import '../../pages/Exports/style.css';
 import { useForm } from 'react-hook-form';
 import { plainToClass } from 'class-transformer';
-// import './Imports.scss';
-import IState from '../../types/StateType';
-import Loader from '../../modules/common/components/Loader/Loader';
-import {
-  getImports,
-  reset,
-} from '../../modules/import/services/state/importsSlice';
+import IState from '../../../../types/StateType';
+import Import from '../../../../models/Import';
+import ProductsService from '../../../../services/ProductsService';
+import { getProducts } from '../../../product/services/state/ProductSlice';
+import SuppliersService from '../../../../services/SuppliersService';
+import Product from '../../../../models/Product';
+import Supplier from '../../../../models/Supplier';
+import Loader from '../../../common/components/Loader/Loader';
+import '../../../common/style/style.css';
+import ImportsService from '../../../import/services/api/importApiClient';
+import { getImports } from '../../../import/services/state/importsSlice';
+import { getSuppliers } from '../../../supplier/services/state/SuppliersSlice';
 
 type Params = {
   id: string;
@@ -79,9 +75,6 @@ const EditImport = (): JSX.Element => {
     SuppliersService.getSuppliers().then((res) => {
       dispatch(getSuppliers(res));
     });
-    return () => {
-      dispatch(reset(true));
-    };
   }, [dispatch, id]);
 
   const handleChangeProductImport = (

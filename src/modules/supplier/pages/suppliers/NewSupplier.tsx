@@ -51,7 +51,6 @@ const NewSupplier = (): JSX.Element => {
     SuppliersService.newSupplier(inputText)
       .then((res) => {
         dispatch(newSupplier(res));
-        dispatch(reset(true));
         history.push('/admin/suppliers');
         setTimeout(() => {
           enqueueSnackbar('New supplier success', { variant: 'success' });

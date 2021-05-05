@@ -1,7 +1,7 @@
 import CIcon from '@coreui/icons-react';
 import { cilSearch } from '../../../../assets/icons';
-import SearchUI from '../../../common/UI/Search';
-import Input from '../../../common/UI/Input';
+import SearchUI from '../../UI/Search';
+import Input from '../../UI/Input';
 import React from 'react';
 
 interface IProps {

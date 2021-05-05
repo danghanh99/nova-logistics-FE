@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import Product from '../../models/Product';
-import IMeta from '../../types/MetaType';
+import Product from '../../../../models/Product';
+import IMeta from '../../../../types/MetaType';
 
 type State = {
   data: Product[];

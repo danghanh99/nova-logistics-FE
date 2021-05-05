@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import Export from '../../models/Export';
-import IMeta from '../../types/MetaType';
+import Export from '../../../../models/Export';
+import IMeta from '../../../../types/MetaType';
 
 interface IState {
   data: Export[];

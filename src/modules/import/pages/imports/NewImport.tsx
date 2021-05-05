@@ -1,28 +1,25 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import Product from '../../models/Product';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { plainToClass } from 'class-transformer';
-import Supplier from '../../models/Supplier';
-import Import from '../../models/Import';
 import { useForm } from 'react-hook-form';
-import ImportsService from '../../services/ImportsService';
-import {
-  newImport,
-  reset,
-} from '../../modules/import/services/state/importsSlice';
-import ProductsService from '../../services/ProductsService';
-import { getProducts } from '../../pages/Products/ProductSlice';
-import SuppliersService from '../../services/SuppliersService';
-import { getSuppliers } from '../../modules/supplier/services/state/SuppliersSlice';
 import { Autocomplete } from '@material-ui/lab';
 import { TextField } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import '../../pages/Exports/style.css';
-import IState from '../../types/StateType';
-import { isLoading } from '../../LoadingSlice';
+import IState from '../../../../types/StateType';
+import Import from '../../../../models/Import';
+import Product from '../../../../models/Product';
+import Supplier from '../../../../models/Supplier';
+import ImportsService from '../../services/api/importApiClient';
+import { isLoading } from '../../../../LoadingSlice';
+import ProductsService from '../../../../services/ProductsService';
+import { getProducts } from '../../../product/services/state/ProductSlice';
+import SuppliersService from '../../../../services/SuppliersService';
+import { getSuppliers } from '../../../supplier/services/state/SuppliersSlice';
+import { newImport } from '../../services/state/importsSlice';
+import '../../../common/style/style.css';
 
 const NewImport = (): JSX.Element => {
   const schema = yup.object().shape({
@@ -96,7 +93,6 @@ const NewImport = (): JSX.Element => {
     ImportsService.newImport(inputText).then(
       (res) => {
         dispatch(newImport(res));
-        dispatch(reset(true));
         history.push('/admin/imports');
         setTimeout(() => {
           enqueueSnackbar('New import success', { variant: 'success' });
