@@ -19,10 +19,13 @@ const NewCustomer = (): JSX.Element => {
   const loading = useSelector((state: IState) => state.isLoading);
   const schema = yup.object().shape({
     name: yup.string().max(64).required(),
-    phone_number: yup.string().required().matches(/^\d+$/, {
-      message: 'Please enter valid number',
-      excludeEmptyString: false,
-    }),
+    phone_number: yup
+      .string()
+      .required('phone is a required field')
+      .matches(/^\d+$/, {
+        message: 'Please enter valid number',
+        excludeEmptyString: false,
+      }),
     address: yup.string().max(256).required(),
     description: yup.string().max(512),
   });
