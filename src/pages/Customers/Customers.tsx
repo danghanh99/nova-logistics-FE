@@ -11,7 +11,7 @@ import CustomersService from '../../services/CustomersService';
 import Pagination from '../../components/Pagination/Pagination';
 import { reset } from '../Imports/ImportsSlice';
 import { useHistory } from 'react-router-dom';
-import Loader from '../../components/Loader/Loader';
+import Loader from '../../modules/common/components/Loader/Loader';
 import IState from '../../types/StateType';
 
 const initIconSort = {

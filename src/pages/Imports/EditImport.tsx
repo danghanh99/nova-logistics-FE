@@ -20,7 +20,7 @@ import { useForm } from 'react-hook-form';
 import { plainToClass } from 'class-transformer';
 import './Imports.scss';
 import IState from '../../types/StateType';
-import Loader from '../../components/Loader/Loader';
+import Loader from '../../modules/common/components/Loader/Loader';
 import { getImports, reset } from './ImportsSlice';
 
 type Params = {

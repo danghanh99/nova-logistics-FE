@@ -17,7 +17,7 @@ import '../../pages/Exports/style.css';
 import { yupResolver } from '@hookform/resolvers/yup';
 import './../Imports/Imports.scss';
 import IState from '../../types/StateType';
-import Loader from '../../components/Loader/Loader';
+import Loader from '../../modules/common/components/Loader/Loader';
 import { isLoading } from '../../LoadingSlice';
 
 function NewExport(): JSX.Element {

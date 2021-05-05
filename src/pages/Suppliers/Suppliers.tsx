@@ -10,7 +10,7 @@ import { getSuppliers } from './SuppliersSlice';
 import { plainToClass } from 'class-transformer';
 import Pagination from '../../components/Pagination/Pagination';
 import { useHistory } from 'react-router-dom';
-import Loader from '../../components/Loader/Loader';
+import Loader from '../../modules/common/components/Loader/Loader';
 import IState from '../../types/StateType';
 
 const initIconSort = {

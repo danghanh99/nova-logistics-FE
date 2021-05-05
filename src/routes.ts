@@ -1,5 +1,4 @@
 import Exports from './pages/Exports/Exports';
-import Imports from './pages/Imports/Imports';
 import Products from './pages/Products/Products';
 import { IRoute } from './types/RouteType';
 import Suppliers from './pages/Suppliers/Suppliers';
@@ -13,11 +12,12 @@ import NewProduct from './pages/Products/NewProduct';
 import EditProduct from './pages/Products/EditProduct';
 import EditSupplier from './pages/Suppliers/EditSupplier';
 import NewSupplier from './pages/Suppliers/NewSupplier';
+import imports from './modules/import/pages/imports/Imports';
 const routes: IRoute[] = [
   {
     path: '/admin/imports',
     name: 'Imports',
-    component: Imports,
+    component: imports,
     exact: true,
   },
   {

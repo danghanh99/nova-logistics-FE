@@ -9,7 +9,7 @@ import ExportsService from '../../services/ExportsService';
 import { deleteExport, getExports } from './ExportsSlice';
 import Pagination from '../../components/Pagination/Pagination';
 import { useSnackbar } from 'notistack';
-import Loader from '../../components/Loader/Loader';
+import Loader from '../../modules/common/components/Loader/Loader';
 import IState from '../../types/StateType';
 
 const Exports = (): JSX.Element => {

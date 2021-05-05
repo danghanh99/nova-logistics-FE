@@ -13,7 +13,7 @@ import { useForm } from 'react-hook-form';
 import './../Imports/Imports.scss';
 import IState from '../../types/StateType';
 import { useDispatch, useSelector } from 'react-redux';
-import Loader from '../../components/Loader/Loader';
+import Loader from '../../modules/common/components/Loader/Loader';
 import { isLoading } from '../../LoadingSlice';
 type Params = {
   id: string;

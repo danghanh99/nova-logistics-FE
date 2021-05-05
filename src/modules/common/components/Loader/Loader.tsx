@@ -1,4 +1,4 @@
-import LoaderGif from '../../assets/img/loader.gif';
+import LoaderGif from '../../../../assets/img/loader.gif';
 import './Loader.scss';
 
 type Props = {

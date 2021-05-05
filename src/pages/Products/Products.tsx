@@ -9,7 +9,7 @@ import ProductsService from '../../services/ProductsService';
 import { getProducts } from './ProductSlice';
 import Pagination from '../../components/Pagination/Pagination';
 import { useHistory } from 'react-router-dom';
-import Loader from '../../components/Loader/Loader';
+import Loader from '../../modules/common/components/Loader/Loader';
 import IState from '../../types/StateType';
 
 const Products = (): JSX.Element => {

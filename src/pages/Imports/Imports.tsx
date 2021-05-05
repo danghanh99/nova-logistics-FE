@@ -9,7 +9,7 @@ import Pagination from '../../components/Pagination/Pagination';
 import { useState } from 'react';
 import './Imports.scss';
 import { useSnackbar } from 'notistack';
-import Loader from '../../components/Loader/Loader';
+import Loader from '../../modules/common/components/Loader/Loader';
 import IState from '../../types/StateType';
 import Search from './Search/Search';
 import Headers from './Headers/Headers';
