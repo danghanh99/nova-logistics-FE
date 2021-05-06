@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ProductsService from '../../services/api/productApiClitent';
-import Product from '../../../../models/Product';
+import Product from '../../services/api/types/Product';
 import IState from '../../../../types/StateType';
 import { createProduct } from '../../services/state/ProductSlice';
 import { isLoading } from '../../../../LoadingSlice';

@@ -9,7 +9,6 @@ import ImportsService from '../../services/api/importApiClient';
 import { useDispatch, useSelector } from 'react-redux';
 import { plainToClass } from 'class-transformer';
 import IState from '../../../../types/StateType';
-import Import from '../../../../models/Import';
 import Loader from '../../../common/components/Loader/Loader';
 import { useHistory } from 'react-router-dom';
 import Pagination from '../../../common/components/Pagination/Pagination';
@@ -17,6 +16,7 @@ import { isLoading } from '../../../../LoadingSlice';
 import { useSnackbar } from 'notistack';
 import { deleteImport, getImports } from '../../services/state/importsSlice';
 import Select from '../../../common/components/Select/Select';
+import Import from '../../services/api/types/Import';
 
 const Imports = (): JSX.Element => {
   const dispatch = useDispatch();

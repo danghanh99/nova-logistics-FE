@@ -1,8 +1,8 @@
-import Customer from '../models/Customer';
-import Export from '../models/Export';
-import Import from '../models/Import';
-import Product from '../models/Product';
-import Supplier from '../models/Supplier';
+import Customer from '../modules/customer/services/api/types/Customer';
+import Export from '../modules/export/services/api/types/Export';
+import Import from '../modules/import/services/api/types/Import';
+import Product from '../modules/product/services/api/types/Product';
+import Supplier from '../modules/supplier/services/api/types/Supplier';
 import IMeta from './MetaType';
 
 interface IState {

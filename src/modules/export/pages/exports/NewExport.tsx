@@ -11,13 +11,13 @@ import IState from '../../../../types/StateType';
 import ProductsService from '../../../../services/ProductsService';
 import { getProducts } from '../../../product/services/state/ProductSlice';
 import CustomersService from '../../../../services/CustomersService';
-import Product from '../../../../models/Product';
-import Customer from '../../../../models/Customer';
+import Product from '../../../product/services/api/types/Product';
 import ExportsService from '../../services/api/exportApiClient';
 import { isLoading } from '../../../../LoadingSlice';
 import Loader from '../../../common/components/Loader/Loader';
 import '../../../common/style/style.css';
 import { getCustomers } from '../../../customer/services/state/CustomersSlice';
+import Customer from '../../../customer/services/api/types/Customer';
 
 function NewExport(): JSX.Element {
   const currentDate = new Date().toLocaleDateString('fr-CA');

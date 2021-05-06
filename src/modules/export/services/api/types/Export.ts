@@ -1,7 +1,5 @@
-import Import from './Import';
-import Customer from './Customer';
-import User from './User';
-import Inventory from './Inventory';
+import Customer from '../../../../customer/services/api/types/Customer';
+import Import from '../../../../import/services/api/types/Import';
 
 class Export {
   id!: number;
@@ -11,9 +9,6 @@ class Export {
 
   imports!: Import[];
   customer?: Customer | null;
-  user?: User;
-  inventory?: Inventory;
-
   description!: string;
 }
 

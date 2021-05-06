@@ -1,12 +1,11 @@
 import axios from 'axios';
-import Customer from '../models/Customer';
-import ICustomer from '../models/Customer';
+import Customer from '../modules/customer/services/api/types/Customer';
 import IMeta from '../types/MetaType';
 
 const API_URL = 'https://nova-logistics-backend.herokuapp.com/api/v1/';
 
 interface IState {
-  data: ICustomer[];
+  data: Customer[];
   meta: IMeta;
 }
 

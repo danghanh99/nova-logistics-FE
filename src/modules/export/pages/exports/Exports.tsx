@@ -12,7 +12,7 @@ import Content from '../../components/Content/Content';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import { plainToClass } from 'class-transformer';
-import Export from '../../../../models/Export';
+import Export from '../../services/api/types/Export';
 import IState from '../../../../types/StateType';
 import ExportsService from '../../services/api/exportApiClient';
 import { deleteExport, getExports } from '../../services/state/ExportsSlice';

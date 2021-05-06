@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Import from '../../../../models/Import';
+import Import from './types/Import';
 const API_URL = 'https://nova-logistics-backend.herokuapp.com/api/v1/';
 
 const getImports = async (

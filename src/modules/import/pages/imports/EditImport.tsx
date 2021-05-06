@@ -10,17 +10,17 @@ import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { plainToClass } from 'class-transformer';
 import IState from '../../../../types/StateType';
-import Import from '../../../../models/Import';
 import ImportsService from '../../services/api/importApiClient';
 import ProductsService from '../../../../services/ProductsService';
 import { getProducts } from '../../../product/services/state/ProductSlice';
 import SuppliersService from '../../../../services/SuppliersService';
-import Product from '../../../../models/Product';
-import Supplier from '../../../../models/Supplier';
+import Product from '../../../product/services/api/types/Product';
 import Loader from '../../../common/components/Loader/Loader';
 import '../../../common/style/style.css';
 import { getImports } from '../../services/state/importsSlice';
 import { getSuppliers } from '../../../supplier/services/state/SuppliersSlice';
+import Import from '../../services/api/types/Import';
+import Supplier from '../../../supplier/services/api/types/Supplier';
 
 type Params = {
   id: string;

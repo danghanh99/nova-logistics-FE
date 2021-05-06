@@ -1,6 +1,6 @@
 import CIcon from '@coreui/icons-react';
 import { cilTrash } from '../../../../assets/icons';
-import Export from '../../../../models/Export';
+import Export from '../../services/api/types/Export';
 
 interface IProps {
   listExports: Export[];
