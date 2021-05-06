@@ -1,8 +1,10 @@
 import CIcon from '@coreui/icons-react';
 import { cilArrowBottom, cilArrowTop } from '../../../../assets/icons';
+import IIcons from '../../../common/services/api/types/IconType';
 
 interface IProps {
   onSort: (name: string, value: string) => void;
+  iconSort: IIcons;
 }
 const Headers = (props: IProps) => {
   const { onSort } = props;
@@ -15,12 +17,12 @@ const Headers = (props: IProps) => {
         Quantity
         <i>
           <CIcon
-            // className={iconSort.quantity_desc}
+            className={`${props.iconSort.quantity_desc} cursor`}
             content={cilArrowTop}
             onClick={(e) => onSort('quantity', 'desc')}
           />
           <CIcon
-            // className={iconSort.quantity_asc}
+            className={`${props.iconSort.quantity_asc} cursor`}
             content={cilArrowBottom}
             onClick={(e) => onSort('quantity', 'asc')}
           />
@@ -30,12 +32,12 @@ const Headers = (props: IProps) => {
         Price
         <i>
           <CIcon
-            // className={iconSort.retail_price_desc}
+            className={`${props.iconSort.retail_price_desc} cursor`}
             content={cilArrowTop}
             onClick={(e) => onSort('retail_price', 'desc')}
           />
           <CIcon
-            // className={iconSort.retail_price_asc}
+            className={`${props.iconSort.retail_price_asc} cursor`}
             content={cilArrowBottom}
             onClick={(e) => onSort('retail_price', 'asc')}
           />
@@ -45,12 +47,12 @@ const Headers = (props: IProps) => {
         Import Date
         <i>
           <CIcon
-            // className={iconSort.imported_date_desc}
+            className={`${props.iconSort.imported_date_desc} cursor`}
             content={cilArrowTop}
             onClick={(e) => onSort('imported_date', 'desc')}
           ></CIcon>
           <CIcon
-            // className={iconSort.imported_date_asc}
+            className={`${props.iconSort.imported_date_asc} cursor`}
             content={cilArrowBottom}
             onClick={(e) => onSort('imported_date', 'asc')}
           ></CIcon>

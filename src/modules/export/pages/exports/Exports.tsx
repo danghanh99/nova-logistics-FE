@@ -12,13 +12,24 @@ import Content from '../../components/Content/Content';
 import { useDispatch, useSelector } from 'react-redux';
 import { useSnackbar } from 'notistack';
 import { plainToClass } from 'class-transformer';
-import Export from '../../../../models/Export';
+import Export from '../../services/api/types/Export';
 import IState from '../../../../types/StateType';
 import ExportsService from '../../services/api/exportApiClient';
 import { deleteExport, getExports } from '../../services/state/ExportsSlice';
 import { isLoading } from '../../../../LoadingSlice';
 
 const Exports = () => {
+  const initIconSort = {
+    quantity_desc: '',
+    quantity_asc: '',
+    sell_price_desc: '',
+    sell_price_asc: '',
+    exported_date_desc: '',
+    exported_date_asc: '',
+  };
+
+  const [iconSort, setIconSort] = useState(initIconSort);
+
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const listExports = plainToClass(
@@ -41,6 +52,17 @@ const Exports = () => {
   const onSort = (name: string, value: string) => {
     const sortType = `${name}: ${value}`;
     setSort(sortType);
+    const enableIcon = `${name}_${value}`;
+    setIconSort({
+      ...iconSort,
+      quantity_desc: '',
+      quantity_asc: '',
+      sell_price_asc: '',
+      sell_price_desc: '',
+      exported_date_asc: '',
+      exported_date_desc: '',
+      [enableIcon]: 'text-success',
+    });
   };
   const onHandleDelete = (id: number) => {
     ExportsService.deleteExport(id)
@@ -79,7 +101,7 @@ const Exports = () => {
         </div>
       </div>
       <Table className="table table-bordered table-striped table-hover">
-        <Headers onSort={onSort} />
+        <Headers onSort={onSort} iconSort={iconSort} />
         <Content listExports={listExports} onHandleDelete={onHandleDelete} />
       </Table>
       <div className="col-12 pr-0">

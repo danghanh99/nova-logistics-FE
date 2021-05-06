@@ -1,7 +1,7 @@
-import Customer from '../../../../../models/Customer';
-import Export from '../../../../../models/Export';
-import Import from '../../../../../models/Import';
-import Product from '../../../../../models/Product';
+import Customer from '../../../../customer/services/api/types/Customer';
+import Export from '../../../../export/services/api/types/Export';
+import Import from '../../../../import/services/api/types/Import';
+import Product from '../../../../product/services/api/types/Product';
 import Supplier from '../../../../supplier/services/api/types/Supplier';
 import IMeta from './MetaType';
 

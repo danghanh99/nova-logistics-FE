@@ -9,4 +9,16 @@ export default interface IIcons {
   description_asc?: string;
   phone_number_desc?: string;
   phone_number_asc?: string;
+
+  quantity_desc?: string;
+  quantity_asc?: string;
+  retail_price_desc?: string;
+  retail_price_asc?: string;
+  imported_date_desc?: string;
+  imported_date_asc?: string;
+
+  sell_price_desc?: string;
+  sell_price_asc?: string;
+  exported_date_desc?: string;
+  exported_date_asc?: string;
 }

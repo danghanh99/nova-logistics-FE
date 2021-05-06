@@ -9,7 +9,6 @@ import ImportsService from '../../services/api/importApiClient';
 import { useDispatch, useSelector } from 'react-redux';
 import { plainToClass } from 'class-transformer';
 import IState from '../../../../types/StateType';
-import Import from '../../../../models/Import';
 import Loader from '../../../common/components/Loader/Loader';
 import { useHistory } from 'react-router-dom';
 import Pagination from '../../../common/components/Pagination/Pagination';
@@ -17,8 +16,18 @@ import { isLoading } from '../../../../LoadingSlice';
 import { useSnackbar } from 'notistack';
 import { deleteImport, getImports } from '../../services/state/importsSlice';
 import Select from '../../../common/components/Select/Select';
+import Import from '../../services/api/types/Import';
 
 const Imports = (): JSX.Element => {
+  const initIconSort = {
+    quantity_desc: '',
+    quantity_asc: '',
+    retail_price_desc: '',
+    retail_price_asc: '',
+    imported_date_desc: '',
+    imported_date_asc: '',
+  };
+
   const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const history = useHistory();
@@ -48,9 +57,15 @@ const Imports = (): JSX.Element => {
   const handlerPage = (value: number) => {
     setPage(value);
   };
+  const [iconSort, setIconSort] = useState(initIconSort);
   const onSort = (name: string, value: string) => {
     const sortType = `${name}: ${value}`;
     setSort(sortType);
+    const enableIcon = `${name}_${value}`;
+    setIconSort({
+      ...initIconSort,
+      [enableIcon]: 'text-success',
+    });
   };
 
   const onHandleDelete = (id: number) => {
@@ -83,7 +98,7 @@ const Imports = (): JSX.Element => {
         </div>
       </div>
       <Table className="table table-bordered table-striped table-hover">
-        <Headers onSort={onSort} />
+        <Headers onSort={onSort} iconSort={iconSort} />
         <Content listImports={listImports} onHandleDelete={onHandleDelete} />
       </Table>
       <div className="col-12 pr-0">

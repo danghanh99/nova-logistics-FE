@@ -1,4 +1,4 @@
-import Product from '../../../../../models/Product';
+import Product from '../../../../product/services/api/types/Product';
 import Supplier from '../../../../supplier/services/api/types/Supplier';
 class Import {
   id!: number;

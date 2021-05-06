@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Export from '../../../../models/Export';
+import Export from './types/Export';
 import IMeta from '../../../../types/MetaType';
 
 const API_URL = 'https://nova-logistics-backend.herokuapp.com/api/v1/';

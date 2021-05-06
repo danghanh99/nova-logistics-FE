@@ -1,7 +1,7 @@
 import CIcon from '@coreui/icons-react';
 import { useHistory } from 'react-router-dom';
 import { cilColorBorder } from '../../../../assets/icons';
-import Product from '../../../../models/Product';
+import Product from '../../services/api/types/Product';
 
 interface IProps {
   listProducts: Product[];

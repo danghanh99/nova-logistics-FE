@@ -14,7 +14,7 @@ import ProductsService from '../../services/api/productApiClitent';
 import { getProducts } from '../../services/state/ProductSlice';
 import Headers from '../../components/Headers/Headers';
 import Content from '../../components/Content/Content';
-import Product from '../../../../models/Product';
+import Product from '../../services/api/types/Product';
 
 const Imports = (): JSX.Element => {
   const dispatch = useDispatch();

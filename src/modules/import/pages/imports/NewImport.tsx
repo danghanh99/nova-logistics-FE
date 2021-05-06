@@ -9,9 +9,7 @@ import { useSnackbar } from 'notistack';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import IState from '../../../../types/StateType';
-import Import from '../../../../models/Import';
-import Product from '../../../../models/Product';
-import Supplier from '../../../../models/Supplier';
+import Product from '../../../product/services/api/types/Product';
 import ImportsService from '../../services/api/importApiClient';
 import { isLoading } from '../../../../LoadingSlice';
 import ProductsService from '../../../../services/ProductsService';
@@ -20,6 +18,8 @@ import SuppliersService from '../../../../services/SuppliersService';
 import { getSuppliers } from '../../../supplier/services/state/SuppliersSlice';
 import { newImport } from '../../services/state/importsSlice';
 import '../../../common/style/style.css';
+import Import from '../../services/api/types/Import';
+import Supplier from '../../../supplier/services/api/types/Supplier';
 
 const NewImport = (): JSX.Element => {
   const schema = yup.object().shape({
