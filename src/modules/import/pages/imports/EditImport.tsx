@@ -32,12 +32,14 @@ const EditImport = (): JSX.Element => {
       .number()
       .typeError('quantity must be a number')
       .positive()
-      .integer(),
+      .integer()
+      .max(999999999),
     retail_price: yup
       .number()
       .typeError('price must be a number')
       .positive()
-      .integer(),
+      .integer()
+      .max(999999999),
     description: yup.string(),
     imported_date: yup.string().required('date must be exist'),
   });

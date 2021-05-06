@@ -28,6 +28,7 @@ const NewImport = (): JSX.Element => {
       .typeError('quantity must be a number')
       .positive()
       .integer()
+      .max(999999999)
       .required()
       .label('quantity'),
     retail_price: yup
@@ -35,6 +36,7 @@ const NewImport = (): JSX.Element => {
       .typeError('price must be a number')
       .positive()
       .integer()
+      .max(999999999)
       .required()
       .label('price'),
     description: yup.string(),
